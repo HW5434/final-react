@@ -1,14 +1,22 @@
+// BootStrap , BootsWatch 의존성 추가
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootswatch/dist/cosmo/bootstrap.min.css";
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import "bootstrap";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <HashRouter>
     <App />
-  </React.StrictMode>
+  </HashRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
