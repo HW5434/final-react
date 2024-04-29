@@ -6,6 +6,8 @@ import Home from './components/Home'; //홈 화면
 import Test01 from './components/Test01'; 
 import Test02 from './components/Test02';
 import Test03 from './components/Test03';
+import Qna from './components/integrated/Qna';
+
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/test01" element={<Test01/>}/>
             <Route path="/test02" element={<Test02/>}/>
             <Route path="/test03" element={<Test03/>}/>
+
+            <Route path="/testqna" element={<Qna/>}/>
           </Routes>
         </div>
       </div>
