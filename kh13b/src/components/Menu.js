@@ -50,6 +50,21 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/test03">테스트 3번</NavLink>
                                 </div>
                             </li>
+
+                            {/* 고객센터 */}
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 3번</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/testqna">공지사항 연습</NavLink>
+                                </div>
+                            </li>
+                            {/* 좌석 */}
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
+                                </div>
+                            </li>
                         </ul>
 
                          {/* 이 부분을 로그인 여부에 따라 다르게 표시 */}

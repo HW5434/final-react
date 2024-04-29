@@ -7,6 +7,7 @@ import Test01 from './components/Test01';
 import Test02 from './components/Test02';
 import Test03 from './components/Test03';
 import Qna from './components/integrated/Qna';
+import Seat from './components/integrated/Seat';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/test03" element={<Test03/>}/>
 
             <Route path="/testqna" element={<Qna/>}/>
+            <Route path="/seat" element={<Seat/>}/>
           </Routes>
         </div>
       </div>
