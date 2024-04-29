@@ -1,7 +1,9 @@
 //화면 상단에 배치할 메뉴(Header로 사용할 예정)
 
 //import
+import './Menu.css';
 import { NavLink } from "react-router-dom";
+
 
 //function
 function Menu() {
@@ -56,8 +58,6 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/testqna">공지사항 연습</NavLink>
                                 </div>
                             </li>
-
-
                             {/* 좌석 */}
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
