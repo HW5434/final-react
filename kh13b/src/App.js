@@ -8,6 +8,7 @@ import Test02 from './components/Test02';
 import Test03 from './components/Test03';
 import Qna from './components/integrated/Qna';
 import Seat from './components/integrated/Seat';
+import ConcertRequest from './components/integrated/ConcertRequest';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 
             <Route path="/testqna" element={<Qna/>}/>
             <Route path="/seat" element={<Seat/>}/>
+            <Route path="/ConcertRequest" element={<ConcertRequest/>}/>
           </Routes>
         </div>
       </div>
