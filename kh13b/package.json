@@ -9,6 +9,7 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "bootswatch": "^5.3.3",
+    "hacademy-cinema-seat": "^0.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.1.0",
