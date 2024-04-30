@@ -38,7 +38,7 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 2번</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/test01">테스트 1번</NavLink>
-                                    <NavLink className="dropdown-item" to="/test02">테스트 2번</NavLink>
+                                    <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
                                     <NavLink className="dropdown-item" to="/test03">테스트 3번</NavLink>
                                 </div>
                             </li>
