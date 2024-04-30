@@ -1,0 +1,17 @@
+.centered-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success {
+    font-size: 20px; /* 버튼 텍스트 크기 조정 */
+    padding: 10px 10px; /* 내부 여백 조정 */
+    border-radius: 5px; /* 버튼 모서리 둥글게 만들기 */
+    border-width: 0;
+    box-shadow: 0px 4px 8px rgba(83, 83, 83, 0.2); /* 그림자 효과 추가 */
+}
+
+.red-icon {
+    color: red;
+}
