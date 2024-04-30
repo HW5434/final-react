@@ -3,7 +3,20 @@ import Jumbotron from "./Jumbotron";
 function Test01() {
     return(
         <>
-            <Jumbotron title="테스트 1번" content="테스트를 위한 파일입니다."/>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        1
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        123
+      </div>
+    </div>
+  </div>
+ </div>
         </>
     );
 };

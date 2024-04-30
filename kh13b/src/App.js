@@ -9,7 +9,8 @@ import Test03 from './components/Test03';
 import Qna from './components/integrated/Qna';
 import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
-
+import SignUp from './components/member/SignUp';
+import Login from './components/member/Login';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
             <Route path="/testqna" element={<Qna/>}/>
             <Route path="/seat" element={<Seat/>}/>
             <Route path="/ConcertRequest" element={<ConcertRequest/>}/>
+            <Route path="/signUp" element={<SignUp/>}/>
+            <Route path="/login" element={<Login/>}/>
+
           </Routes>
         </div>
       </div>
