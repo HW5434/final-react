@@ -67,16 +67,18 @@ function Menu() {
                             </li>
                         </ul>
 
-                    {/* 회원에 대한 Col */}
-                    <div className="d-flex">
-                        <span className="me-2">
-                            로그인
-                        </span>
-                        /
-                        <span className="ms-2">
-                            회원가입
-                        </span>
-                    </div>
+                         {/* 이 부분을 로그인 여부에 따라 다르게 표시 */}
+                         <div className="d-flex">
+                         
+                                <span className="me-2">
+                                <NavLink className="dropdown-item" to="/login">로그인</NavLink>
+                                </span>
+                                /
+                                <span className="ms-2">
+                                <NavLink className="dropdown-item" to="/signUp">회원가입</NavLink>
+                                </span>
+                     
+                            </div>
 
                     </div>
                 </div>
