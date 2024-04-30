@@ -71,11 +71,11 @@ function Menu() {
                          <div className="d-flex">
                          
                                 <span className="me-2">
-                                    로그인
+                                <NavLink className="dropdown-item" to="/login">로그인</NavLink>
                                 </span>
                                 /
                                 <span className="ms-2">
-                                   회원가입
+                                <NavLink className="dropdown-item" to="/signUp">회원가입</NavLink>
                                 </span>
                      
                             </div>
