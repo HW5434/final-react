@@ -11,6 +11,8 @@ import { FaCheck } from "react-icons/fa6";
 
 import { Modal } from "bootstrap";
 
+import {SeatGroup} from "hacademy-cinema-seat";
+
 const Seat = () => {
     const [seats, setSeats] = useState([]);
     const [input, setInput] = useState({
@@ -96,7 +98,7 @@ const Seat = () => {
         //- copy 중에서 target과 동일한 정보를 가진 항목을 찾아서 edit : true로 만든다
         //- 배열을 변환 시켜야 하므로 map 함수를 사용한다
         const copy2 = recover.map(seat => {
-            //target : 수정버튼을 누른 학생 정보, seat : 현재 회차의 학생정보
+            //target : 수정버튼을 누른  좌석정보, seat : 현재 회차의 좌석정보
             if (target.seatNo === seat.seatNo) {//target이랑 seat가 동일하다면//원하는 정보일 경우
 
                 return {
@@ -120,7 +122,7 @@ const Seat = () => {
         //- copy 중에서 target과 동일한 정보를 가진 항목을 찾아서 edit : true로 만든다
         //- 배열을 변환 시켜야 하므로 map 함수를 사용한다
         const copy2 = copy.map(seat => {
-            //target : 수정버튼을 누른 학생 정보, seat : 현재 회차의 학생정보
+            //target : 수정버튼을 누른 좌석 정보, seat : 현재 회차의 좌석정보
             if (target.seatNo === seat.seatNo) {//target이랑 seat가 동일하다면//원하는 정보일 경우
 
                 return {
@@ -139,7 +141,7 @@ const Seat = () => {
     const changeSeat = useCallback((e, target) => {
         const copy = [...seats];//복사! 원본 건들면 안되니까
         const copy2 = copy.map(seat => {
-            if (target.seatId === seat.seatNo) {//이벤트 발생한 학생이라면
+            if (target.seatNo === seat.seatNo) {//이벤트 발생한 좌석이라면
                 return {
                     ...seat,//나머지 정보는 유지하되,
                     [e.target.name]: e.target.value//단, 입력항목만 교체
@@ -175,6 +177,25 @@ const Seat = () => {
     return (
         <>
             <Jumbotron title="좌석" />
+
+            <div className='row mt-4'>
+                <div className='col'>
+                <SeatGroup map={seats} setMap={setSeats}
+                        fields={{
+                        no:'seatNo', 
+                        row:'seatCol', 
+                        col:'seatRow', 
+                        grade:'seatLevel',
+                        reserved:'seatReserved', 
+                        disabled:'seatDisabled',
+                        checked:'seatChecked',
+                        }}
+                        rows={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                        cols={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+                        showNames
+                    />
+                </div>
+            </div>
 
             {/* 신규등록 버튼(모달띄우기) */}
             <div className="row mt-4 text-end">
@@ -285,16 +306,17 @@ const Seat = () => {
                                         className="form-control" />
                                 </div>
                             </div>
-                            <div className="row mt-4">
+                            <div className="row mt-4"> 
                                 <div className="col">
                                     <label>좌석 등급</label>
-                                    <input type="text" name="seatLevel"
-                                        value={input.seatLevel}
-                                        onChange={e => changeInput(e)}
-                                        className="form-control" />
+                                    <select name="seatLevel" value={input.seatLevel} onChange={e => changeInput(e)} className="form-control">
+                                        <option value="VIP">VIP</option>
+                                        <option value="R">R</option>
+                                        <option value="S">S</option>
+                                        <option value="A">A</option>
+                                    </select>
                                 </div>
                             </div>
-
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-success me-2"
