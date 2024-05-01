@@ -21,6 +21,7 @@ const SignUp = () => {
         memberAddress2: "",
     });
 
+    //유효성 체크 데이터
     const [inputValid, setInputValid] = useState({
         memberName: false,
         memberId: false,
@@ -34,14 +35,14 @@ const SignUp = () => {
         memberAddress2: false,
     });
 
-    const [checkId, setCheckId] = useState({
-        flag: false,
-        message: "",
-    });
-    const [checkEmail, setCheckEmail] = useState({
-        flag: false,
-        message: "",
-    });
+    //id 중복체크
+    const [checkId, setCheckId] = useState({ flag: false, message: "" });
+    //email 중복체크
+    const [checkEmail, setCheckEmail] = useState({ flag: false, message: "" });
+    //email인증
+    const [emailVerification, setEmailVerification] = useState({ flag: false, authenticationCode: "", });
+    //email인증 사용자 입력번호
+    const [inputCode, setInputCode] = useState("");
 
     //등록 입력값 변경
     const handleSignUpInputChange = (e) => {
@@ -117,9 +118,8 @@ const SignUp = () => {
         }
     }
 
-    //아이디 중복
+    //이메일 중복
     const doubleCheckEmail = async (memberEmail) => {
-        alert(memberEmail)
         const res = await axios.get(`/member/doubleCheckEmail/${memberEmail}`);
         if(res.data) {
             setCheckEmail({
@@ -132,7 +132,30 @@ const SignUp = () => {
                 message: "다시 입력해"
             });
         }
-    }    
+    }
+
+    //이메일 인증번호 전송
+    const sendEmail = async (memberEmail) => {
+        const res = await axios.get(`/member/sendEmail/${memberEmail}`);
+        setEmailVerification(prevState => ({
+            authenticationCode: res.data,
+            flag: true,
+        }));
+    }
+
+    //사용자 이메일 인증번호 입력
+    const handleEmailCheckInputChange = (e) => {
+        setInputCode(e.target.value);
+    }
+
+    //인증번호 확인
+    const userInputCode = (inputCode) => {
+        if(inputCode === String(emailVerification.authenticationCode)) {
+            alert("인증완료");
+        } else {
+            alert("인증실패");
+        }
+    }
 
     //입력값초기화
     const clearInput = useCallback(()=> {
@@ -150,6 +173,7 @@ const SignUp = () => {
     }, [input]);
     
 
+    //이메일 주소관련
     const [emailId, setEmailId] = useState('');
     const [emailDomain, setEmailDomain] = useState('');
     const [emailType, setEmailType] = useState('');
@@ -161,6 +185,7 @@ const SignUp = () => {
             memberEmail: e.target.value + "@" + emailDomain
         }));
     };
+
     const handleEmailTypeChange = (e) => {
         setEmailType(e.target.value);
         setEmailDomain(e.target.value);
@@ -169,6 +194,7 @@ const SignUp = () => {
             memberEmail: emailId + "@" + e.target.value
         }));        
     };
+
     const handleEmailDomainChange = (e) => {
         setEmailDomain(e.target.value);
         setInput(prevState => ({
@@ -180,7 +206,6 @@ const SignUp = () => {
     //view
     return (
         <>
-
             <Jumbotron title="회원가입" content="SignUp"/>
 
             <div className='row mt-4'>
@@ -260,7 +285,13 @@ const SignUp = () => {
                     <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
                         {checkEmail.message === "" ? "" : checkEmail.message}
                     </p>
-                    <a href="#" className="me-2">이메일 인증</a>
+                    {emailVerification.flag ? 
+                        <>
+                            <input type='text' onChange={handleEmailCheckInputChange}/>
+                            <button onClick={() => userInputCode(inputCode)}>인증확인</button>
+                        </> : 
+                        <button onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
+                    }
                     <div className="notice">
                         ※ 일부 이메일(gmail.com, hotmail.com, live.co.kr, outlook.com, nate.com, dreamwiz.com, empal.com 등)은 <span className="color_red">답변 메일 수신</span>이 원활하지 않을 수 있습니다. <br />
                         ※ 특정 키워드를 사용한 이메일의 경우, 홈페이지 보안 정책에 따라 가입이 어려울 수 있습니다.
