@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import AddressSearch from "./AddressSearch/AddressSearch";
 import axios from "../utils/CustomAxios";
+import Jumbotron from './../Jumbotron';
 
 
 const SignUp = () => {
@@ -11,13 +12,30 @@ const SignUp = () => {
     const [input, setInput] = useState({
         memberName:"",
         memberId: "",
+        memberIdCheck:"",
         memberPw: "",
+        memberPwCheck:"",
         memberBirth: "",
+        memberBirthCheck:"",
         memberContact: "",
+        memberContactCheck:"",
         memberEmail: "",
         memberPost: "",
         memberAddress1: "",
         memberAddress2: "",
+    });
+
+    const [inputValid, setInputValid] = useState({
+        memberName: false,
+        memberId: false,
+        memberPw: false,
+        memberPwCheck: false,
+        memberBirth: false,
+        memberContact: false,
+        memberEmail: false,
+        memberPost: false,
+        memberAddress1: false,
+        memberAddress2: false,
     });
 
     //등록 입력값 변경
@@ -28,9 +46,49 @@ const SignUp = () => {
             [name]: value
         }));
     }
+    //등록값 유효성 체크
+    const changeValid = (e) => {
+        const name = e.target.name;
+        if(name === 'memberName') {
+            setInputValid({
+                ...inputValid,
+                memberName : input.memberName !== ''
+            });
+        } else if(name === 'memberId') {
+            const regex = /^[a-z][a-z0-9]{7,19}$/;
+            setInputValid({
+                ...inputValid,
+                memberId : regex.test(input.memberId)
+            });
+        } else if(name === "memberPw") {
+            const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,16}$/;
+            setInputValid({
+                ...inputValid,
+                memberPw : regex.test(input.memberPw)
+            });
+        } else if(name === "memberPwCheck") {
+            setInputValid({
+                ...inputValid,
+                memberPwCheck : input.memberPw === input.memberPwCheck
+            });
+        } else if(name === "memberBirth") {
+            const regex = /^(19[0-9]{2}|20[0-9]{2})-(02-(0[1-9]|1[0-9]|2[0-8])|(0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30)|(0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01]))$/;
+            setInputValid({
+                ...inputValid,
+                memberBirth : regex.test(input.memberBirth)
+            });
+        } else if(name === "memberContact") {
+            const regex = /^010[1-9][0-9]{3}[0-9]{4}$/;
+            setInputValid({
+                ...inputValid,
+                memberContact : regex.test(input.memberContact)
+            });
+        }
+    }
+
     //등록
     const saveInput = useCallback(async ()=> {
-        const resp = await axios.post("/join/", input);
+        const resp = await axios.post("/member/", input);
         clearInput();
     }, [input]);
     //등록취소
@@ -62,20 +120,33 @@ const SignUp = () => {
 
     const handleEmailIdChange = (e) => {
         setEmailId(e.target.value);
+        setInput(prevState => ({
+            ...prevState,
+            memberEmail: e.target.value + emailDomain
+        }));
     };
     const handleEmailTypeChange = (e) => {
         setEmailType(e.target.value);
         setEmailDomain(e.target.value);
+        setInput(prevState => ({
+            ...prevState,
+            memberEmail: emailId + e.target.value
+        }));        
     };
     const handleEmailDomainChange = (e) => {
         setEmailDomain(e.target.value);
+        setInput(prevState => ({
+            ...prevState,
+            memberEmail: emailId + e.target.value
+        }));
     };
-
-
 
     //view
     return (
         <>
+
+            <Jumbotron title="회원가입" content="SignUp"/>
+
             <div className='row mt-4'>
                 <div className='col'>
                     <label>이름</label>
@@ -141,10 +212,10 @@ const SignUp = () => {
             <AddressSearch input={input} handleSignUpInputChange={handleSignUpInputChange}/>
             <div className='row mt-4'>
                 <div className='col text-center'>
-                    <button className='btn btn-success ms-2' onClick={e=>saveInput()}>
+                    <button className='btn btn-success' onClick={e=>saveInput()}>
                         확인
                     </button>
-                    <button className='btn btn-danger' onClick={e=>cancelInput()}>
+                    <button className='btn btn-danger ms-2' onClick={e=>cancelInput()}>
                         취소
                     </button>
                 </div>

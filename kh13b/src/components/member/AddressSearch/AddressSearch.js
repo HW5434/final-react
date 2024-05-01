@@ -4,7 +4,7 @@ import Modal from "react-modal";
 
 const AddressSearch = ({
     input,
-    signUpInputChange
+    handleSignUpInputChange
 }) => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,7 @@ const AddressSearch = ({
             <div className='row mt-4'>
                 <div className='col'>
                     <label>상세주소</label>
-                    <input type="text" name="memberAddress2" className="form-control" value={input.memberAddress2} onChange={signUpInputChange}/>
+                    <input type="text" name="memberAddress2" className="form-control" value={input.memberAddress2} onChange={handleSignUpInputChange}/>
                 </div>
             </div>
         </>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Jumbotron from "../Jumbotron";
 
 
 const Login = () => {
@@ -10,6 +11,7 @@ const Login = () => {
 
     return (
         <>
+            <Jumbotron title="로그인" content="Login"/>
             <div className="row mt-4">
                 <div className="col">
                     <label>아이디</label>
