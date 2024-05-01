@@ -1,6 +1,6 @@
 
-import DaumPostcode from 'react-daum-postcode';
 import { useState } from 'react';
+import DaumPost from "./DaumPost";
 
 const SignUp = () => {
 
@@ -8,6 +8,7 @@ const SignUp = () => {
     const [join, setJoin] = useState([]);
 
     const [input, setInput] = useState({
+        memberName:"",
         memberId: "",
         memberPw: "",
         memberContact: "",
@@ -35,33 +36,40 @@ const SignUp = () => {
         setEmailDomain(e.target.value);
       };
 
-
-
+      const [addressObj, setAddressObj] = useState({ areaAddress: '', townAddress: '' });
+      const [locationObj, setLocationObj] = useState(null); // setLocationObj 추가
+      
     //view
     return (
         <>
             <div className='row mt-4'>
                 <div className='col'>
+                    <label>이름</label>
+                    <input type="text" name="memberName" value={input.memberName}/>
+                </div>
+            </div>
+            <div className='row mt-4'>
+                <div className='col'>
                     <label>아이디</label>
-                    <input type="text" name="memberId" value={input.memberId} className="form-control"/>
+                    <input type="text" name="memberId" value={input.memberId}/>
                 </div>
             </div>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>비밀번호</label>
-                    <input type="password" name="memberPw" value={input.memberPw} className="form-control"/>
+                    <input type="password" name="memberPw" value={input.memberPw}/>
                 </div>
             </div>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>연락처</label>
-                    <input type="text" name="memberContact" value={input.memberContact} className="form-control"/>
+                    <input type="tel" name="memberContact" value={input.memberContact}/>
                 </div>
             </div>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>이메일</label>
-                    <input type="text" value={emailId} onChange={handleEmailIdChange} className="form-control"/>
+                    <input type="text" value={emailId} onChange={handleEmailIdChange}/>
                     <span>@</span>
                     <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
                         <option value="">직접입력</option>
@@ -74,7 +82,7 @@ const SignUp = () => {
                         <option value="outlook.com">outlook.com</option>
                     </select>
                     <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
-                        onChange={handleEmailDomainChange} className="form-control"/>
+                        onChange={handleEmailDomainChange}/>
                     
                     <a href="#" className="me-2">이메일 중복확인</a>
                     <a href="#" className="me-2">이메일 인증</a>
@@ -87,25 +95,26 @@ const SignUp = () => {
             <div className='row mt-4'>
                 <div className='col'>
                     <label>생년월일</label>
-                    <input type="text" name="memberBirth" value={input.memberBirth} className="form-control"/>
+                    <input type="text" name="memberBirth" value={input.memberBirth}/>
                 </div>
             </div>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>우편번호</label>
-                    <input type="text" name="memberPost" value={input.memberPost} className="form-control"/>
+                    <input type="text" name="memberPost" value={input.memberPost} readOnly />
+                    <DaumPost setAddressObj={setAddressObj} setLocationObj={setLocationObj} />
                 </div>
             </div>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>기본주소</label>
-                    <input type="text" name="memberAddress1" value={input.memberAddress1} className="form-control"/>
+                    <input type="text" name="memberAddress1" value={addressObj.areaAddress} readOnly />
                 </div>
             </div>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>상세주소</label>
-                    <input type="text" name="memberAddress2" value={input.memberAddress2} className="form-control"/>
+                    <input type="text" name="memberAddress2" value={input.memberAddress2}/>
                 </div>
             </div>
 
