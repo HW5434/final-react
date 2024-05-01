@@ -206,8 +206,8 @@ const SignUp = () => {
     //view
     return (
         <>
-            <Jumbotron title="회원가입" content="SignUp"/>
-
+        <Jumbotron title="회원가입" content="SignUp"/>
+        <div className='inquiry_write'>
             <div className='row mt-4'>
                 <div className='col'>
                     <label>이름</label>
@@ -266,25 +266,26 @@ const SignUp = () => {
             <div className='row mt-4'>
                 <div className='col'>
                     <label>이메일</label>
-                    <input type="text" value={emailId} onChange={handleEmailIdChange} className="form-control"/>
-                    <span>@</span>
-                    <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
-                        <option value="">직접입력</option>
-                        <option value="hanmail.net">hanmail.net</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="hotmail.com">hotmail.com</option>
-                        <option value="nate.com">nate.com</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="kakao.com">kakao.com</option>
-                        <option value="outlook.com">outlook.com</option>
-                    </select>
-                    <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
-                        onChange={handleEmailDomainChange} className="form-control"/>
-                    
-                    <button className="me-2" onClick={() => doubleCheckEmail(input.memberEmail)}>이메일 중복확인</button>
-                    <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
-                        {checkEmail.message === "" ? "" : checkEmail.message}
-                    </p>
+                    <div className='email-wrap'>
+                        <input type="text" value={emailId} onChange={handleEmailIdChange} className="form-control"/>
+                        <span className='at'>@</span>
+                        <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
+                            <option value="">직접입력</option>
+                            <option value="hanmail.net">hanmail.net</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="hotmail.com">hotmail.com</option>
+                            <option value="nate.com">nate.com</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="kakao.com">kakao.com</option>
+                            <option value="outlook.com">outlook.com</option>
+                        </select>
+                        <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
+                            onChange={handleEmailDomainChange} className="form-control"/>
+                        <button className="doubleCheck" onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
+                        <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
+                            {checkEmail.message === "" ? "" : checkEmail.message}
+                        </p>
+                    </div>
                     {emailVerification.flag ? 
                         <>
                             <input type='text' onChange={handleEmailCheckInputChange}/>
@@ -309,6 +310,7 @@ const SignUp = () => {
                     </button>
                 </div>
             </div>
+        </div>
         </>
     );
 };

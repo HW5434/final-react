@@ -5,3 +5,26 @@
 .falseValid {
     color: red;
 }
+
+.inquiry_write {
+    border-top: 2px solid #baa151;
+    padding: 45px 0 45px 0;
+    min-height: 600px;
+    position: relative;
+    z-index: 300;
+    width: 980px;
+    margin: 0 auto;
+}
+
+.email-wrap {
+    display: flex;
+}
+
+.at {
+    font-size: 20px;
+    padding: 0 10px 0 10px;
+}
+
+.doubleCheck {
+    width: 200px;
+}
