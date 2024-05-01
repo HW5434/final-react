@@ -65,6 +65,13 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
                                 </div>
                             </li>
+                            {/* 공연 */}
+                            <li className="nav-item dropdown p-3">
+                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/concert">공연정보</NavLink>
+                                </div>
+                            </li>
                         </ul>
 
                          {/* 이 부분을 로그인 여부에 따라 다르게 표시 */}
