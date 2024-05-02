@@ -99,47 +99,10 @@ function ConcertRequest() {
         });
     },[concertRequests]);
 
-    const saveInput = useCallback(() => {
-        axios({
-            url: "/concertRequest/",
-            method: "post",
-            data: input,
-        })
-            .then(resp => {
-                loadData();
-                setInput({
-                    concertRequestNo: "",
-                    concertRequestCompanyName: "",
-                    concertRequestCompanyNumber: "",
-                    concertRequestRepresentative: "",
-                    concertRequestManager: "",
-                    concertRequestAddress: "",
-                    concertRequestOfficeNumber: "",
-                    concertRequestPhoneNumber: "",
-                    concertRequestEmail: "",
-                    concertRequestFax: "",
-                    concertRequestConcertName: "",
-                    concertRequestConcertGenre: "",
-                    concertRequestAge: "",
-                    concertRequestRuntimeFirst: "",
-                    concertRequestIntermission: "",
-                    concertRequestRuntimeSecond: "",
-                    concertRequestHeadDay: "",
-                    concertRequestFooterDay: "",
-                    concertRequestReadyhDay: "",
-                    concertRequestReadyfDay: "",
-                    concertRequestStarthDay: "",
-                    concertRequestStartfDay: "",
-                    concertRequestWithdrawhDay: "",
-                    concertRequestWithdrawfDay: "",
-                    concertRequestSeatvip: "",
-                    concertRequestSeatr: "",
-                    concertRequestSeats: "",
-                    concertRequestSeata: ""
-                });
-                closeModal();
-            });
-    }, [input]);
+    const saveInput = useCallback(async () => {
+        const resp = await axios.post("/concertRequest/", input);
+        },[input]);
+            
     return (
         <>
 
@@ -486,7 +449,7 @@ function ConcertRequest() {
                                     </div> */}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">접수신청</button>
+                                <button type="button" class="btn btn-primary" onClick={e=>saveInput()}>접수신청</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                             </div>
 
