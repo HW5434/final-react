@@ -20,6 +20,7 @@ import ConcertDetail from './components/integrated/concert/ConcertDetail';
 
 import Notice from './components/integrated/Notice';
 import NoticeDetail from './components/integrated/NoticeDetail';
+import ConcertScheduleInfo from './components/integrated/concert/ConcertScheduleInfo';
 
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/concert" element={<Concert />} />
             <Route path="/concert/:concertNo" element={<ConcertDetail />} />
+            <Route path="/concertScheduleInfo" element={<ConcertScheduleInfo/>} />
+
+
             <Route path="/approve/:concertRequestNo" element={<RequestDetail/>}/> 
             <Route path="/approve" element={<Approve/>}/>
 

@@ -11,7 +11,7 @@ import { FaCheck } from "react-icons/fa6";
 
 import { Modal } from "bootstrap";
 
-import {SeatGroup} from "hacademy-cinema-seat";
+import { SeatGroup } from "hacademy-cinema-seat";
 
 const Seat = () => {
     const [seats, setSeats] = useState([]);
@@ -178,24 +178,38 @@ const Seat = () => {
         <>
             <Jumbotron title="좌석" />
 
-            <div className='row mt-4'>
-                <div className='col'>
-                <SeatGroup map={seats} setMap={setSeats}
-                        fields={{
-                        no:'seatNo', 
-                        row:'seatCol', 
-                        col:'seatRow', 
-                        grade:'seatLevel',
-                        reserved:'seatReserved', 
-                        disabled:'seatDisabled',
-                        checked:'seatChecked',
-                        }}
-                        rows={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                        cols={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-                        showNames
-                    />
+
+            <div className="container w-100">
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-100">
+
+                            <div className='row mt-4'>
+                                <div className='col'>
+                                    <SeatGroup map={seats} setMap={setSeats}
+                                        fields={{
+                                            no: 'seatNo',
+                                            row: 'seatCol',
+                                            col: 'seatRow',
+                                            grade: 'seatLevel',
+                                            reserved: 'seatReserved',
+                                            disabled: 'seatDisabled',
+                                            checked: 'seatChecked',
+                                        }}
+                                        rows={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                        cols={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+                                        showNames
+                                    />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
 
             {/* 신규등록 버튼(모달띄우기) */}
             <div className="row mt-4 text-end">
@@ -306,7 +320,7 @@ const Seat = () => {
                                         className="form-control" />
                                 </div>
                             </div>
-                            <div className="row mt-4"> 
+                            <div className="row mt-4">
                                 <div className="col">
                                     <label>좌석 등급</label>
                                     <select name="seatLevel" value={input.seatLevel} onChange={e => changeInput(e)} className="form-control">
