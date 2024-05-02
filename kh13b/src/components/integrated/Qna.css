@@ -1,0 +1,16 @@
+/* 게시글 전체에 대한 디자인 */
+
+/* 게시글 제목에 대한 디자인 */
+
+/* 게시글 내용에 대한 디자인 */
+.accordion-body{
+    /* 배경색 */
+    background-color: antiquewhite;
+    /* 글꼴 */
+    font-family: '빙그레 메로나체';
+}
+
+/* 페이지 네이션 디자인 */
+.pagination{
+
+}
