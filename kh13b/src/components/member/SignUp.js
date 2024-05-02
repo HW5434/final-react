@@ -58,6 +58,9 @@ const SignUp = () => {
                 memberName : value !== '' && value.length > 1
             });
         } else if(name === 'memberId') {
+            //아이디 입력값이 변경 되면 flag 값을 다시 false로 설정
+	        setCheckId({flag : false, message: ""});
+
             const regex = /^[a-z][a-z0-9]{7,19}$/;
             setInputValid({
                 ...inputValid,
@@ -91,9 +94,15 @@ const SignUp = () => {
 
     //등록
     const saveInput = useCallback(async ()=> {
+        //중복 확인(아이디, 이메일) 안했으면 가입 못하게
+        // 아이디,이메일 중복 체크를 모두 완료하지 않은 경우
+        if(!checkId.flag || !checkEmail.flag) {
+            alert("아이디 또는 이메일 중복 확인을 해주세요.");
+            return;
+        }
+        // 중복 확인이 완료된 경우, 회원가입 요청을 보냄
         const resp = await axios.post("/member/", input);
-        clearInput();
-    }, [input]);
+    }, [checkId.flag, checkEmail.flag]);
 
     //등록취소
     const cancelInput = useCallback(()=> {
@@ -157,28 +166,16 @@ const SignUp = () => {
         }
     }
 
-    //입력값초기화
-    const clearInput = useCallback(()=> {
-        setInput({
-            memberName:"",
-            memberId: "",
-            memberPw: "",
-            memberBirth: "",
-            memberContact: "",
-            memberEmail: "",
-            memberPost: "",
-            memberAddress1: "",
-            memberAddress2: "",
-        });
-    }, [input]);
-    
-
+ 
     //이메일 주소관련
     const [emailId, setEmailId] = useState('');
     const [emailDomain, setEmailDomain] = useState('');
     const [emailType, setEmailType] = useState('');
 
     const handleEmailIdChange = (e) => {
+        //이메일 입력값이 변경 되면 flag 값을 다시 false로 설정
+        setCheckEmail({flag: false, message: ""});
+
         setEmailId(e.target.value);
         setInput(prevState => ({
             ...prevState,
@@ -187,6 +184,9 @@ const SignUp = () => {
     };
 
     const handleEmailTypeChange = (e) => {
+        //이메일 입력값이 변경 되면 flag 값을 다시 false로 설정
+        setCheckEmail({flag: false, message: ""});
+
         setEmailType(e.target.value);
         setEmailDomain(e.target.value);
         setInput(prevState => ({
@@ -196,6 +196,9 @@ const SignUp = () => {
     };
 
     const handleEmailDomainChange = (e) => {
+        //이메일 입력값이 변경 되면 flag 값을 다시 false로 설정
+        setCheckEmail({flag: false, message: ""});
+
         setEmailDomain(e.target.value);
         setInput(prevState => ({
             ...prevState,
@@ -220,7 +223,7 @@ const SignUp = () => {
             <div className='row mt-4'>
                 <div className='col'>
                     <label>아이디</label>
-                    <button href="#" className="me-2" onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
+                    <button className="me-2" onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
                     <p className={checkId.flag ? "trueValid" : "falseValid"}>
                         {checkId.message === "" ? "" : checkId.message}
                     </p>
@@ -256,7 +259,7 @@ const SignUp = () => {
             </div>
             <div className='row mt-4'>
                 <div className='col'>
-                    <label>연락처</label>
+                    <label>연락처 (숫자만 입력)</label>
                     <input type="tel" name="memberContact" value={input.memberContact} className="form-control" onChange={handleSignUpInputChange}/>
                     <p className={inputValid.memberContact ? "trueValid" : "falseValid"}>
                         {input.memberContact === "" ? "" : inputValid.memberContact ? "연락처 잘 입력했어" : "연락처 입력해"}
@@ -294,7 +297,7 @@ const SignUp = () => {
                         <button onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
                     }
                     <div className="notice">
-                        ※ 일부 이메일(gmail.com, hotmail.com, live.co.kr, outlook.com, nate.com, dreamwiz.com, empal.com 등)은 <span className="color_red">답변 메일 수신</span>이 원활하지 않을 수 있습니다. <br />
+                        ※ 일부 이메일(gmail.com, hotmail.com, live.co.kr, outlook.com, nate.com, dreamwiz.com, empal.com 등)은 답변 메일 수신이 원활하지 않을 수 있습니다. <br />
                         ※ 특정 키워드를 사용한 이메일의 경우, 홈페이지 보안 정책에 따라 가입이 어려울 수 있습니다.
                     </div>
                 </div>
@@ -303,7 +306,7 @@ const SignUp = () => {
             <div className='row mt-4'>
                 <div className='col text-center'>
                     <button className='btn btn-success' onClick={e=>saveInput()}>
-                        확인
+                        회원가입
                     </button>
                     <button className='btn btn-danger ms-2' onClick={e=>cancelInput()}>
                         취소
