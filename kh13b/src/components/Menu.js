@@ -53,7 +53,8 @@ function Menu() {
                             <li className="nav-item dropdown p-3">
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
                                 <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/testqna">공지사항 연습</NavLink>
+                                    <NavLink className="dropdown-item" to="/qna">1대1 문의글</NavLink>
+                                    <NavLink className="dropdown-item" to="/notice">공지사항 공사중..</NavLink> 
                                 </div>
                             </li>
                             {/* 좌석 */}
@@ -61,6 +62,13 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
+                                </div>
+                            </li>
+                            {/* 공연 */}
+                            <li className="nav-item dropdown p-3">
+                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/concert">공연정보</NavLink>
                                 </div>
                             </li>
                         </ul>
