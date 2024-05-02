@@ -206,6 +206,9 @@ const SignUp = () => {
         }));
     };
 
+    // 현재 날짜를 ISO 형식으로 가져옵니다.
+    const currentDate = new Date().toLocaleDateString('en-CA');
+
     //view
     return (
         <>
@@ -254,7 +257,7 @@ const SignUp = () => {
             <div className='row mt-4'>
                 <div className='col'>
                     <label>생년월일</label>
-                    <input type="date" name="memberBirth" value={input.memberBirth} className="form-control" onChange={handleSignUpInputChange}/>
+                    <input type="date" name="memberBirth" value={input.memberBirth} className="form-control" onChange={handleSignUpInputChange} max={currentDate}/>
                 </div>
             </div>
             <div className='row mt-4'>
