@@ -11,6 +11,9 @@ import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
 import Login from './components/member/Login';
+import Approve from './components/integrated/ConcertSchedule/Approve';
+import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
+
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
             <Route path="/ConcertRequest" element={<ConcertRequest/>}/>
             <Route path="/signUp" element={<SignUp/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/approve" element={<Approve/>}/>
+             {/* 페이지 넘기는 방법 */}
+            <Route path="/approve/:concertRequestNo" element={<RequestDetail/>}/> 
 
           </Routes>
         </div>
