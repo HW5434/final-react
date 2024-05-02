@@ -22,47 +22,33 @@ const NoticeDetail = () => {
 
     return (
         <>
-            <Jumbotron title="상세페이지" content="공지글에 대한 페이지입니다." />
-            <div className="row">
-                <div className="col">
-                    <div>
-                        <h1>
-                            {notice.noticeNo}번째 글
-                        </h1>
-                    </div>
+            <div className="container" style={{ maxWidth: "1300px" }}>
+                <Jumbotron title="상세페이지" content="공지글에 대한 페이지입니다." />
+                <div className="row mt-5">
+                    <div className="col">
+                        <div className="">
+                            <h1>
+                                {notice.noticeNo}번째 글
+                            </h1>
+                            <hr></hr>
+                        </div>
 
-                    <div>
-                        {/* 공지글 제목 */}
-                        {notice.noticeTitle}
-                    </div>
+                        <div className="col">
+                            <div className="noticeTitle mt-5">
+                                {/* 공지글 제목 */}
+                                {notice.noticeTitle}
+                            </div>
+                        </div>
 
-                    <div>
-                        {/* 공지글 내용 */}
-                        {notice.noticeContent}
-                    </div>
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="col">
-                    <div>
-                        <h1>
-                            {notice.noticeNo}번째 글
-                        </h1>
-                    </div>
-
-                    <div>
-                        {/* 공지글 제목 */}
-                        {notice.noticeTitle}
-                    </div>
-
-                    <div>
-                        {/* 공지글 내용 */}
-                        {notice.noticeContent}
+                        <div className="col">
+                            <div className="mt-5">
+                                {/* 공지글 내용 */}
+                                {notice.noticeContent}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
             {/* 
             
             테이블로 설정했을때
