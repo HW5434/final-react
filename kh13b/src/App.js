@@ -11,6 +11,9 @@ import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
 import Login from './components/member/Login';
+import Approve from './components/integrated/ConcertSchedule/Approve';
+import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
+
 
 import Concert from './components/integrated/concert/Concert';
 import ConcertDetail from './components/integrated/concert/ConcertDetail';
@@ -30,12 +33,11 @@ function App() {
           <Menu />
 
 
-          <Routes>
+          <Routes>      
             <Route path="/" element={<Home />} />
             <Route path="/test01" element={<Test01 />} />
             <Route path="/test02" element={<Test02 />} />
             <Route path="/test03" element={<Test03 />} />
-
 
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />
@@ -44,7 +46,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/concert" element={<Concert />} />
             <Route path="/concert/:concertNo" element={<ConcertDetail />} />
-
+            <Route path="/approve/:concertRequestNo" element={<RequestDetail/>}/> 
+            <Route path="/approve" element={<Approve/>}/>
 
             <Route path="/login" element={<Login/>}/>
             <Route path='/notice' element={<Notice/>}/>
