@@ -55,7 +55,8 @@ function Menu() {
                             <li className="nav-item dropdown p-3">
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
                                 <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/testqna">공지사항 연습</NavLink>
+                                    <NavLink className="dropdown-item" to="/qna">1대1 문의글</NavLink>
+                                    <NavLink className="dropdown-item" to="/notice">공지사항 공사중..</NavLink> 
                                 </div>
                             </li>
                             {/* 좌석 */}
