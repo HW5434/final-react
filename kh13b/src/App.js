@@ -11,6 +11,8 @@ import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
 import Login from './components/member/Login';
+import Notice from './components/integrated/Notice';
+import NoticeDetail from './components/integrated/NoticeDetail';
 
 function App() {
   return (
@@ -29,12 +31,14 @@ function App() {
             <Route path="/test02" element={<Test02/>}/>
             <Route path="/test03" element={<Test03/>}/>
 
-            <Route path="/testqna" element={<Qna/>}/>
+            <Route path="/qna" element={<Qna/>}/>
             <Route path="/seat" element={<Seat/>}/>
             <Route path="/ConcertRequest" element={<ConcertRequest/>}/>
             <Route path="/signUp" element={<SignUp/>}/>
-            <Route path="/login" element={<Login/>}/>
 
+            <Route path="/login" element={<Login/>}/>
+            <Route path='/notice' element={<Notice/>}/>
+            <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
           </Routes>
         </div>
       </div>
