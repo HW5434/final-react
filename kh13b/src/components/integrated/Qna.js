@@ -12,17 +12,11 @@ function Qna() {
         qnaNo: "",
         qnaTitle: "",
         qnaContent: "",
-        qnaAnswer: "N"
+        qnaAnswer: "N",
+        qnaTarget: ""
     });
 
     const [expandedQna, setExpandedQna] = useState(null);
-
-    const [showAdminInput, setShowAdminInput] = useState(false);
-    // 관리자 입력 폼 토글 함수
-    const toggleAdminInput = () => {
-        setShowAdminInput(!showAdminInput);
-    };
-
     // 최초 로드
     useEffect(() => {
         loadData();
@@ -32,7 +26,7 @@ function Qna() {
     const loadData = useCallback(async () => {
         const resp = await axios.get("/qna/");
         setQnas(resp.data);
-    }, []);
+    }, [qnas]);
 
     // 삭제
     const deleteQna = useCallback(async (target) => {
@@ -40,7 +34,7 @@ function Qna() {
         if (choice === false) return;
         const resp = await axios.delete("/qna/" + target.qnaNo);
         loadData();
-    }, []);
+    }, [qnas]);
 
     // 등록
     const saveInput = useCallback(async () => {
@@ -86,9 +80,10 @@ function Qna() {
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
         modal.hide();
+        clearInput();
     }, []);
 
-    // Q&A 아이템 확장/축소 토글
+    // 토글버튼 클릭시 일부만 선택
     const toggleExpand = useCallback((qnaNo) => {
         setExpandedQna(expandedQna === qnaNo ? null : qnaNo);
     }, [expandedQna]);
@@ -122,47 +117,41 @@ function Qna() {
                                 </h2>
 
                                 {/* 클릭 했을때 보이는 질문글의 내용들 */}
-                                <div className={expandedQna === qna.qnaNo ? "accordion-collapse collapse show" : "accordion-collapse collapse"}
-                                    id={`collapse${qna.qnaNo}`}
-                                    aria-labelledby={`heading${qna.qnaNo}`}
+                                <div className={expandedQna === qna.qnaNo ? "accordion-collapse collapse show" : "accordion-collapse collapse"} id={`collapse${qna.qnaNo}`} aria-labelledby={`heading${qna.qnaNo}`}
                                     data-bs-parent={`#accordion${qna.qnaNo}`}>
                                     <div className="accordion-body">
-
                                         {/* 답변 영역 */}
                                         <div className='row'>
                                             <div className='col mt-3'>
                                                 <h1 className='text'>질문글 내용</h1>
+                                                <button className='btn btn-primary' onClick={e => deleteQna(qna)}>
+                                                    삭제버튼
+                                                </button>
                                             </div>
                                         </div>
-
-                                        <div className='row'>
-                                            <div className='col mt-3'>
-                                                <h2 className='text'>
-                                                    {qna.qnaContent}
-                                                </h2>
-                                            </div>
-                                        </div>
-
 
                                         <div className="accordion" id="accordionExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header">
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <button className='btn btn-positive'>
+                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <span className='btn btn-positive'>
                                                             <label>답변등록 [관리자기능]</label>
-                                                        </button>
+                                                        </span>
                                                     </button>
                                                 </h2>
 
                                                 <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                                     <div className="accordion-body">
                                                         <div className="row text-start">
+
                                                             <div className="row">
                                                                 <div className="col">
                                                                     <h2>글 제목</h2>
                                                                     <input type="text" name="qnaTitle" value={input.qnaTitle} onChange={changeInput} className="form-control" />
                                                                 </div>
                                                             </div>
+
                                                             <div className="row">
                                                                 <div className="col">
                                                                     <h2>글 내용</h2>
@@ -173,7 +162,7 @@ function Qna() {
                                                             <div className="row">
                                                                 <div className="col">
                                                                     <div className="modal-footer">
-                                                                        <button className='btn btn-success me-2' onClick={saveInput}>
+                                                                        <button className='btn btn-success me-2' onClick={saveInput()}>
                                                                             등록
                                                                         </button>
                                                                         <button className='btn btn-danger' onClick={cancelInput}>
@@ -182,9 +171,15 @@ function Qna() {
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+
+
+
+
+
+
+
                                                         </div>
-
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -193,9 +188,12 @@ function Qna() {
 
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     ))}
+
+
                 </div>
             </div>
 
@@ -241,6 +239,7 @@ function Qna() {
                         </div>
                         <div className="modal-body">
                             {/* 등록 화면 */}
+
                             <div className="row">
                                 <div className="col">
                                     <label>글 제목</label>
@@ -251,42 +250,6 @@ function Qna() {
                             <div className="row">
                                 <div className="col">
                                     <label>글 내용</label>
-                                    <textarea type="text" name="qnaContent" value={input.qnaContent} onChange={changeInput} className="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button className='btn btn-success me-2' onClick={saveInput}>
-                                등록
-                            </button>
-                            <button className='btn btn-danger' onClick={cancelInput}>
-                                취소
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* 관리자 Modal */}
-            <div ref={bsModal} className="modal fade" id="staticBackdrop" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">질문글 쓰기</h1>
-                            <button type="button" className="btn-close" aria-label="Close" onClick={cancelInput}></button>
-                        </div>
-                        <div className="modal-body">
-                            {/* 등록 화면 */}
-                            <div className="row">
-                                <div className="col">
-                                    <label>답변글 제목</label>
-                                    <input type="text" name="qnaTitle" value={input.qnaTitle} onChange={changeInput} className="form-control" />
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col">
-                                    <label>답변글 내용</label>
                                     <textarea type="text" name="qnaContent" value={input.qnaContent} onChange={changeInput} className="form-control" />
                                 </div>
                             </div>
