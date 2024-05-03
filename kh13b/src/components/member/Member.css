@@ -7,13 +7,14 @@
 }
 
 .inquiry_write {
-    border-top: 2px solid #baa151;
-    padding: 45px 0 45px 0;
-    min-height: 600px;
-    position: relative;
-    /* z-index: 300; */
-    width: 980px;
-    margin: 0 auto;
+    width: 800px;
+    margin: 0px auto;
+    padding: 60px 0px;
+}
+
+.signupTitle {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .email-wrap {
@@ -27,4 +28,53 @@
 
 .doubleCheck {
     width: 200px;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: rgb(47, 52, 56);
+    letter-spacing: -0.3px;
+    word-break: keep-all;
+}
+
+.input-control {
+    padding: 8px 15px 9px;
+    display: inline-block;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 21px;
+    resize: none;
+    appearance: none;
+    margin: 0px;
+    padding: 8px 15px 9px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(219, 219, 219);
+    border-image: initial;
+    border-radius: 4px;
+    transition: border-color 0.1s ease 0s, background-color 0.1s ease 0s;
+}
+
+.mb-3 {
+    margin-bottom: 30px;
+}
+
+.checkButton {
+    margin-top: 10px;
+    width: 100%;
+    height: 45px;
+    padding: 0px;
+    background: rgb(247, 248, 250);
+    color: rgb(194, 200, 204);
+    border: solid rgb(218, 220, 224);
+    line-height: 20px;
+    font-size: 17px;
+    min-height: 50px;
 }

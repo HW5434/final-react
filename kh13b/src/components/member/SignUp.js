@@ -211,102 +211,103 @@ const SignUp = () => {
 
     //view
     return (
-        <>
-        <Jumbotron title="회원가입" content="SignUp"/>
         <div className='inquiry_write'>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>이름</label>
-                    <input type="text" name="memberName" value={input.memberName} className="form-control"  onChange={handleSignUpInputChange} />
-                    <p className={inputValid.memberName ? "trueValid" : "falseValid"}>
-                        {input.memberName === "" ? "" : inputValid.memberName ? "이름 잘 입력했어" : "이름 입력해"}
-                    </p>
-                </div>
-            </div>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>아이디</label>
-                    <button className="me-2" onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
-                    <p className={checkId.flag ? "trueValid" : "falseValid"}>
-                        {checkId.message === "" ? "" : checkId.message}
-                    </p>
-                    <input type="text" name="memberId" value={input.memberId} className="form-control" onChange={handleSignUpInputChange}/>
-                    <p className={inputValid.memberId ? "trueValid" : "falseValid"}>
-                        {input.memberId === "" ? "" : inputValid.memberId ? "아이디 잘 입력했어" : "아이디 다시 입력해"}
-                    </p>
-                </div>
-            </div>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>비밀번호</label>
-                    <input type="password" name="memberPw" value={input.memberPw} className="form-control" onChange={handleSignUpInputChange}/>
-                    <p className={inputValid.memberPw ? "trueValid" : "falseValid"}>
-                        {input.memberPw === "" ? "" : inputValid.memberPw ? "비밀번호 잘 입력했어" : "비밀번호 다시 입력해"}
-                    </p>
-                </div>
-            </div>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>비밀번호 확인</label>
-                    <input type="password" name="memberPwCheck" value={input.memberPwCheck} className="form-control" onChange={handleSignUpInputChange}/>
-                    <p className={inputValid.memberPwCheck ? "trueValid" : "falseValid"}>
-                        {input.memberPwCheck === "" ? "" : inputValid.memberPwCheck ? "비밀번호 일치해" : "비밀번호 일치하지않아"}
-                    </p>
-                </div>
-            </div>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>생년월일</label>
-                    <input type="date" name="memberBirth" value={input.memberBirth} className="form-control" onChange={handleSignUpInputChange} max={currentDate}/>
-                </div>
-            </div>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>연락처 (숫자만 입력)</label>
-                    <input type="tel" name="memberContact" value={input.memberContact} className="form-control" onChange={handleSignUpInputChange}/>
-                    <p className={inputValid.memberContact ? "trueValid" : "falseValid"}>
-                        {input.memberContact === "" ? "" : inputValid.memberContact ? "연락처 잘 입력했어" : "연락처 입력해"}
-                    </p>
-                </div>
-            </div>
-            <div className='row mt-4'>
-                <div className='col'>
-                    <label>이메일</label>
-                    <div className='email-wrap'>
-                        <input type="text" value={emailId} onChange={handleEmailIdChange} className="form-control"/>
-                        <span className='at'>@</span>
-                        <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
-                            <option value="">직접입력</option>
-                            <option value="hanmail.net">hanmail.net</option>
-                            <option value="gmail.com">gmail.com</option>
-                            <option value="hotmail.com">hotmail.com</option>
-                            <option value="nate.com">nate.com</option>
-                            <option value="naver.com">naver.com</option>
-                            <option value="kakao.com">kakao.com</option>
-                            <option value="outlook.com">outlook.com</option>
-                        </select>
-                        <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
-                            onChange={handleEmailDomainChange} className="form-control"/>
-                        <button className="doubleCheck" onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
-                        <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
-                            {checkEmail.message === "" ? "" : checkEmail.message}
+            <h1 className='signupTitle'>회원가입</h1>
+            <form>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>이름</label>
+                        <input type="text" name="memberName" value={input.memberName} className="input-control"  onChange={handleSignUpInputChange} placeholder='이름' />
+                        <p className={inputValid.memberName ? "trueValid" : "falseValid"}>
+                            {input.memberName === "" ? "" : inputValid.memberName ? "이름 잘 입력했어" : "이름 입력해"}
                         </p>
                     </div>
-                    {emailVerification.flag ? 
-                        <>
-                            <input type='text' onChange={handleEmailCheckInputChange}/>
-                            <button onClick={() => userInputCode(inputCode)}>인증확인</button>
-                        </> : 
-                        <button onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
-                    }
-                    <div className="notice">
-                        ※ 일부 이메일(gmail.com, hotmail.com, live.co.kr, outlook.com, nate.com, dreamwiz.com, empal.com 등)은 답변 메일 수신이 원활하지 않을 수 있습니다. <br />
-                        ※ 특정 키워드를 사용한 이메일의 경우, 홈페이지 보안 정책에 따라 가입이 어려울 수 있습니다.
+                </div>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>아이디</label>
+                        <p className={checkId.flag ? "trueValid" : "falseValid"}>
+                            {checkId.message === "" ? "" : checkId.message}
+                        </p>
+                        <input type="text" name="memberId" value={input.memberId} className="input-control" onChange={handleSignUpInputChange} placeholder='아이디' />
+                        <p className={inputValid.memberId ? "trueValid" : "falseValid"}>
+                            {input.memberId === "" ? "" : inputValid.memberId ? "아이디 잘 입력했어" : "아이디 다시 입력해"}
+                        </p>
+                        <button className="checkButton" onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
                     </div>
                 </div>
-            </div>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>비밀번호</label>
+                        <input type="password" name="memberPw" value={input.memberPw} className="input-control" onChange={handleSignUpInputChange} placeholder='비밀번호' />
+                        <p className={inputValid.memberPw ? "trueValid" : "falseValid"}>
+                            {input.memberPw === "" ? "" : inputValid.memberPw ? "비밀번호 잘 입력했어" : "비밀번호 다시 입력해"}
+                        </p>
+                    </div>
+                </div>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>비밀번호 확인</label>
+                        <input type="password" name="memberPwCheck" value={input.memberPwCheck} className="input-control" onChange={handleSignUpInputChange} placeholder='비밀번호 확인' />
+                        <p className={inputValid.memberPwCheck ? "trueValid" : "falseValid"}>
+                            {input.memberPwCheck === "" ? "" : inputValid.memberPwCheck ? "비밀번호 일치해" : "비밀번호 일치하지않아"}
+                        </p>
+                    </div>
+                </div>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>생년월일</label>
+                        <input type="date" name="memberBirth" value={input.memberBirth} className="input-control" onChange={handleSignUpInputChange} max={currentDate} />
+                    </div>
+                </div>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>연락처 (숫자만 입력)</label>
+                        <input type="tel" name="memberContact" value={input.memberContact} className="input-control" onChange={handleSignUpInputChange} placeholder='연락처' />
+                        <p className={inputValid.memberContact ? "trueValid" : "falseValid"}>
+                            {input.memberContact === "" ? "" : inputValid.memberContact ? "연락처 잘 입력했어" : "연락처 입력해"}
+                        </p>
+                    </div>
+                </div>
+                <div className='mb-3'>
+                    <div className='col'>
+                        <label>이메일</label>
+                        <div className='email-wrap'>
+                            <input type="text" value={emailId} onChange={handleEmailIdChange} className="input-control" placeholder='이메일' />
+                            <span className='at'>@</span>
+                            <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
+                                <option value="">직접입력</option>
+                                <option value="hanmail.net">hanmail.net</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="hotmail.com">hotmail.com</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="kakao.com">kakao.com</option>
+                                <option value="outlook.com">outlook.com</option>
+                            </select>
+                            <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
+                                onChange={handleEmailDomainChange} className="input-control"/>
+                            <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
+                                {checkEmail.message === "" ? "" : checkEmail.message}
+                            </p>
+                        </div>
+                        <button className="checkButton doubleCheck" onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
+                        {emailVerification.flag ? 
+                            <>
+                                <input type='text' onChange={handleEmailCheckInputChange}/>
+                                <button onClick={() => userInputCode(inputCode)}>인증확인</button>
+                            </> : 
+                            <button onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
+                        }
+                        <div className="notice">
+                            ※ 일부 이메일(gmail.com, hotmail.com, live.co.kr, outlook.com, nate.com, dreamwiz.com, empal.com 등)은 답변 메일 수신이 원활하지 않을 수 있습니다. <br />
+                            ※ 특정 키워드를 사용한 이메일의 경우, 홈페이지 보안 정책에 따라 가입이 어려울 수 있습니다.
+                        </div>
+                    </div>
+                </div>
+            </form>
             <AddressSearch input={input} handleSignUpInputChange={handleSignUpInputChange}/>
-            <div className='row mt-4'>
+            <div className='mb-3'>
                 <div className='col text-center'>
                     <button className='btn btn-success' onClick={e=>saveInput()}>
                         회원가입
@@ -317,7 +318,6 @@ const SignUp = () => {
                 </div>
             </div>
         </div>
-        </>
     );
 };
 
