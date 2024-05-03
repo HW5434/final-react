@@ -18,6 +18,11 @@
 
 .email-wrap {
     display: flex;
+    flex-direction: column;
+}
+
+.email-wrap-top {
+    display: flex;
 }
 
 .at {
@@ -27,4 +32,8 @@
 
 .doubleCheck {
     width: 200px;
+}
+
+.disabledTrue {
+    background-color: gray;
 }

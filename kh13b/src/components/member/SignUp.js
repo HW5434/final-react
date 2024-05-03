@@ -209,6 +209,7 @@ const SignUp = () => {
     // 현재 날짜를 ISO 형식으로 가져옵니다.
     const currentDate = new Date().toLocaleDateString('en-CA');
 
+
     //view
     return (
         <>
@@ -226,7 +227,7 @@ const SignUp = () => {
             <div className='row mt-4'>
                 <div className='col'>
                     <label>아이디</label>
-                    <button className="me-2" onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
+                    <button className={checkId.flag ? 'disabledTrue' : ''} onClick={() => doubleCheckId(input.memberId)} disabled={checkId.flag}>아이디 중복확인</button>
                     <p className={checkId.flag ? "trueValid" : "falseValid"}>
                         {checkId.message === "" ? "" : checkId.message}
                     </p>
@@ -273,21 +274,23 @@ const SignUp = () => {
                 <div className='col'>
                     <label>이메일</label>
                     <div className='email-wrap'>
-                        <input type="text" value={emailId} onChange={handleEmailIdChange} className="form-control"/>
-                        <span className='at'>@</span>
-                        <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
-                            <option value="">직접입력</option>
-                            <option value="hanmail.net">hanmail.net</option>
-                            <option value="gmail.com">gmail.com</option>
-                            <option value="hotmail.com">hotmail.com</option>
-                            <option value="nate.com">nate.com</option>
-                            <option value="naver.com">naver.com</option>
-                            <option value="kakao.com">kakao.com</option>
-                            <option value="outlook.com">outlook.com</option>
-                        </select>
-                        <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
-                            onChange={handleEmailDomainChange} className="form-control"/>
-                        <button className="doubleCheck" onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
+                        <div className='email-wrap-top'>
+                            <input type="text" value={emailId} onChange={handleEmailIdChange} className="form-control"/>
+                            <span className='at'>@</span>
+                            <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
+                                <option value="">직접입력</option>
+                                <option value="hanmail.net">hanmail.net</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="hotmail.com">hotmail.com</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="kakao.com">kakao.com</option>
+                                <option value="outlook.com">outlook.com</option>
+                            </select>
+                            <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
+                                onChange={handleEmailDomainChange} className="form-control"/>
+                            <button className="doubleCheck" onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
+                        </div>
                         <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
                             {checkEmail.message === "" ? "" : checkEmail.message}
                         </p>
