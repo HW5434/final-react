@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 function ConcertRequest() {
     const [concertRequests, setConcertRequests] = useState([]);
     const [input, setInput] = useState({
+        memberNo:"",
         concertRequestNo: "",
         concertRequestCompanyName: "",
         concertRequestCompanyNumber: "",
@@ -38,17 +39,25 @@ function ConcertRequest() {
         concertRequestSeatr: "",
         concertRequestSeats: "",
         concertRequestSeata: "",
-        concertRequestState: "n"
+        concertRequestState: "n",
+        actorName: ""
     });
 
     //시작하자마자 서버와 통신해서 데이터를 넣는다
-      useEffect(()=>{
+    useEffect(() => {
         loadData();
     }, []);//최초1회만
 
     //callback
 
 
+    const [memberNo, setMemberNo] = useState("5")
+    useEffect(() => {
+        console.log("memberNo:", memberNo); // 여기서 값을 확인해보세요.
+      }, [memberNo]);
+    
+    
+       
 
 
     const bsModal = useRef();
@@ -89,20 +98,91 @@ function ConcertRequest() {
         });
     }, [input]);
 
-    const loadData = useCallback(()=>{
+    const loadData = useCallback(() => {
         axios({
-            url:"/concertRequest/",
-            method:"get"
+            url: "/concertRequest/",
+            method: "get"
         })
-        .then(resp => {
-            setConcertRequests(resp.data);
-        });
-    },[concertRequests]);
+            .then(resp => {
+                setConcertRequests(resp.data);
+            });
+    }, [concertRequests]);
 
     const saveInput = useCallback(async () => {
         const resp = await axios.post("/concertRequest/", input);
-        },[input]);
-            
+    }, [input]);
+    
+    // 날짜 제한 부분
+    const [headDate, setHeadDate] = useState(new Date());//1
+    const [footerDate, setFooterDate] = useState(headDate);
+    const [readyhDate, setReadyhDate] = useState(headDate);//2
+    const [readyfDate, setReadyfDate] = useState(headDate);
+    const [starthDate, setStarthDate] = useState(headDate);//3
+    const [startfDate, setStartfDate] = useState(headDate);
+    const [withdrawhDate, setWithdrawhDate] = useState(headDate);//4
+    const [withdrawfDate, setWithdrawfDate] = useState(headDate);
+    
+    const handleHeadDateChange = (e) => {
+        const date = new Date(e.target.value);
+        setHeadDate(date);
+        setFooterDate(date);
+        setReadyhDate(date);
+        setStarthDate(date);
+        setWithdrawhDate(date);
+      };
+    
+      const handleFooterDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= headDate) {
+            setFooterDate(date);
+        }
+      };
+
+      const handleReadyhDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= headDate || date <= setFooterDate) {
+            setReadyhDate(date);
+            setReadyfDate(date);
+        }
+      };
+
+      const handleReadyfDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= readyhDate && date <= setFooterDate) {
+            setReadyfDate(date);
+        }
+      };
+
+      const handleStarthDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= readyhDate && date <= readyfDate) {
+            setStarthDate(date);
+            setStartfDate(date);
+        }
+      };
+
+      const handleStartfDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= starthDate && date <= readyfDate) {
+            setStartfDate(date);
+        }
+      };
+
+      const handleWithdrawhDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= starthDate && date <= startfDate) {
+            setWithdrawhDate(date);
+            setWithdrawfDate(date);
+        }
+      };
+
+      const handleWithdrawfDateChange = (e) => {
+        const date = new Date(e.target.value);
+        if (date >= withdrawhDate && date <= startfDate) {
+            setWithdrawfDate(date);
+        }
+      };
+
     return (
         <>
 
@@ -347,14 +427,14 @@ function ConcertRequest() {
                                     <div className='col-3'>
 
                                         {/* 입력 창들 렌더링 */}
-                                        {inputs.map(input => (
-                                            <div key={input.id} className="row mb-2">
-                                                <input type="text" value={input.value}
-                                                    onChange={(e) => handleChange(input.id, e.target.value)}
+                                       
+                                            <div className="row mb-2">
+                                                <input type="text" value={input.actorName} name='actorName'
+                                                    onChange={e => changeInput(e)}
                                                 />
                                             </div>
 
-                                        ))}
+                                        
 
                                     </div>
                                 </div>
@@ -371,16 +451,17 @@ function ConcertRequest() {
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestHeadDay"
-                                            value={input.concertRequestHeadDay}
-                                            onChange={e => changeInput(e)}
+                                            value={headDate.toISOString().split('T')[0]} 
+                                            onChange={handleHeadDateChange}
                                             className='form-control' />
                                     </div>
 
                                     <div className='col'>
 
                                         <input type="date" name="concertRequestFooterDay"
-                                            value={input.concertRequestFooterDay}
-                                            onChange={e => changeInput(e)}
+                                           value={headDate.toISOString().split('T')[0]} 
+                                           onChange={handleFooterDateChange}
+                                            setReadyfDate
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -392,14 +473,14 @@ function ConcertRequest() {
 
                                         <input type="date" name="concertRequestReadyhDay"
                                             value={input.concertRequestReadyhDay}
-                                            onChange={e => changeInput(e)}
+                                            onChange={handleReadyhDateChange}
                                             className='form-control' />
                                     </div>
 
                                     <div className='col'>
                                         <input type="date" name="concertRequestReadyfDay"
                                             value={input.concertRequestReadyfDay}
-                                            onChange={e => changeInput(e)}
+                                            onChange={handleReadyfDateChange}
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -438,18 +519,18 @@ function ConcertRequest() {
                                     </div>
                                 </div>
                                 {/* <div className='row mt-4'>
-                                        <div className='col mb-4'>
-                                            <label>포스터 첨부</label>
-                                            <input type="file" name="concertRequestNo"
-                                                value={input.concertRequestNo}
-                                                onChange={e => changeInput(e)}
-                                                className='form-control' />
-                                        </div>
+                                    <div className='col mb-4'>
+                                        <label>포스터 첨부</label>
+                                        <input type="file" name="concertRequestNo"
+                                            value={input.concertRequestNo}
+                                            onChange={e => changeInput(e)}
+                                            className='form-control' />
+                                    </div>
 
-                                    </div> */}
+                                </div> */}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onClick={e=>saveInput()}>접수신청</button>
+                                <button type="button" class="btn btn-primary" onClick={e => saveInput()}>접수신청</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                             </div>
 
