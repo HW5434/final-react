@@ -113,6 +113,10 @@ const SignUp = () => {
 
     //아이디 중복
     const doubleCheckId = async (memberId) => {
+        if(memberId === '') {
+            alert("아이디를 입력해주세요");
+            return;
+        }
         const res = await axios.get(`/member/doubleCheckId/${memberId}`);
         if(res.data) {
             setCheckId({
@@ -129,6 +133,10 @@ const SignUp = () => {
 
     //이메일 중복
     const doubleCheckEmail = async (memberEmail) => {
+        if(memberEmail === '') {
+            alert("이메일을 입력해주세요");
+            return;
+        }
         const res = await axios.get(`/member/doubleCheckEmail/${memberEmail}`);
         if(res.data) {
             setCheckEmail({
@@ -233,8 +241,8 @@ const SignUp = () => {
                         <p className={inputValid.memberId ? "trueValid" : "falseValid"}>
                             {input.memberId === "" ? "" : inputValid.memberId ? "아이디 잘 입력했어" : "아이디 다시 입력해"}
                         </p>
-                        <button className="checkButton" onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
-                    </div>
+                        <button className={`${inputValid.memberId ? "openData" : "noneData"}`} onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
+                    </div>  
                 </div>
                 <div className='mb-3'>
                     <div className='col'>
@@ -273,32 +281,36 @@ const SignUp = () => {
                     <div className='col'>
                         <label>이메일</label>
                         <div className='email-wrap'>
-                            <input type="text" value={emailId} onChange={handleEmailIdChange} className="input-control" placeholder='이메일' />
-                            <span className='at'>@</span>
-                            <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
-                                <option value="">직접입력</option>
-                                <option value="hanmail.net">hanmail.net</option>
-                                <option value="gmail.com">gmail.com</option>
-                                <option value="hotmail.com">hotmail.com</option>
-                                <option value="nate.com">nate.com</option>
-                                <option value="naver.com">naver.com</option>
-                                <option value="kakao.com">kakao.com</option>
-                                <option value="outlook.com">outlook.com</option>
-                            </select>
-                            <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
-                                onChange={handleEmailDomainChange} className="input-control"/>
+                            <div className='email-top'>
+                                <input type="text" value={emailId} onChange={handleEmailIdChange} className="input-control" placeholder='이메일' />
+                                <span className='at'>@</span>
+                                <select name="menuType" value={emailType} onChange={handleEmailTypeChange}>
+                                    <option value="">직접입력</option>
+                                    <option value="hanmail.net">hanmail.net</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="hotmail.com">hotmail.com</option>
+                                    <option value="nate.com">nate.com</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="kakao.com">kakao.com</option>
+                                    <option value="outlook.com">outlook.com</option>
+                                </select>
+                                <input type="text" name="email" value={emailDomain} readOnly={emailType === '' ? false : true}
+                                    onChange={handleEmailDomainChange} className="input-control"/>
+                            </div>
                             <p className={checkEmail.flag ? "trueValid" : "falseValid"}>
                                 {checkEmail.message === "" ? "" : checkEmail.message}
                             </p>
                         </div>
-                        <button className="checkButton doubleCheck" onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
-                        {emailVerification.flag ? 
-                            <>
-                                <input type='text' onChange={handleEmailCheckInputChange}/>
-                                <button onClick={() => userInputCode(inputCode)}>인증확인</button>
-                            </> : 
-                            <button onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
-                        }
+                        <div className='email-bottom-rap'>
+                            <button className={`mr ${input.memberEmail.length > 1  ? 'openData' : 'noneData'}`} onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
+                            {emailVerification.flag ? 
+                                <>
+                                    <input type='text' onChange={handleEmailCheckInputChange}/>
+                                    <button className="ml checkButton" onClick={() => userInputCode(inputCode)}>인증확인</button>
+                                </> : 
+                                <button className={`ml ${checkEmail.flag ? 'openData' : 'noneData'}`} onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
+                            }
+                        </div>
                         <div className="notice">
                             ※ 일부 이메일(gmail.com, hotmail.com, live.co.kr, outlook.com, nate.com, dreamwiz.com, empal.com 등)은 답변 메일 수신이 원활하지 않을 수 있습니다. <br />
                             ※ 특정 키워드를 사용한 이메일의 경우, 홈페이지 보안 정책에 따라 가입이 어려울 수 있습니다.
