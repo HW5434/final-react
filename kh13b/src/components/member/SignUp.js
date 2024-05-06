@@ -3,6 +3,7 @@ import AddressSearch from "./AddressSearch/AddressSearch";
 import axios from "../utils/CustomAxios";
 import Jumbotron from './../Jumbotron';
 import './Member.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
@@ -43,6 +44,8 @@ const SignUp = () => {
     const [emailVerification, setEmailVerification] = useState({ flag: false, authenticationCode: "", });
     //email인증 사용자 입력번호
     const [inputCode, setInputCode] = useState("");
+
+    const navigator = useNavigate();
 
     //등록 입력값 변경
     const handleSignUpInputChange = (e) => {
@@ -108,7 +111,7 @@ const SignUp = () => {
     const cancelInput = useCallback(()=> {
         const choice = window.confirm("작성 중인 내용이 모두 삭제되고 메인 페이지로 돌아갑니다. 진행하시겠습니까");
         if(choice === false) return;
-        window.location.href = "/Home"; // 메인 페이지로 이동
+        navigator("/") // 메인 페이지로 이동
     }, [input]);
 
     //아이디 중복
