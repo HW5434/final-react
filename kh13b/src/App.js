@@ -21,9 +21,13 @@ import ConcertDetail from './components/integrated/concert/ConcertDetail';
 
 import Notice from './components/integrated/Notice';
 import NoticeDetail from './components/integrated/NoticeDetail';
+
 import { isLoginState, loginGradeState, loginIdState } from './components/utils/RecoilData';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useCallback, useEffect } from 'react';
+
+import ConcertScheduleInfo from './components/integrated/concert/ConcertScheduleInfo';
+
 
 
 function App() {
@@ -82,8 +86,11 @@ function App() {
 
             <Route path="/concert" element={<Concert />} />
             <Route path="/concert/:concertNo" element={<ConcertDetail />} />
+
             <Route path="/approve/:concertRequestNo" element={<RequestDetail />} />
             <Route path="/approve" element={<Approve />} />
+
+            <Route path="/concertScheduleInfo" element={<ConcertScheduleInfo/>} />
 
             <Route path='/notice' element={<Notice />} />
             <Route path="/notice/:noticeNo" element={<NoticeDetail />} />

@@ -48,7 +48,7 @@ function Menu() {
                         <ul className="navbar-nav me-auto">
                             {/* 메뉴 1 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 1번</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 1번</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/test01">테스트 1번</NavLink>
                                     <NavLink className="dropdown-item" to="/test02">테스트 2번</NavLink>
@@ -57,7 +57,7 @@ function Menu() {
                             </li>
                             {/* 메뉴 2 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 2번</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 2번</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/test01">테스트 1번</NavLink>
                                     <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
@@ -66,14 +66,14 @@ function Menu() {
                             </li>
                             {/* 메뉴 3 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 3번</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 3번</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
                                 </div>
                             </li>
                             {/* 고객센터 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/qna">1대1 문의글</NavLink>
                                     <NavLink className="dropdown-item" to="/notice">공지사항 공사중..</NavLink> 
@@ -81,16 +81,16 @@ function Menu() {
                             </li>
                             {/* 좌석 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
+                                <a className="nav-link dropdown-toggle"href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
                                 </div>
                             </li>
                             {/* 공연 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
                                 <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/concert">공연정보</NavLink>
+                                    <NavLink className="dropdown-item" to="/concert">공연 정보</NavLink>
                                 </div>
                             </li>
                         </ul>

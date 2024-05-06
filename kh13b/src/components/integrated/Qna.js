@@ -11,10 +11,12 @@ function Qna() {
     const [input, setInput] = useState({
         qnaNo: "",
         qnaTitle: "",
-        qnaContent: ""
+        qnaContent: "",
+        qnaAnswer: "N",
+        qnaTarget: ""
     });
-    const [expandedQna, setExpandedQna] = useState(null);
 
+    const [expandedQna, setExpandedQna] = useState(null);
     // 최초 로드
     useEffect(() => {
         loadData();
@@ -24,7 +26,7 @@ function Qna() {
     const loadData = useCallback(async () => {
         const resp = await axios.get("/qna/");
         setQnas(resp.data);
-    }, []);
+    }, [qnas]);
 
     // 삭제
     const deleteQna = useCallback(async (target) => {
@@ -32,7 +34,7 @@ function Qna() {
         if (choice === false) return;
         const resp = await axios.delete("/qna/" + target.qnaNo);
         loadData();
-    }, []);
+    }, [qnas]);
 
     // 등록
     const saveInput = useCallback(async () => {
@@ -61,7 +63,8 @@ function Qna() {
         setInput({
             qnaNo: "",
             qnaTitle: "",
-            qnaContent: ""
+            qnaContent: "",
+            qnaAnswer: ""
         });
     }, [input]);
 
@@ -77,9 +80,10 @@ function Qna() {
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
         modal.hide();
+        clearInput();
     }, []);
 
-    // Q&A 아이템 확장/축소 토글
+    // 토글버튼 클릭시 일부만 선택
     const toggleExpand = useCallback((qnaNo) => {
         setExpandedQna(expandedQna === qnaNo ? null : qnaNo);
     }, [expandedQna]);
@@ -113,46 +117,114 @@ function Qna() {
                                 </h2>
 
                                 {/* 클릭 했을때 보이는 질문글의 내용들 */}
-                                <div className={expandedQna === qna.qnaNo ? "accordion-collapse collapse show" : "accordion-collapse collapse"} id={`collapse${qna.qnaNo}`} aria-labelledby={`heading${qna.qnaNo}`} data-bs-parent={`#accordion${qna.qnaNo}`}>
+                                <div className={expandedQna === qna.qnaNo ? "accordion-collapse collapse show" : "accordion-collapse collapse"} id={`collapse${qna.qnaNo}`} aria-labelledby={`heading${qna.qnaNo}`}
+                                    data-bs-parent={`#accordion${qna.qnaNo}`}>
                                     <div className="accordion-body">
-                                        <h2 className='text'>질문글 내용</h2>
-                                        <div>
-
+                                        {/* 답변 영역 */}
+                                        <div className='row'>
+                                            <div className='col mt-3'>
+                                                <h1 className='text'>질문글 내용</h1>
+                                                <button className='btn btn-primary' onClick={e => deleteQna(qna)}>
+                                                    삭제버튼
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div>{qna.qnaContent}</div>
+
+                                        <div className="accordion" id="accordionExample">
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header">
+                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <span className='btn btn-positive'>
+                                                            <label>답변등록 [관리자기능]</label>
+                                                        </span>
+                                                    </button>
+                                                </h2>
+
+                                                <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                                    <div className="accordion-body">
+                                                        <div className="row text-start">
+
+                                                            <div className="row">
+                                                                <div className="col">
+                                                                    <h2>글 제목</h2>
+                                                                    <input type="text" name="qnaTitle" value={input.qnaTitle} onChange={changeInput} className="form-control" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="row">
+                                                                <div className="col">
+                                                                    <h2>글 내용</h2>
+                                                                    <textarea type="text" name="qnaContent" value={input.qnaContent} onChange={changeInput} className="form-control" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="row">
+                                                                <div className="col">
+                                                                    <div className="modal-footer">
+                                                                        <button className='btn btn-success me-2' onClick={saveInput()}>
+                                                                            등록
+                                                                        </button>
+                                                                        <button className='btn btn-danger' onClick={cancelInput}>
+                                                                            취소
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     ))}
+
+
                 </div>
             </div>
 
             {/* 페이지 네이션 */}
-
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                <ul className="pagination justify-content-center mt-5">
+                    <li className="page-item">
+                        <a className="page-link" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+                    <li className="page-item"><a className="page-link" href="#">1</a></li>
+                    <li className="page-item"><a className="page-link" href="#">2</a></li>
+                    <li className="page-item"><a className="page-link" href="#">3</a></li>
+                    <li className="page-item">
+                        <a className="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
             </nav>
 
-            {/* 추가 버튼 */}
+            {/* 일반회원 등록버튼 */}
             <div className="row mt-4">
                 <div className="col text-end">
                     <button className="btn btn-primary" onClick={openModal}>
                         신규 등록
+                    </button>
+
+                    <button className="btn btn-primary ms-2" onClick={openModal}>
+                        답변등록
                     </button>
                 </div>
             </div>
@@ -167,6 +239,7 @@ function Qna() {
                         </div>
                         <div className="modal-body">
                             {/* 등록 화면 */}
+
                             <div className="row">
                                 <div className="col">
                                     <label>글 제목</label>

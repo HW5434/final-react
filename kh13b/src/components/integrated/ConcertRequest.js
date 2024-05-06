@@ -1,10 +1,12 @@
-import { useState } from "react"
 
-import { useRef, useCallback } from 'react';
+import axios from '../utils/CustomAxios';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { Modal } from "bootstrap";
 import img_rent_step from './image/img_rent_step.jpg';
 import "./CSS.css";
 import { NavLink } from "react-router-dom";
+
+
 function ConcertRequest() {
     const [concertRequests, setConcertRequests] = useState([]);
     const [input, setInput] = useState({
@@ -40,11 +42,43 @@ function ConcertRequest() {
     });
 
     //시작하자마자 서버와 통신해서 데이터를 넣는다
-    //   useEffect(()=>{
-    //     loadData();
-    // }, []);//최초1회만
+      useEffect(()=>{
+        loadData();
+    }, []);//최초1회만
 
     //callback
+
+
+
+
+    const bsModal = useRef();
+    const openModal = useCallback(() => {
+        const modal = new Modal(bsModal.current);
+        modal.show();
+        closeModal();
+    }, [bsModal]);
+    const closeModal = useCallback(() => {
+        const modal = Modal.getInstance(bsModal.current);
+        modal.hide();
+    }, [bsModal]);
+
+    const [inputs, setInputs] = useState([{ id: 1, value: '' }]); // 초기 입력 상태
+
+
+    // 새로운 input 입력 창 추가
+    const handleAddInput = () => {
+        const newInput = { id: inputs.length + 1, value: '' };
+        setInputs([...inputs, newInput]);
+    };
+
+    // 입력 값 변경 시 상태 업데이트
+    const handleChange = (id, value) => {
+        const updatedInputs = inputs.map(input =>
+            input.id === id ? { ...input, value } : input
+        );
+        setInputs(updatedInputs);
+    };
+
     const changeInput = useCallback((e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -55,21 +89,23 @@ function ConcertRequest() {
         });
     }, [input]);
 
+    const loadData = useCallback(()=>{
+        axios({
+            url:"/concertRequest/",
+            method:"get"
+        })
+        .then(resp => {
+            setConcertRequests(resp.data);
+        });
+    },[concertRequests]);
 
-
-
-    const bsModal = useRef();
-    const openModal = useCallback(() => {
-        const modal = new Modal(bsModal.current);
-        modal.show();
-    }, [bsModal]);
-    const closeModal = useCallback(() => {
-        const modal = Modal.getInstance(bsModal.current);
-        modal.hide();
-    }, [bsModal]);
-
+    const saveInput = useCallback(async () => {
+        const resp = await axios.post("/concertRequest/", input);
+        },[input]);
+            
     return (
         <>
+
             <div className="container mt-4 ms-3">
                 <h1>공연 대관 문의</h1>
                 <div className="row">
@@ -115,6 +151,7 @@ function ConcertRequest() {
                         <div class="modal-body">
 
                             {/* 등록 화면 */}
+
                             <div className="container">
                                 <span className="red-icon"><h2>신청인</h2></span>
                                 <hr />
@@ -124,11 +161,11 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>단체명
                                         </label>
                                         <div className='col'>
+                                            <input type="text" name="concertRequestCompanyName"
+                                                value={input.concertRequestCompanyName}
+                                                onChange={e => changeInput(e)}
+                                                className='form-control' />
                                         </div>
-                                        <input type="text" name="concertRequestCompanyName"
-                                            value={input.concertRequestCompanyName}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
                                     </div>
                                     <div className='col'>
                                         <label>사업자등록번호</label>
@@ -172,27 +209,27 @@ function ConcertRequest() {
                                         <label>
                                             <i class="bi bi-asterisk red-icon"></i>사무실번호
                                         </label>
-                                        <input type="number" name="concertRequestOfficeNumber"
+                                        <input type="tel" name="concertRequestOfficeNumber"
                                             value={input.concertRequestOfficeNumber}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
-                                        <div className='col'>
-                                            <label>
-                                                <i class="bi bi-asterisk red-icon"></i>이메일
-                                            </label>
-                                            <input type="text" name="concertRequestEmail"
-                                                value={input.concertRequestEmail}
-                                                onChange={e => changeInput(e)}
-                                                className='form-control' />
-                                        </div>
+                                    <div className='col'>
+                                        <label>
+                                            <i class="bi bi-asterisk red-icon"></i>이메일
+                                        </label>
+                                        <input type="text" name="concertRequestEmail"
+                                            value={input.concertRequestEmail}
+                                            onChange={e => changeInput(e)}
+                                            className='form-control' />
+                                    </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
                                         <label>
                                             <i class="bi bi-asterisk red-icon"></i>핸드폰번호
                                         </label>
-                                        <input type="number" name="concertRequestPhoneNumber"
+                                        <input type="tel" name="concertRequestPhoneNumber"
                                             value={input.concertRequestPhoneNumber}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
@@ -226,7 +263,7 @@ function ConcertRequest() {
                                 <div className='row mt-4'>
                                     <div className='col'>
                                         <label>
-                                            <i class="bi bi-asterisk red-icon"/>공연장르
+                                            <i class="bi bi-asterisk red-icon" />공연장르
                                         </label>
                                         <input type="text" name="concertRequestConcertGenre"
                                             value={input.concertRequestConcertGenre}
@@ -235,7 +272,7 @@ function ConcertRequest() {
                                     </div>
                                     <div className='col'>
                                         <label>
-                                            <i class="bi bi-asterisk red-icon"/>관람연령
+                                            <i class="bi bi-asterisk red-icon" />관람연령
                                         </label>
                                         <input type="text" name="concertRequestAge"
                                             value={input.concertRequestAge}
@@ -245,21 +282,21 @@ function ConcertRequest() {
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
-                                        <label><i class="bi bi-asterisk red-icon"/>1막 공연시간</label>
+                                        <label><i class="bi bi-asterisk red-icon" />1막 공연시간</label>
                                         <input type="text" name="concertRequestRuntimeFirst"
                                             value={input.concertRequestRuntimeFirst}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
                                     <div className='col'>
-                                        <label><i class="bi bi-asterisk red-icon"/>인터미션</label>
+                                        <label><i class="bi bi-asterisk red-icon" />인터미션</label>
                                         <input type="text" name="concertRequestIntermission"
                                             value={input.concertRequestIntermission}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
                                     <div className='col'>
-                                        <label><i class="bi bi-asterisk red-icon"/>2막 공연시간</label>
+                                        <label><i class="bi bi-asterisk red-icon" />2막 공연시간</label>
                                         <input type="text" name="concertRequestRuntimeSecond"
                                             value={input.concertRequestRuntimeSecond}
                                             onChange={e => changeInput(e)}
@@ -296,8 +333,34 @@ function ConcertRequest() {
                                             className='form-control' />
                                     </div>
                                 </div>
+                                <div className='row mt-4'>
+                                    <div className='col'>
+                                        <label>공연 배우 입력</label>
+                                    </div>
+                                    <div className="col text-end">
+                                        {/* 새로운 입력 창 추가 버튼 */}
+                                        <label htmlFor="addInputButton" style={{ cursor: 'pointer' }}>+</label>
+                                        <button id="addInputButton" onClick={handleAddInput} style={{ display: 'none' }}>+</button>
+                                    </div>
+                                </div>
+                                <div className='row mt-4'>
+                                    <div className='col-3'>
+
+                                        {/* 입력 창들 렌더링 */}
+                                        {inputs.map(input => (
+                                            <div key={input.id} className="row mb-2">
+                                                <input type="text" value={input.value}
+                                                    onChange={(e) => handleChange(input.id, e.target.value)}
+                                                />
+                                            </div>
+
+                                        ))}
+
+                                    </div>
+                                </div>
                                 <br />
                             </div>
+
 
                             <div className="container">
                                 <span><h2>대관 일정</h2></span>
@@ -312,9 +375,9 @@ function ConcertRequest() {
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
-                                   
+
                                     <div className='col'>
-                                      
+
                                         <input type="date" name="concertRequestFooterDay"
                                             value={input.concertRequestFooterDay}
                                             onChange={e => changeInput(e)}
@@ -326,13 +389,13 @@ function ConcertRequest() {
                                         <label><h3>준비대관</h3></label>
                                     </div>
                                     <div className='col'>
-                                       
+
                                         <input type="date" name="concertRequestReadyhDay"
                                             value={input.concertRequestReadyhDay}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
-                                    
+
                                     <div className='col'>
                                         <input type="date" name="concertRequestReadyfDay"
                                             value={input.concertRequestReadyfDay}
@@ -342,7 +405,7 @@ function ConcertRequest() {
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
-                                    <label><h3>공연대관</h3></label>
+                                        <label><h3>공연대관</h3></label>
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestStarthDay"
@@ -374,28 +437,27 @@ function ConcertRequest() {
                                             className='form-control' />
                                     </div>
                                 </div>
-                                <div className='row mt-4'>
-                                    <div className='col'>
-                                        <label>포스터 첨부</label>
-                                        <input type="file" name="concertRequestNo"
-                                            value={input.concertRequestNo}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
-                                    </div>
+                                {/* <div className='row mt-4'>
+                                        <div className='col mb-4'>
+                                            <label>포스터 첨부</label>
+                                            <input type="file" name="concertRequestNo"
+                                                value={input.concertRequestNo}
+                                                onChange={e => changeInput(e)}
+                                                className='form-control' />
+                                        </div>
 
-                                </div>
+                                    </div> */}
                             </div>
-                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onClick={e=>saveInput()}>접수신청</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
 
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">접수신청</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            </div >
 
 
 
