@@ -36,6 +36,12 @@ const Login = () => {
         setLoginId(resp.data.memberId);
         setLoginGrade(resp.data.memberGrade);
 
+        //accessToken은 이후의 axios 요청에 포함시켜서 서버로 가져가야함
+        axios.defaults.headers.common['Authorization'] = resp.data.accessToken;
+
+        //refreshToken을 localStorage에 저장
+        window.localStorage.setItem("refreshToken", resp.data.refreshToken);
+
         //로그인 후 메인 페이지로 이동
         navigator("/")
     }, [input]);
