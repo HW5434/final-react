@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import AddressSearch from "./AddressSearch/AddressSearch";
 import axios from "../utils/CustomAxios";
 import Jumbotron from './../Jumbotron';
 import './Member.css';
 import { useNavigate } from 'react-router-dom';
+import { MdRemoveRedEye } from "react-icons/md";
 
 
 const SignUp = () => {
@@ -44,8 +45,11 @@ const SignUp = () => {
     const [emailVerification, setEmailVerification] = useState({ flag: false, authenticationCode: "", });
     //email인증 사용자 입력번호
     const [inputCode, setInputCode] = useState("");
-
+    //네비게이터
     const navigator = useNavigate();
+    //비밀번호 보임/숨김
+    const [isShowPwChecked, setShowPwChecked] = useState(false);
+    const passwordRef = useRef();
 
     //등록 입력값 변경
     const handleSignUpInputChange = (e) => {
@@ -220,6 +224,20 @@ const SignUp = () => {
     // 현재 날짜를 ISO 형식으로 가져옵니다.
     const currentDate = new Date().toLocaleDateString('en-CA');
 
+    // 비밀번호 보임/숨김 처리
+    const handleShowPwChecked = async () => {
+        const password = await passwordRef.current;
+        if (password === null) return;
+        
+        await setShowPwChecked(!isShowPwChecked);
+
+        if(!isShowPwChecked) {
+            password.type = 'text';
+        } else {
+            password.type = 'password';
+        }
+    }
+
 
     //view
     return (
@@ -242,16 +260,18 @@ const SignUp = () => {
                             {checkId.message === "" ? "" : checkId.message}
                         </p>
                         <input type="text" name="memberId" value={input.memberId} className="input-control" onChange={handleSignUpInputChange} placeholder='아이디' />
-                        <p className={inputValid.memberId ? "trueValid" : "falseValid"}>
-                            {input.memberId === "" ? "" : inputValid.memberId ? "아이디 잘 입력했어" : "아이디 다시 입력해"}
-                        </p>
-                        <button className={`${inputValid.memberId ? "openData" : "noneData"}`} onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
+                        <button type='button' className={`mt-3 ${inputValid.memberId ? "openData" : "noneData"}`} onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
                     </div>  
                 </div>
                 <div className='mb-3'>
                     <div className='col'>
                         <label>비밀번호</label>
-                        <input type="password" name="memberPw" value={input.memberPw} className="input-control" onChange={handleSignUpInputChange} placeholder='비밀번호' />
+                        <div>
+                            <input type="password" name="memberPw" value={input.memberPw} className="input-control" onChange={handleSignUpInputChange} ref={passwordRef} placeholder='비밀번호' />
+                            <p className='passwor-flag' onClick={handleShowPwChecked}>
+                                <MdRemoveRedEye />
+                            </p>
+                        </div>
                         <p className={inputValid.memberPw ? "trueValid" : "falseValid"}>
                             {input.memberPw === "" ? "" : inputValid.memberPw ? "비밀번호 잘 입력했어" : "비밀번호 다시 입력해"}
                         </p>
@@ -306,13 +326,13 @@ const SignUp = () => {
                             </p>
                         </div>
                         <div className='email-bottom-rap'>
-                            <button className={`mr ${input.memberEmail.length > 1  ? 'openData' : 'noneData'}`} onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
+                            <button type='button' className={`mr ${input.memberEmail.length > 1  ? 'openData' : 'noneData'}`} onClick={() => doubleCheckEmail(input.memberEmail)}>중복확인</button>
                             {emailVerification.flag ? 
-                                <>
+                                <div className='email-check'>
                                     <input type='text' onChange={handleEmailCheckInputChange}/>
                                     <button className="ml checkButton" onClick={() => userInputCode(inputCode)}>인증확인</button>
-                                </> : 
-                                <button className={`ml ${checkEmail.flag ? 'openData' : 'noneData'}`} onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
+                                </div> : 
+                                <button type='button' className={`ml ${checkEmail.flag ? 'openData' : 'noneData'}`} onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
                             }
                         </div>
                         <div className="notice">
@@ -323,12 +343,12 @@ const SignUp = () => {
                 </div>
             </form>
             <AddressSearch input={input} handleSignUpInputChange={handleSignUpInputChange}/>
-            <div className='mb-3'>
-                <div className='col text-center'>
-                    <button className='btn btn-success' onClick={e=>saveInput()}>
+            <div className='mt-4 mb-3'>
+                <div className='result-wrap'>
+                    <button type='button' className='sign-success' onClick={e=>saveInput()}>
                         회원가입
                     </button>
-                    <button className='btn btn-danger ms-2' onClick={e=>cancelInput()}>
+                    <button type='button' className='sign-danger ms-2' onClick={e=>cancelInput()}>
                         취소
                     </button>
                 </div>
