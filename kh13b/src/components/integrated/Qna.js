@@ -16,14 +16,6 @@ function Qna() {
         qnaTarget: null
     });
 
-    const [admin, setAdmin] = useState({
-        qnaNo: "",
-        qnaTitle: "",
-        qnaContent: "",
-        qnaAnswer: "N",
-        qnaTarget: null
-    });
-
     const [expandedQna, setExpandedQna] = useState(null);
     
     // 최초 로드
@@ -44,13 +36,6 @@ function Qna() {
         const resp = await axios.delete("/qna/" + target.qnaNo);
         loadData();
     }, [qnas]);
-
-    //수정 업데이트 구문
-    const updateQna = useCallback(async (target) => {
-    const resp = await axios.post("/qna/" + target.qnaNo);
-    loadData();
-    }, [qnas]);
-
 
     // 등록
     const saveInput = useCallback(async () => {
@@ -151,7 +136,7 @@ function Qna() {
                                                 <h2 className="accordion-header">
                                                     <button className="accordion-button" type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <span className='btn btn-positive' onClick={e => updateQna(qna.qnaNo)}>
+                                                        <span className='btn btn-positive'>
                                                             <label>답변등록 [관리자기능]</label>
                                                         </span>
                                                     </button>
@@ -160,6 +145,13 @@ function Qna() {
                                                 <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                                     <div className="accordion-body">
                                                         <div className="row text-start">
+
+                                                            <div className="row">
+                                                                <div className="col">
+                                                                    <h2>Target</h2>
+                                                                    <input type="text" name="qnaTitle" value={input.qnaTitle} onChange={changeInput} className="form-control" />
+                                                                </div>
+                                                            </div>
 
                                                             <div className="row">
                                                                 <div className="col">
