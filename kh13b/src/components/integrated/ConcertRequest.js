@@ -51,7 +51,7 @@ function ConcertRequest() {
     //callback
 
 
-    const [memberNo, setMemberNo] = useState("5")
+    const [memberNo, setMemberNo] = useState("1")
     useEffect(() => {
         console.log("memberNo:", memberNo); // 여기서 값을 확인해보세요.
       }, [memberNo]);
@@ -110,6 +110,10 @@ function ConcertRequest() {
 
     const saveInput = useCallback(async () => {
         const resp = await axios.post("/concertRequest/", input);
+        if(!saveInput){
+            alert("필수 입력 사항을 미기재하였습니다");
+            return;
+        }
     }, [input]);
     
     // 날짜 제한 부분
@@ -148,14 +152,14 @@ function ConcertRequest() {
 
       const handleReadyfDateChange = (e) => {
         const date = new Date(e.target.value);
-        if (date >= readyhDate && date <= setFooterDate) {
+        if (date >= readyhDate || date <= setFooterDate) {
             setReadyfDate(date);
         }
       };
 
       const handleStarthDateChange = (e) => {
         const date = new Date(e.target.value);
-        if (date >= readyhDate && date <= readyfDate) {
+        if (date >= readyhDate || date <= readyfDate) {
             setStarthDate(date);
             setStartfDate(date);
         }
@@ -163,14 +167,14 @@ function ConcertRequest() {
 
       const handleStartfDateChange = (e) => {
         const date = new Date(e.target.value);
-        if (date >= starthDate && date <= readyfDate) {
+        if (date >= starthDate || date <= readyfDate) {
             setStartfDate(date);
         }
       };
 
       const handleWithdrawhDateChange = (e) => {
         const date = new Date(e.target.value);
-        if (date >= starthDate && date <= startfDate) {
+        if (date >= starthDate || date <= startfDate) {
             setWithdrawhDate(date);
             setWithdrawfDate(date);
         }
@@ -178,7 +182,7 @@ function ConcertRequest() {
 
       const handleWithdrawfDateChange = (e) => {
         const date = new Date(e.target.value);
-        if (date >= withdrawhDate && date <= startfDate) {
+        if (date >= withdrawhDate || date <= startfDate) {
             setWithdrawfDate(date);
         }
       };
@@ -453,15 +457,16 @@ function ConcertRequest() {
                                         <input type="date" name="concertRequestHeadDay"
                                             value={headDate.toISOString().split('T')[0]} 
                                             onChange={handleHeadDateChange}
+                                            min={new Date().toISOString().split('T')[0]} // 현재 날짜부터 선택 가능
                                             className='form-control' />
                                     </div>
 
                                     <div className='col'>
 
                                         <input type="date" name="concertRequestFooterDay"
-                                           value={headDate.toISOString().split('T')[0]} 
+                                           value={footerDate.toISOString().split('T')[0]} 
                                            onChange={handleFooterDateChange}
-                                            setReadyfDate
+                                           min={headDate.toISOString().split('T')[0]} // 첫 번째 입력 창 이후의 날짜만 선택 가능
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -472,15 +477,19 @@ function ConcertRequest() {
                                     <div className='col'>
 
                                         <input type="date" name="concertRequestReadyhDay"
-                                            value={input.concertRequestReadyhDay}
+                                            value={readyhDate.toISOString().split('T')[0]}
                                             onChange={handleReadyhDateChange}
+                                            min={headDate.toISOString().split('T')[0]}
+                                            max={footerDate.toISOString().split('T')[0]}
                                             className='form-control' />
                                     </div>
 
                                     <div className='col'>
                                         <input type="date" name="concertRequestReadyfDay"
-                                            value={input.concertRequestReadyfDay}
+                                            value={readyfDate.toISOString().split('T')[0]}
                                             onChange={handleReadyfDateChange}
+                                            min={readyhDate.toISOString().split('T')[0]}
+                                            max={footerDate.toISOString().split('T')[0]}
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -490,14 +499,18 @@ function ConcertRequest() {
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestStarthDay"
-                                            value={input.concertRequestStarthDay}
-                                            onChange={e => changeInput(e)}
+                                            value={starthDate.toISOString().split('T')[0]}
+                                            onChange={handleStarthDateChange}
+                                            min={readyfDate.toISOString().split('T')[0]}
+                                            max={footerDate.toISOString().split('T')[0]}
                                             className='form-control' />
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestStartfDay"
-                                            value={input.concertRequestStartfDay}
-                                            onChange={e => changeInput(e)}
+                                            value={startfDate.toISOString().split('T')[0]}
+                                            onChange={handleStartfDateChange}
+                                            min={starthDate.toISOString().split('T')[0]}
+                                            max={footerDate.toISOString().split('T')[0]}
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -507,14 +520,18 @@ function ConcertRequest() {
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestWithdrawhDay"
-                                            value={input.concertRequestWithdrawhDay}
-                                            onChange={e => changeInput(e)}
+                                            value={withdrawhDate.toISOString().split('T')[0]}
+                                            onChange={handleWithdrawhDateChange}
+                                            min={startfDate.toISOString().split('T')[0]}
+                                            max={footerDate.toISOString().split('T')[0]}
                                             className='form-control' />
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestWithdrawfDay"
-                                            value={input.concertRequestWithdrawfDay}
-                                            onChange={e => changeInput(e)}
+                                            value={withdrawfDate.toISOString().split('T')[0]}
+                                            onChange={handleWithdrawfDateChange}
+                                            min={withdrawhDate.toISOString().split('T')[0]}
+                                            max={footerDate.toISOString().split('T')[0]}
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -530,6 +547,7 @@ function ConcertRequest() {
                                 </div> */}
                             </div>
                             <div class="modal-footer">
+                                
                                 <button type="button" class="btn btn-primary" onClick={e => saveInput()}>접수신청</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                             </div>
