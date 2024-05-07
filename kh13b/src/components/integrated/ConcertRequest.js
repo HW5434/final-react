@@ -9,8 +9,8 @@ import { NavLink } from "react-router-dom";
 
 function ConcertRequest() {
     const [concertRequests, setConcertRequests] = useState([]);
-    const [input, setInput] = useState({
-        memberNo:"",
+    const [applicant, setApplicant] = useState({
+        //memberNo: "",
         concertRequestNo: "",
         concertRequestCompanyName: "",
         concertRequestCompanyNumber: "",
@@ -20,13 +20,24 @@ function ConcertRequest() {
         concertRequestOfficeNumber: "",
         concertRequestPhoneNumber: "",
         concertRequestEmail: "",
-        concertRequestFax: "",
+        concertRequestFax: ""
+    });
+    const [concert, setConcert] = useState({
         concertRequestConcertName: "",
         concertRequestConcertGenre: "",
         concertRequestAge: "",
         concertRequestRuntimeFirst: "",
         concertRequestIntermission: "",
         concertRequestRuntimeSecond: "",
+        concertRequestSeatvip: "",
+        concertRequestSeatr: "",
+        concertRequestSeats: "",
+        concertRequestSeata: "",
+    });
+    const [actors, setActors] = useState([
+       { actorName: ''},
+    ]);
+    const [rent, setRent] = useState({
         concertRequestHeadDay: "",
         concertRequestFooterDay: "",
         concertRequestReadyhDay: "",
@@ -35,13 +46,9 @@ function ConcertRequest() {
         concertRequestStartfDay: "",
         concertRequestWithdrawhDay: "",
         concertRequestWithdrawfDay: "",
-        concertRequestSeatvip: "",
-        concertRequestSeatr: "",
-        concertRequestSeats: "",
-        concertRequestSeata: "",
-        concertRequestState: "n",
-        actorName: ""
+        concertRequestState: "n"
     });
+  
 
     //시작하자마자 서버와 통신해서 데이터를 넣는다
     useEffect(() => {
@@ -49,15 +56,6 @@ function ConcertRequest() {
     }, []);//최초1회만
 
     //callback
-
-
-    const [memberNo, setMemberNo] = useState("1")
-    useEffect(() => {
-        console.log("memberNo:", memberNo); // 여기서 값을 확인해보세요.
-      }, [memberNo]);
-    
-    
-       
 
 
     const bsModal = useRef();
@@ -71,7 +69,8 @@ function ConcertRequest() {
         modal.hide();
     }, [bsModal]);
 
-    const [inputs, setInputs] = useState([{ id: 1, value: '' }]); // 초기 입력 상태
+   
+    const [inputs, setInputs] = useState([]);
 
 
     // 새로운 input 입력 창 추가
@@ -92,11 +91,11 @@ function ConcertRequest() {
         const name = e.target.name;
         const value = e.target.value;
 
-        setInput({
-            ...input,//원래input을 유지시키되
+        setInputs({
+            ...inputs,//원래input을 유지시키되
             [name]: value//name에 해당하는 값만 value로 바꿔라!
         });
-    }, [input]);
+    }, [inputs]);
 
     const loadData = useCallback(() => {
         axios({
@@ -109,13 +108,10 @@ function ConcertRequest() {
     }, [concertRequests]);
 
     const saveInput = useCallback(async () => {
-        const resp = await axios.post("/concertRequest/", input);
-        if(!saveInput){
-            alert("필수 입력 사항을 미기재하였습니다");
-            return;
-        }
-    }, [input]);
-    
+        const resp = await axios.post("/concertRequest/", inputs);
+       
+    }, [inputs]);
+
     // 날짜 제한 부분
     const [headDate, setHeadDate] = useState(new Date());//1
     const [footerDate, setFooterDate] = useState(headDate);
@@ -125,7 +121,7 @@ function ConcertRequest() {
     const [startfDate, setStartfDate] = useState(headDate);
     const [withdrawhDate, setWithdrawhDate] = useState(headDate);//4
     const [withdrawfDate, setWithdrawfDate] = useState(headDate);
-    
+
     const handleHeadDateChange = (e) => {
         const date = new Date(e.target.value);
         setHeadDate(date);
@@ -133,59 +129,59 @@ function ConcertRequest() {
         setReadyhDate(date);
         setStarthDate(date);
         setWithdrawhDate(date);
-      };
-    
-      const handleFooterDateChange = (e) => {
+    };
+
+    const handleFooterDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= headDate) {
             setFooterDate(date);
         }
-      };
+    };
 
-      const handleReadyhDateChange = (e) => {
+    const handleReadyhDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= headDate || date <= setFooterDate) {
             setReadyhDate(date);
             setReadyfDate(date);
         }
-      };
+    };
 
-      const handleReadyfDateChange = (e) => {
+    const handleReadyfDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= readyhDate || date <= setFooterDate) {
             setReadyfDate(date);
         }
-      };
+    };
 
-      const handleStarthDateChange = (e) => {
+    const handleStarthDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= readyhDate || date <= readyfDate) {
             setStarthDate(date);
             setStartfDate(date);
         }
-      };
+    };
 
-      const handleStartfDateChange = (e) => {
+    const handleStartfDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= starthDate || date <= readyfDate) {
             setStartfDate(date);
         }
-      };
+    };
 
-      const handleWithdrawhDateChange = (e) => {
+    const handleWithdrawhDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= starthDate || date <= startfDate) {
             setWithdrawhDate(date);
             setWithdrawfDate(date);
         }
-      };
+    };
 
-      const handleWithdrawfDateChange = (e) => {
+    const handleWithdrawfDateChange = (e) => {
         const date = new Date(e.target.value);
         if (date >= withdrawhDate || date <= startfDate) {
             setWithdrawfDate(date);
         }
-      };
+    };
 
     return (
         <>
@@ -246,15 +242,15 @@ function ConcertRequest() {
                                         </label>
                                         <div className='col'>
                                             <input type="text" name="concertRequestCompanyName"
-                                                value={input.concertRequestCompanyName}
+                                                value={inputs.concertRequestCompanyName}
                                                 onChange={e => changeInput(e)}
-                                                className='form-control' />
+                                                className='form-control' required />
                                         </div>
                                     </div>
                                     <div className='col'>
                                         <label>사업자등록번호</label>
                                         <input type="text" name="concertRequestCompanyNumber"
-                                            value={input.concertRequestCompanyNumber}
+                                            value={applicant.concertRequestCompanyNumber}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
@@ -263,7 +259,7 @@ function ConcertRequest() {
                                     <div className='col'>
                                         <label>대표자</label>
                                         <input type="text" name="concertRequestRepresentative"
-                                            value={input.concertRequestRepresentative}
+                                            value={applicant.concertRequestRepresentative}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
@@ -272,9 +268,9 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>담당자
                                         </label>
                                         <input type="text" name="concertRequestManager"
-                                            value={input.concertRequestManager}
+                                            value={applicant.concertRequestManager}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -283,9 +279,9 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>주소
                                         </label>
                                         <input type="text" name="concertRequestAddress"
-                                            value={input.concertRequestAddress}
+                                            value={applicant.concertRequestAddress}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -294,18 +290,18 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>사무실번호
                                         </label>
                                         <input type="tel" name="concertRequestOfficeNumber"
-                                            value={input.concertRequestOfficeNumber}
+                                            value={applicant.concertRequestOfficeNumber}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>
                                             <i class="bi bi-asterisk red-icon"></i>이메일
                                         </label>
                                         <input type="text" name="concertRequestEmail"
-                                            value={input.concertRequestEmail}
+                                            value={applicant.concertRequestEmail}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -314,15 +310,15 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>핸드폰번호
                                         </label>
                                         <input type="tel" name="concertRequestPhoneNumber"
-                                            value={input.concertRequestPhoneNumber}
+                                            value={applicant.concertRequestPhoneNumber}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
 
                                     <div className='col'>
                                         <label>팩스번호</label>
                                         <input type="text" name="concertRequestFax"
-                                            value={input.concertRequestFax}
+                                            value={applicant.concertRequestFax}
                                             onChange={e => changeInput(e)}
                                             className='form-control' />
                                     </div>
@@ -339,9 +335,9 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>공연명
                                         </label>
                                         <input type="text" name="concertRequestConcertName"
-                                            value={input.concertRequestConcertName}
+                                            value={concert.concertRequestConcertName}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -350,71 +346,71 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon" />공연장르
                                         </label>
                                         <input type="text" name="concertRequestConcertGenre"
-                                            value={input.concertRequestConcertGenre}
+                                            value={concert.concertRequestConcertGenre}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>
                                             <i class="bi bi-asterisk red-icon" />관람연령
                                         </label>
                                         <input type="text" name="concertRequestAge"
-                                            value={input.concertRequestAge}
+                                            value={concert.concertRequestAge}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
                                         <label><i class="bi bi-asterisk red-icon" />1막 공연시간</label>
                                         <input type="text" name="concertRequestRuntimeFirst"
-                                            value={input.concertRequestRuntimeFirst}
+                                            value={concert.concertRequestRuntimeFirst}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label><i class="bi bi-asterisk red-icon" />인터미션</label>
                                         <input type="text" name="concertRequestIntermission"
-                                            value={input.concertRequestIntermission}
+                                            value={concert.concertRequestIntermission}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label><i class="bi bi-asterisk red-icon" />2막 공연시간</label>
                                         <input type="text" name="concertRequestRuntimeSecond"
-                                            value={input.concertRequestRuntimeSecond}
+                                            value={concert.concertRequestRuntimeSecond}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
                                         <label>VIP석</label>
                                         <input type="number" name="concertRequestSeatvip"
-                                            value={input.concertRequestSeatvip}
+                                            value={concert.concertRequestSeatvip}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>R석</label>
                                         <input type="number" name="concertRequestSeatr"
-                                            value={input.concertRequestSeatr}
+                                            value={concert.concertRequestSeatr}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>S석</label>
                                         <input type="number" name="concertRequestSeats"
-                                            value={input.concertRequestSeats}
+                                            value={concert.concertRequestSeats}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>A석</label>
                                         <input type="number" name="concertRequestSeata"
-                                            value={input.concertRequestSeata}
+                                            value={concert.concertRequestSeata}
                                             onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -424,22 +420,19 @@ function ConcertRequest() {
                                     <div className="col text-end">
                                         {/* 새로운 입력 창 추가 버튼 */}
                                         <label htmlFor="addInputButton" style={{ cursor: 'pointer' }}>+</label>
-                                        <button id="addInputButton" onClick={handleAddInput} style={{ display: 'none' }}>+</button>
+                                        <button id="addInputButton" onClick={handleAddInput} style={{ display: 'none' }}></button>
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col-3'>
 
                                         {/* 입력 창들 렌더링 */}
-                                       
-                                            <div className="row mb-2">
-                                                <input type="text" value={input.actorName} name='actorName'
-                                                    onChange={e => changeInput(e)}
-                                                />
-                                            </div>
 
-                                        
-
+                                        <div className="row mb-2">
+                                            <input type="text" value={actors.actorName} name='actorName'
+                                                onChange={e => changeInput(e)} required
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <br />
@@ -455,19 +448,19 @@ function ConcertRequest() {
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestHeadDay"
-                                            value={headDate.toISOString().split('T')[0]} 
+                                            value={headDate.toISOString().split('T')[0]}
                                             onChange={handleHeadDateChange}
                                             min={new Date().toISOString().split('T')[0]} // 현재 날짜부터 선택 가능
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
 
                                     <div className='col'>
 
                                         <input type="date" name="concertRequestFooterDay"
-                                           value={footerDate.toISOString().split('T')[0]} 
-                                           onChange={handleFooterDateChange}
-                                           min={headDate.toISOString().split('T')[0]} // 첫 번째 입력 창 이후의 날짜만 선택 가능
-                                            className='form-control' />
+                                            value={footerDate.toISOString().split('T')[0]}
+                                            onChange={handleFooterDateChange}
+                                            min={headDate.toISOString().split('T')[0]} // 첫 번째 입력 창 이후의 날짜만 선택 가능
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -481,7 +474,7 @@ function ConcertRequest() {
                                             onChange={handleReadyhDateChange}
                                             min={headDate.toISOString().split('T')[0]}
                                             max={footerDate.toISOString().split('T')[0]}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
 
                                     <div className='col'>
@@ -490,7 +483,7 @@ function ConcertRequest() {
                                             onChange={handleReadyfDateChange}
                                             min={readyhDate.toISOString().split('T')[0]}
                                             max={footerDate.toISOString().split('T')[0]}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -503,7 +496,7 @@ function ConcertRequest() {
                                             onChange={handleStarthDateChange}
                                             min={readyfDate.toISOString().split('T')[0]}
                                             max={footerDate.toISOString().split('T')[0]}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestStartfDay"
@@ -511,7 +504,7 @@ function ConcertRequest() {
                                             onChange={handleStartfDateChange}
                                             min={starthDate.toISOString().split('T')[0]}
                                             max={footerDate.toISOString().split('T')[0]}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -524,7 +517,7 @@ function ConcertRequest() {
                                             onChange={handleWithdrawhDateChange}
                                             min={startfDate.toISOString().split('T')[0]}
                                             max={footerDate.toISOString().split('T')[0]}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <input type="date" name="concertRequestWithdrawfDay"
@@ -532,7 +525,7 @@ function ConcertRequest() {
                                             onChange={handleWithdrawfDateChange}
                                             min={withdrawhDate.toISOString().split('T')[0]}
                                             max={footerDate.toISOString().split('T')[0]}
-                                            className='form-control' />
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 {/* <div className='row mt-4'>
@@ -547,7 +540,7 @@ function ConcertRequest() {
                                 </div> */}
                             </div>
                             <div class="modal-footer">
-                                
+
                                 <button type="button" class="btn btn-primary" onClick={e => saveInput()}>접수신청</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                             </div>
