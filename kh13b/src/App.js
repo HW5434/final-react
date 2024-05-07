@@ -27,6 +27,12 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useCallback, useEffect } from 'react';
 
 import ConcertScheduleInfo from './components/integrated/concert/ConcertScheduleInfo';
+import ReservationList from './components/integrated/ReservationList';
+import ReservationDetail from './components/integrated/ReservationDetail';
+
+
+
+
 
 
 
@@ -91,9 +97,13 @@ function App() {
             <Route path="/approve" element={<Approve />} />
 
             <Route path="/concertScheduleInfo" element={<ConcertScheduleInfo/>} />
+            <Route path="/login" element={<Login/>}/>
+            <Route path='/notice' element={<Notice/>}/>
+            <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
+            <Route path="/reservationList" element={<ReservationList/>}/>
+            <Route path="/reservationList:reservationNo" element={<ReservationDetail/>}/>
 
-            <Route path='/notice' element={<Notice />} />
-            <Route path="/notice/:noticeNo" element={<NoticeDetail />} />
+
           </Routes>
         </div>
       </div>
