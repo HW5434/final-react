@@ -13,10 +13,19 @@ function Qna() {
         qnaTitle: "",
         qnaContent: "",
         qnaAnswer: "N",
-        qnaTarget: ""
+        qnaTarget: null
+    });
+
+    const [admin, setAdmin] = useState({
+        qnaNo: "",
+        qnaTitle: "",
+        qnaContent: "",
+        qnaAnswer: "N",
+        qnaTarget: null
     });
 
     const [expandedQna, setExpandedQna] = useState(null);
+    
     // 최초 로드
     useEffect(() => {
         loadData();
@@ -35,6 +44,13 @@ function Qna() {
         const resp = await axios.delete("/qna/" + target.qnaNo);
         loadData();
     }, [qnas]);
+
+    //수정 업데이트 구문
+    const updateQna = useCallback(async (target) => {
+    const resp = await axios.post("/qna/" + target.qnaNo);
+    loadData();
+    }, [qnas]);
+
 
     // 등록
     const saveInput = useCallback(async () => {
@@ -135,7 +151,7 @@ function Qna() {
                                                 <h2 className="accordion-header">
                                                     <button className="accordion-button" type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <span className='btn btn-positive'>
+                                                        <span className='btn btn-positive' onClick={e => updateQna(qna.qnaNo)}>
                                                             <label>답변등록 [관리자기능]</label>
                                                         </span>
                                                     </button>
@@ -162,7 +178,7 @@ function Qna() {
                                                             <div className="row">
                                                                 <div className="col">
                                                                     <div className="modal-footer">
-                                                                        <button className='btn btn-success me-2' onClick={saveInput()}>
+                                                                        <button className='btn btn-success me-2' onClick={saveInput}>
                                                                             등록
                                                                         </button>
                                                                         <button className='btn btn-danger' onClick={cancelInput}>
@@ -171,14 +187,6 @@ function Qna() {
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-
-
-
-
-
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,7 +237,7 @@ function Qna() {
                 </div>
             </div>
 
-            {/* Modal */}
+
             <div ref={bsModal} className="modal fade" id="staticBackdrop" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -238,7 +246,7 @@ function Qna() {
                             <button type="button" className="btn-close" aria-label="Close" onClick={cancelInput}></button>
                         </div>
                         <div className="modal-body">
-                            {/* 등록 화면 */}
+
 
                             <div className="row">
                                 <div className="col">
