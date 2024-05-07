@@ -21,6 +21,12 @@ import ConcertDetail from './components/integrated/concert/ConcertDetail';
 import Notice from './components/integrated/Notice';
 import NoticeDetail from './components/integrated/NoticeDetail';
 import ConcertScheduleInfo from './components/integrated/concert/ConcertScheduleInfo';
+import ReservationList from './components/integrated/ReservationList';
+import ReservationDetail from './components/integrated/ReservationDetail';
+
+
+
+
 
 
 function App() {
@@ -56,6 +62,9 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path='/notice' element={<Notice/>}/>
             <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
+            <Route path="/reservationList" element={<ReservationList/>}/>
+            <Route path="/reservationList:reservationNo" element={<ReservationDetail/>}/>
+
           </Routes>
         </div>
       </div>
