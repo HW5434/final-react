@@ -52,7 +52,7 @@ const AddressSearch = ({
                     <input type="text" name="memberPost" className="form-control" value={input.memberPost} />
                 </div>
             </div>        
-            <button type="button" className="btn-address-search" onClick={onToggleModal}>우편번호 찾기</button>
+            <button type="button" className="mt-3 btn-address-search openData" onClick={onToggleModal}>우편번호 찾기</button>
             <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                 <DaumPostcode onComplete={completeHandler} height="100%" ref={postModalRef}/>
             </Modal>
