@@ -33,11 +33,11 @@ const FindId = () => {
             <Jumbotron title="아이디 찾기" content="FindId" />
             <form onSubmit={getFindId} className="text-center">
                 <div>
-                    <label htmlFor="name">이름:</label>
+                    <label>이름:</label>
                     <input type="text" name="memberName" value={input.memberName} onChange={(e) => handleFindIdInputChange(e)} />
                 </div>
                 <div>
-                    <label htmlFor="email">이메일:</label>
+                    <label>이메일:</label>
                     <input type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindIdInputChange(e)} />
                 </div>
                 <button type="submit">아이디 찾기</button>

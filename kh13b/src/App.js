@@ -14,6 +14,7 @@ import SignUp from './components/member/SignUp';
 import Login from './components/member/Login';
 import Mypage from './components/member/Mypage/Mypage';
 import FindId from './components/member/Find/FindId';
+import FindPw from './components/member/Find/FindPw';
 import Approve from './components/integrated/ConcertSchedule/Approve';
 import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
 
@@ -83,6 +84,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/findId" element={<FindId />} />
+            <Route path="/findPw" element={<FindPw />} />
 
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />

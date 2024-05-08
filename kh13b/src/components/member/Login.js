@@ -30,20 +30,23 @@ const Login = () => {
     const login = useCallback(async()=> {
         if(input.memberId.length === 0) return;
         if(input.memberPw.length === 0) return;
-
-        const resp = await axios.post("/member/login", input);
-        //console.log(resp.data);
-        setLoginId(resp.data.memberId);
-        setLoginGrade(resp.data.memberGrade);
-
-        //accessToken은 이후의 axios 요청에 포함시켜서 서버로 가져가야함
-        axios.defaults.headers.common['Authorization'] = resp.data.accessToken;
-
-        //refreshToken을 localStorage에 저장
-        window.localStorage.setItem("refreshToken", resp.data.refreshToken);
-
-        //로그인 후 메인 페이지로 이동
-        navigator("/")
+        try {
+            const resp = await axios.post("/member/login", input);
+            //console.log(resp.data);
+            setLoginId(resp.data.memberId);
+            setLoginGrade(resp.data.memberGrade);
+    
+            //accessToken은 이후의 axios 요청에 포함시켜서 서버로 가져가야함
+            axios.defaults.headers.common['Authorization'] = resp.data.accessToken;
+    
+            //refreshToken을 localStorage에 저장
+            window.localStorage.setItem("refreshToken", resp.data.refreshToken);
+    
+            //로그인 후 메인 페이지로 이동
+            navigator("/")
+        } catch(e) {
+            alert("아이디 혹은 비밀번호가 틀렸습니다.");
+        }
     }, [input]);
 
     return (
@@ -81,8 +84,8 @@ const Login = () => {
                     </label>                
                 </div>
                 <div className="w-100 text-center">
-                    <Link to="/findId">아이디 찾기</Link> │
-                    <span>비밀번호 찾기 │ </span>
+                    <Link to="/findId">아이디 찾기</Link>
+                    <Link to="/findPw">비밀번호 찾기</Link>
                     <span>회원가입</span>
                 </div>
                 

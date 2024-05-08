@@ -1,8 +1,26 @@
 import './Mypage.css';
 import { Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { useRecoilState } from "recoil";
+import { isLoginState } from "../../utils/RecoilData";
+import axios from '../../utils/CustomAxios';
 
 const Mypage = () => {
-// <div></div>
+
+    const [login, setLogin] = useRecoilState(isLoginState);
+    const [member, setMember] = useState({});
+
+    const load = useCallback(async() => {
+        const refreshToken = localStorage.getItem('refreshToken');
+        await axios.get(`/member/getMember/${refreshToken}`).then((res) => {
+            setMember(res.data);
+        });
+    });
+
+    useEffect(() => {
+        load();
+    }, []);
+
     return (
         <div className='mypage'>
             <div className='mypage-container'>
@@ -13,7 +31,7 @@ const Mypage = () => {
                                 <div className='profile'>
                                     <div className='profile-main'>
                                         <div className='main-rap'>
-                                            <div className='profile-name'>이름자리</div>
+                                            <div className='profile-name'>{member.memberName}</div>
                                             <div className='profile-bottom'>
                                                 <dl className='bottom-datarap'>
                                                     <dt className='datarap-text'>DATA1</dt>
