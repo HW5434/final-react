@@ -12,6 +12,7 @@ import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
 import Login from './components/member/Login';
+import FindId from './components/member/Find/FindId';
 import Approve from './components/integrated/ConcertSchedule/Approve';
 import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
 
@@ -79,6 +80,7 @@ function App() {
             {/* 로그인 */}
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/findId" element={<FindId />} />
 
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />

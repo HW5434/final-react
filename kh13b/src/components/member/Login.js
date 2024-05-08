@@ -3,8 +3,7 @@ import Jumbotron from "../Jumbotron";
 import {useRecoilState} from "recoil";
 import { loginIdState, loginGradeState } from "../utils/RecoilData";
 import axios from "../utils/CustomAxios";
-import { useNavigate } from "react-router-dom";
-import FindId from "./Find/FindId";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -82,7 +81,7 @@ const Login = () => {
                     </label>                
                 </div>
                 <div className="w-100 text-center">
-                    <span>아이디 찾기 │ </span>
+                    <Link to="/findId">아이디 찾기</Link>
                     <span>비밀번호 찾기 │ </span>
                     <span>회원가입</span>
                 </div>
