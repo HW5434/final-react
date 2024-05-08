@@ -4,6 +4,7 @@ import {useRecoilState} from "recoil";
 import { loginIdState, loginGradeState } from "../utils/RecoilData";
 import axios from "../utils/CustomAxios";
 import { useNavigate } from "react-router-dom";
+import FindId from "./Find/FindId";
 
 const Login = () => {
 
@@ -47,7 +48,7 @@ const Login = () => {
     }, [input]);
 
     return (
-        <>
+        <div className="login-wrap">
             <Jumbotron title="로그인" content="Login"/>
 
             <div className="row mt-4">
@@ -67,21 +68,29 @@ const Login = () => {
 
             <div className='row mt-4'>
                 <div className='col text-center'>
-                    <button className='btn btn-success' onClick={e=>login()}>
+                    <button className='btn btn-success w-100' onClick={e=>login()}>
                         로그인
                     </button>
                 </div>
             </div>
-            <div className="row mt-4">
-                <div className="col">
-                <label>
-                    <input type="checkbox"/>
-                    자동로그인
-                </label>
+
+            <div className="row mt">
+                <div className="w-100 left">
+                    <label>
+                        <input type="checkbox"/>
+                        자동로그인
+                    </label>                
                 </div>
+                <div className="w-100 text-center">
+                    <span>아이디 찾기 │ </span>
+                    <span>비밀번호 찾기 │ </span>
+                    <span>회원가입</span>
+                </div>
+                
             </div>
             
-        </>
+            
+        </div>
     );
 };
 
