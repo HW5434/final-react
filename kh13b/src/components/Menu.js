@@ -1,13 +1,35 @@
 //화면 상단에 배치할 메뉴(Header로 사용할 예정)
 
 //import
+import { useRecoilState } from 'recoil';
 import './Menu.css';
 import { NavLink } from "react-router-dom";
+import { loginGradeState, loginIdState } from './utils/RecoilData';
+import { useCallback, useMemo } from 'react';
+import axios from "./utils/CustomAxios";
 
 
 //function
 function Menu() {
 
+    //state
+    const [loginId, setLoginId] = useRecoilState(loginIdState);
+    const [loginGrade, setLoginGrade] = useRecoilState(loginGradeState);
+
+    //memo
+    const isLogin = useMemo(()=> {
+        return loginId.length > 0 && loginGrade.length > 0;
+    }, [loginId, loginGrade]);
+
+    //callback
+    const logout = useCallback(()=> {
+        //recoil 저장소에 대한 정리 + axios의 헤더 제거
+        setLoginId('');
+        setLoginGrade('');
+        delete axios.defaults.headers.common['Authorization'];
+    }, [loginId, loginGrade]);
+
+    //view
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
@@ -44,7 +66,7 @@ function Menu() {
                             </li>
                             {/* 메뉴 3 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 3번</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
                                 </div>
@@ -71,21 +93,30 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/concert">공연 정보</NavLink>
                                 </div>
                             </li>
+                             {/* 좌석 */}
+                             <li className="nav-item dropdown p-3">
+                                <a className="nav-link dropdown-toggle"href="#" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/reservationList">예매 내역</NavLink>
+                                </div>
+                            </li>
                         </ul>
 
-                         {/* 이 부분을 로그인 여부에 따라 다르게 표시 */}
-                         <div className="d-flex">
-                         
-                                <span className="me-2">
-                                <NavLink className="dropdown-item" to="/login">로그인</NavLink>
-                                </span>
-                                /
-                                <span className="ms-2">
-                                <NavLink className="dropdown-item" to="/signUp">회원가입</NavLink>
-                                </span>
-                     
-                            </div>
-
+                        {/* 로그인관련 */}
+                        <div className="d-flex">
+                            {isLogin ? ( /*isLogin : 로그인이 되어 있을 경우*/
+                                <>
+                                    <NavLink className="dropdown-item me-2" to="#" onClick={e=>logout()}>로그아웃</NavLink>
+                                    <NavLink className="dropdown-item" to="/mypage">마이페이지</NavLink>
+                                </>
+                            ) : (
+                                <>
+                                    <NavLink className="dropdown-item me-2" to="/login">로그인</NavLink>
+                                    <NavLink className="dropdown-item" to="/signUp">회원가입</NavLink>
+                                </>
+                            )}
+                        </div>
+                        
                     </div>
                 </div>
             </nav>
