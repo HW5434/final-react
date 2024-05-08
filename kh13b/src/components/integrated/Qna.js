@@ -13,10 +13,11 @@ function Qna() {
         qnaTitle: "",
         qnaContent: "",
         qnaAnswer: "N",
-        qnaTarget: ""
+        qnaTarget: null
     });
 
     const [expandedQna, setExpandedQna] = useState(null);
+    
     // 최초 로드
     useEffect(() => {
         loadData();
@@ -147,6 +148,13 @@ function Qna() {
 
                                                             <div className="row">
                                                                 <div className="col">
+                                                                    <h2>Target</h2>
+                                                                    <input type="text" name="qnaTitle" value={input.qnaTitle} onChange={changeInput} className="form-control" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="row">
+                                                                <div className="col">
                                                                     <h2>글 제목</h2>
                                                                     <input type="text" name="qnaTitle" value={input.qnaTitle} onChange={changeInput} className="form-control" />
                                                                 </div>
@@ -162,7 +170,7 @@ function Qna() {
                                                             <div className="row">
                                                                 <div className="col">
                                                                     <div className="modal-footer">
-                                                                        <button className='btn btn-success me-2' onClick={saveInput()}>
+                                                                        <button className='btn btn-success me-2' onClick={saveInput}>
                                                                             등록
                                                                         </button>
                                                                         <button className='btn btn-danger' onClick={cancelInput}>
@@ -171,14 +179,6 @@ function Qna() {
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-
-
-
-
-
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,7 +229,7 @@ function Qna() {
                 </div>
             </div>
 
-            {/* Modal */}
+
             <div ref={bsModal} className="modal fade" id="staticBackdrop" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -238,7 +238,7 @@ function Qna() {
                             <button type="button" className="btn-close" aria-label="Close" onClick={cancelInput}></button>
                         </div>
                         <div className="modal-body">
-                            {/* 등록 화면 */}
+
 
                             <div className="row">
                                 <div className="col">
