@@ -32,8 +32,6 @@ function App() {
           <div className='col-sm-10 offset-sm-1'></div>
           {/* 네비게이터 */}
           <Menu />
-
-
           <Routes>      
             <Route path="/" element={<Home />} />
             <Route path="/test01" element={<Test01 />} />
