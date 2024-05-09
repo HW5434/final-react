@@ -11,7 +11,7 @@ function ConcertRequest() {
     const [concertRequests, setConcertRequests] = useState([]);
     const [applicant, setApplicant] = useState({
         //memberNo: "",
-        //concertRequestNo: "",
+        concertRequestNo: "",
         concertRequestCompanyName: "",
         concertRequestCompanyNumber: "",
         concertRequestRepresentative: "",
@@ -62,11 +62,11 @@ function ConcertRequest() {
 
     const changeActors = useCallback((e, target) => {
         const copy = [...actors];//actors 복사
-        const copy2 = copy.map(actor=>{//copy 뒤져가면서
-            if(actor.actorNo === target.actorNo) {//actorNo가 같으면
-                return {...actor, "actorName":e.target.value}//actorName 교체해라
+        const copy2 = copy.map(actor => {//copy 뒤져가면서
+            if (actor.actorNo === target.actorNo) {//actorNo가 같으면
+                return { ...actor, "actorName": e.target.value }//actorName 교체해라
             }
-            return {...actor};//아니면 현상유지
+            return { ...actor };//아니면 현상유지
         });
         setActors(copy2);//원래 데이터 덮어쓰기
     });
@@ -109,7 +109,7 @@ function ConcertRequest() {
     }, [bsModal]);
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
-       
+        
     }, [bsModal]);
 
 
@@ -140,18 +140,68 @@ function ConcertRequest() {
             method: "post",
             //data: {...applicant, ...rent, ...concert, actors:actors},
             data: { applicant: applicant, rent: rent, concert: concert, actors: actors },
-            
+
         })
             .then(resp => {
                 //등록이 완료되면? 목록 갱신
                 loadData();
+                setApplicant({
+                    concertRequestNo: "",
+                    concertRequestCompanyName: "",
+                    concertRequestCompanyNumber: "",
+                    concertRequestRepresentative: "",
+                    concertRequestManager: "",
+                    concertRequestAddress: "",
+                    concertRequestOfficeNumber: "",
+                    concertRequestPhoneNumber: "",
+                    concertRequestEmail: "",
+                    concertRequestFax: ""
+                });
+                setConcert({
+                    concertRequestConcertName: "",
+                    concertRequestConcertGenre: "",
+                    concertRequestAge: "",
+                    concertRequestRuntimeFirst: "",
+                    concertRequestIntermission: "",
+                    concertRequestRuntimeSecond: "",
+                    concertRequestSeatvip: "",
+                    concertRequestSeatr: "",
+                    concertRequestSeats: "",
+                    concertRequestSeata: "",
+                });
+                setConcert({
+                    concertRequestConcertName: "",
+                    concertRequestConcertGenre: "",
+                    concertRequestAge: "",
+                    concertRequestRuntimeFirst: "",
+                    concertRequestIntermission: "",
+                    concertRequestRuntimeSecond: "",
+                    concertRequestSeatvip: "",
+                    concertRequestSeatr: "",
+                    concertRequestSeats: "",
+                    concertRequestSeata: "",
+                });
+                setActors({
+                    actorNo: 1, actorName: ''
+                });
+                setRent({
+                    concertRequestHeadDay: "",
+                    concertRequestFooterDay: "",
+                    concertRequestReadyhDay: "",
+                    concertRequestReadyfDay: "",
+                    concertRequestStarthDay: "",
+                    concertRequestStartfDay: "",
+                    concertRequestWithdrawhDay: "",
+                    concertRequestWithdrawfDay: "",
+                    concertRequestState: "n"
+                });
                 closeModal();
             });
-    }, [applicant, rent, concert, actors, closeModal, loadData]);
+    }, [applicant, rent, concert, actors]);
 
- 
 
-  
+
+
 
     return (
         <>
@@ -451,7 +501,7 @@ function ConcertRequest() {
                                         <input type="date" name="concertRequestReadyhDay"
                                             value={rent.concertRequestReadyhDay}
                                             onChange={e => changeRent(e)}
-                                            min={rent.concertRequestHeadDay} 
+                                            min={rent.concertRequestHeadDay}
                                             max={rent.concertRequestFooterDay}
                                             className='form-control' required />
                                     </div>
@@ -521,7 +571,7 @@ function ConcertRequest() {
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-primary" onClick={saveInput}>접수신청</button>
-                                
+
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                             </div>
 
