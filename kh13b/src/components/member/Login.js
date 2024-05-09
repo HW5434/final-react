@@ -84,9 +84,9 @@ const Login = () => {
                     </label>                
                 </div>
                 <div className="w-100 text-center">
-                    <Link to="/findId">아이디 찾기</Link>
-                    <Link to="/findPw">비밀번호 찾기</Link>
-                    <span>회원가입</span>
+                    <Link to="/findId">아이디 찾기</Link> │
+                    <Link to="/findPw">비밀번호 찾기</Link> │ 
+                    <Link to="/SignUP">회원가입</Link>
                 </div>
                 
             </div>
