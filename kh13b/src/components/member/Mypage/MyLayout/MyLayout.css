@@ -1,0 +1,63 @@
+.profile-wrap {
+    width: 66.6667%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mypage-layout {
+    max-width: 700px;
+    margin: 0px auto;
+    padding: 50px 0px 0px;
+    color: rgb(41, 41, 41);
+}
+
+.layout-rap {
+    margin: 0px 0px 60px;
+}
+
+.layout-title {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px 0px 20px;
+}
+
+.my-title-text {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.my-title-count {
+    margin-left: 0.4ch;
+    color: rgb(217 143 11);
+}
+
+.my-nav {
+    margin: 0px -10px;
+    a {
+        margin: 0px 10px;
+        color: rgb(217 143 11);
+        font-size: 13px;
+        font-weight: bold;
+        transition: opacity 0.1s ease 0s;
+        text-decoration: none;
+    }
+}
+
+.layout-list {
+    display: flex;
+    flex-wrap: wrap;
+    color: rgb(41, 41, 41);
+    margin: 0px -10px -20px;
+}
+
+.my-list-data {
+    flex: 0 0 auto;
+    width: 25%;
+    box-sizing: border-box;
+    padding: 0px 10px 20px;
+}

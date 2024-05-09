@@ -26,6 +26,8 @@ function Menu() {
         //recoil 저장소에 대한 정리 + axios의 헤더 제거
         setLoginId('');
         setLoginGrade('');
+        localStorage.removeItem('refreshToken');
+        
         delete axios.defaults.headers.common['Authorization'];
     }, [loginId, loginGrade]);
 
