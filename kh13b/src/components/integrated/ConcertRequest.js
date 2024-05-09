@@ -1,6 +1,6 @@
 
 import axios from '../utils/CustomAxios';
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useRef, useCallback, useState, useEffect, act } from 'react';
 import { Modal } from "bootstrap";
 import img_rent_step from './image/img_rent_step.jpg';
 import "./CSS.css";
@@ -9,8 +9,9 @@ import { NavLink } from "react-router-dom";
 
 function ConcertRequest() {
     const [concertRequests, setConcertRequests] = useState([]);
-    const [input, setInput] = useState({
-        concertRequestNo: "",
+    const [applicant, setApplicant] = useState({
+        //memberNo: "",
+        //concertRequestNo: "",
         concertRequestCompanyName: "",
         concertRequestCompanyNumber: "",
         concertRequestRepresentative: "",
@@ -19,13 +20,58 @@ function ConcertRequest() {
         concertRequestOfficeNumber: "",
         concertRequestPhoneNumber: "",
         concertRequestEmail: "",
-        concertRequestFax: "",
+        concertRequestFax: ""
+    });
+
+    const changeApplicant = useCallback((e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setApplicant({
+            ...applicant,//원래것을 유지시키되
+            [name]: value//name에 해당하는 값만 value로 바꿔라!
+        });
+    }, [applicant]);
+
+    const [concert, setConcert] = useState({
         concertRequestConcertName: "",
         concertRequestConcertGenre: "",
         concertRequestAge: "",
         concertRequestRuntimeFirst: "",
         concertRequestIntermission: "",
         concertRequestRuntimeSecond: "",
+        concertRequestSeatvip: "",
+        concertRequestSeatr: "",
+        concertRequestSeats: "",
+        concertRequestSeata: "",
+    });
+
+    const changeConcert = useCallback((e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setConcert({
+            ...concert,//원래것을 유지시키되
+            [name]: value//name에 해당하는 값만 value로 바꿔라!
+        });
+    }, [concert]);
+
+    const [actors, setActors] = useState([{
+        actorNo: 1, actorName: ''
+    }]);
+
+    const changeActors = useCallback((e, target) => {
+        const copy = [...actors];//actors 복사
+        const copy2 = copy.map(actor=>{//copy 뒤져가면서
+            if(actor.actorNo === target.actorNo) {//actorNo가 같으면
+                return {...actor, "actorName":e.target.value}//actorName 교체해라
+            }
+            return {...actor};//아니면 현상유지
+        });
+        setActors(copy2);//원래 데이터 덮어쓰기
+    });
+
+    const [rent, setRent] = useState({
         concertRequestHeadDay: "",
         concertRequestFooterDay: "",
         concertRequestReadyhDay: "",
@@ -34,21 +80,25 @@ function ConcertRequest() {
         concertRequestStartfDay: "",
         concertRequestWithdrawhDay: "",
         concertRequestWithdrawfDay: "",
-        concertRequestSeatvip: "",
-        concertRequestSeatr: "",
-        concertRequestSeats: "",
-        concertRequestSeata: "",
         concertRequestState: "n"
     });
 
+    const changeRent = useCallback((e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setRent({
+            ...rent,//원래것을 유지시키되
+            [name]: value//name에 해당하는 값만 value로 바꿔라!
+        });
+    }, [rent]);
+
     //시작하자마자 서버와 통신해서 데이터를 넣는다
-      useEffect(()=>{
+    useEffect(() => {
         loadData();
     }, []);//최초1회만
 
     //callback
-
-
 
 
     const bsModal = useRef();
@@ -59,50 +109,49 @@ function ConcertRequest() {
     }, [bsModal]);
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
-        modal.hide();
+       
     }, [bsModal]);
-
-    const [inputs, setInputs] = useState([{ id: 1, value: '' }]); // 초기 입력 상태
 
 
     // 새로운 input 입력 창 추가
     const handleAddInput = () => {
-        const newInput = { id: inputs.length + 1, value: '' };
-        setInputs([...inputs, newInput]);
+        const newActors = { actorNo: actors.length + 1, actorName: '' };
+        setActors([...actors, newActors]);
+    };
+    const handleRemoveInput = () => {
+        if (actors.length > 1) { // 최소한 하나의 입력 창은 유지되어야 합니다.
+            setActors(actors.slice(0, -1)); // 가장 최근에 추가된 입력 창을 삭제합니다.
+        }
     };
 
-    // 입력 값 변경 시 상태 업데이트
-    const handleChange = (id, value) => {
-        const updatedInputs = inputs.map(input =>
-            input.id === id ? { ...input, value } : input
-        );
-        setInputs(updatedInputs);
-    };
-
-    const changeInput = useCallback((e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        setInput({
-            ...input,//원래input을 유지시키되
-            [name]: value//name에 해당하는 값만 value로 바꿔라!
-        });
-    }, [input]);
-
-    const loadData = useCallback(()=>{
+    const loadData = useCallback(() => {
         axios({
-            url:"/concertRequest/",
-            method:"get"
+            url: "/concertRequest/",
+            method: "get"
         })
-        .then(resp => {
-            setConcertRequests(resp.data);
-        });
-    },[concertRequests]);
+            .then(resp => {
+                setConcertRequests(resp.data);
+            });
+    }, [concertRequests]);
 
-    const saveInput = useCallback(async () => {
-        const resp = await axios.post("/concertRequest/", input);
-        },[input]);
-            
+    const saveInput = useCallback(() => {
+        axios({
+            url: "/concertRequest/",
+            method: "post",
+            //data: {...applicant, ...rent, ...concert, actors:actors},
+            data: { applicant: applicant, rent: rent, concert: concert, actors: actors },
+        })
+            .then(resp => {
+                //등록이 완료되면? 목록 갱신
+                loadData();
+                closeModal();
+            });
+    }, [applicant, rent, concert, actors, closeModal, loadData]);
+
+ 
+
+  
+
     return (
         <>
 
@@ -162,16 +211,16 @@ function ConcertRequest() {
                                         </label>
                                         <div className='col'>
                                             <input type="text" name="concertRequestCompanyName"
-                                                value={input.concertRequestCompanyName}
-                                                onChange={e => changeInput(e)}
-                                                className='form-control' />
+                                                value={applicant.concertRequestCompanyName}
+                                                onChange={e => changeApplicant(e)}
+                                                className='form-control' required />
                                         </div>
                                     </div>
                                     <div className='col'>
                                         <label>사업자등록번호</label>
                                         <input type="text" name="concertRequestCompanyNumber"
-                                            value={input.concertRequestCompanyNumber}
-                                            onChange={e => changeInput(e)}
+                                            value={applicant.concertRequestCompanyNumber}
+                                            onChange={e => changeApplicant(e)}
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -179,8 +228,8 @@ function ConcertRequest() {
                                     <div className='col'>
                                         <label>대표자</label>
                                         <input type="text" name="concertRequestRepresentative"
-                                            value={input.concertRequestRepresentative}
-                                            onChange={e => changeInput(e)}
+                                            value={applicant.concertRequestRepresentative}
+                                            onChange={e => changeApplicant(e)}
                                             className='form-control' />
                                     </div>
                                     <div className='col'>
@@ -188,9 +237,9 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>담당자
                                         </label>
                                         <input type="text" name="concertRequestManager"
-                                            value={input.concertRequestManager}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={applicant.concertRequestManager}
+                                            onChange={e => changeApplicant(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -199,9 +248,9 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>주소
                                         </label>
                                         <input type="text" name="concertRequestAddress"
-                                            value={input.concertRequestAddress}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={applicant.concertRequestAddress}
+                                            onChange={e => changeApplicant(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -210,18 +259,18 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>사무실번호
                                         </label>
                                         <input type="tel" name="concertRequestOfficeNumber"
-                                            value={input.concertRequestOfficeNumber}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={applicant.concertRequestOfficeNumber}
+                                            onChange={e => changeApplicant(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>
                                             <i class="bi bi-asterisk red-icon"></i>이메일
                                         </label>
                                         <input type="text" name="concertRequestEmail"
-                                            value={input.concertRequestEmail}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={applicant.concertRequestEmail}
+                                            onChange={e => changeApplicant(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -230,16 +279,16 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>핸드폰번호
                                         </label>
                                         <input type="tel" name="concertRequestPhoneNumber"
-                                            value={input.concertRequestPhoneNumber}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={applicant.concertRequestPhoneNumber}
+                                            onChange={e => changeApplicant(e)}
+                                            className='form-control' required />
                                     </div>
 
                                     <div className='col'>
                                         <label>팩스번호</label>
-                                        <input type="text" name="concertRequestFax"
-                                            value={input.concertRequestFax}
-                                            onChange={e => changeInput(e)}
+                                        <input type="applicant" name="concertRequestFax"
+                                            value={applicant.concertRequestFax}
+                                            onChange={e => changeApplicant(e)}
                                             className='form-control' />
                                     </div>
                                 </div>
@@ -255,9 +304,9 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon"></i>공연명
                                         </label>
                                         <input type="text" name="concertRequestConcertName"
-                                            value={input.concertRequestConcertName}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestConcertName}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
@@ -266,96 +315,103 @@ function ConcertRequest() {
                                             <i class="bi bi-asterisk red-icon" />공연장르
                                         </label>
                                         <input type="text" name="concertRequestConcertGenre"
-                                            value={input.concertRequestConcertGenre}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestConcertGenre}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>
                                             <i class="bi bi-asterisk red-icon" />관람연령
                                         </label>
                                         <input type="text" name="concertRequestAge"
-                                            value={input.concertRequestAge}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestAge}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
                                         <label><i class="bi bi-asterisk red-icon" />1막 공연시간</label>
                                         <input type="text" name="concertRequestRuntimeFirst"
-                                            value={input.concertRequestRuntimeFirst}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestRuntimeFirst}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label><i class="bi bi-asterisk red-icon" />인터미션</label>
                                         <input type="text" name="concertRequestIntermission"
-                                            value={input.concertRequestIntermission}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestIntermission}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label><i class="bi bi-asterisk red-icon" />2막 공연시간</label>
                                         <input type="text" name="concertRequestRuntimeSecond"
-                                            value={input.concertRequestRuntimeSecond}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestRuntimeSecond}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
                                         <label>VIP석</label>
                                         <input type="number" name="concertRequestSeatvip"
-                                            value={input.concertRequestSeatvip}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestSeatvip}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>R석</label>
                                         <input type="number" name="concertRequestSeatr"
-                                            value={input.concertRequestSeatr}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestSeatr}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>S석</label>
                                         <input type="number" name="concertRequestSeats"
-                                            value={input.concertRequestSeats}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestSeats}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                     <div className='col'>
                                         <label>A석</label>
                                         <input type="number" name="concertRequestSeata"
-                                            value={input.concertRequestSeata}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={concert.concertRequestSeata}
+                                            onChange={e => changeConcert(e)}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
                                     <div className='col'>
-                                        <label>공연 배우 입력</label>
+                                        <span>공연배우입력</span>
                                     </div>
-                                    <div className="col text-end">
-                                        {/* 새로운 입력 창 추가 버튼 */}
-                                        <label htmlFor="addInputButton" style={{ cursor: 'pointer' }}>+</label>
-                                        <button id="addInputButton" onClick={handleAddInput} style={{ display: 'none' }}>+</button>
+                                    {/* 새로운 입력 창 추가 버튼 */}
+                                    <div className='col text-end'>
+                                        <label htmlFor="addInputButton" style={{ cursor: 'pointer' }}>
+                                            <i class="bi bi-plus-square"></i>
+                                        </label>
+                                        <button id="addInputButton" onClick={handleAddInput} style={{ display: 'none' }}></button>
+                                    </div>
+                                    <div className='col-1'>
+                                        {/* 입력 창 삭제 버튼 */}
+                                        <label htmlFor="minusInputButton" style={{ cursor: 'pointer' }}>
+                                            <i class="bi bi-dash-square"></i>
+                                        </label>
+                                        <button id="minusInputButton" onClick={handleRemoveInput} style={{ display: 'none' }}></button>
                                     </div>
                                 </div>
-                                <div className='row mt-4'>
-                                    <div className='col-3'>
-
+                                <div className='row'>
+                                    <div className='col-5'>
                                         {/* 입력 창들 렌더링 */}
-                                        {inputs.map(input => (
-                                            <div key={input.id} className="row mb-2">
-                                                <input type="text" value={input.value}
-                                                    onChange={(e) => handleChange(input.id, e.target.value)}
-                                                />
+                                        {actors.map(actor => (
+                                            <div className="row mb-2" key={actor.id}>
+                                                <div className='col'>
+                                                    <input type="text" value={actor.value} name='actorName'
+                                                        onChange={e => changeActors(e, actor)} required />
+                                                </div>
                                             </div>
-
                                         ))}
-
                                     </div>
                                 </div>
                                 <br />
@@ -366,90 +422,105 @@ function ConcertRequest() {
                                 <span><h2>대관 일정</h2></span>
                                 <hr />
                                 <div className='row mt-4'>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <h3>총대관일</h3>
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestHeadDay"
-                                            value={input.concertRequestHeadDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestHeadDay}
+                                            onChange={e => changeRent(e)}
+                                            min={new Date().toISOString().split('T')[0]}
+                                            className='form-control' required />
                                     </div>
 
-                                    <div className='col'>
-
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestFooterDay"
-                                            value={input.concertRequestFooterDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestFooterDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestHeadDay} // 첫 번째 입력 창 이후의 날짜만 선택 가능
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <label><h3>준비대관</h3></label>
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-4'>
 
                                         <input type="date" name="concertRequestReadyhDay"
-                                            value={input.concertRequestReadyhDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestReadyhDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestHeadDay} 
+                                            max={rent.concertRequestFooterDay}
+                                            className='form-control' required />
                                     </div>
 
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestReadyfDay"
-                                            value={input.concertRequestReadyfDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestReadyfDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestHeadDay}
+                                            max={rent.concertRequestFooterDay}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <label><h3>공연대관</h3></label>
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestStarthDay"
-                                            value={input.concertRequestStarthDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestStarthDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestReadyfDay}
+                                            max={rent.concertRequestFooterDay}
+                                            className='form-control' required />
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestStartfDay"
-                                            value={input.concertRequestStartfDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestStartfDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestReadyfDay}
+                                            max={rent.concertRequestFooterDay}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 <div className='row mt-4'>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <label><h3>철수대관</h3></label>
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestWithdrawhDay"
-                                            value={input.concertRequestWithdrawhDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestWithdrawhDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestStartfDay}
+                                            max={rent.concertRequestFooterDay}
+                                            className='form-control' required />
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-4'>
                                         <input type="date" name="concertRequestWithdrawfDay"
-                                            value={input.concertRequestWithdrawfDay}
-                                            onChange={e => changeInput(e)}
-                                            className='form-control' />
+                                            value={rent.concertRequestWithdrawfDay}
+                                            onChange={e => changeRent(e)}
+                                            min={rent.concertRequestStartfDay}
+                                            max={rent.concertRequestFooterDay}
+                                            className='form-control' required />
                                     </div>
                                 </div>
                                 {/* <div className='row mt-4'>
-                                        <div className='col mb-4'>
-                                            <label>포스터 첨부</label>
-                                            <input type="file" name="concertRequestNo"
-                                                value={input.concertRequestNo}
-                                                onChange={e => changeInput(e)}
-                                                className='form-control' />
-                                        </div>
+                                    <div className='col mb-4'>
+                                        <label>포스터 첨부</label>
+                                        <input type="file" name="concertRequestNo"
+                                            value={input.concertRequestNo}
+                                            onChange={e => changeInput(e)}
+                                            className='form-control' />
+                                    </div>
 
-                                    </div> */}
+                                </div> */}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onClick={e=>saveInput()}>접수신청</button>
+
+                                <button type="button" class="btn btn-primary" onClick={saveInput}>접수신청</button>
+                                
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                             </div>
 
