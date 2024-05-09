@@ -3,7 +3,7 @@ import Jumbotron from "../Jumbotron";
 import {useRecoilState} from "recoil";
 import { loginIdState, loginGradeState } from "../utils/RecoilData";
 import axios from "../utils/CustomAxios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -30,24 +30,27 @@ const Login = () => {
     const login = useCallback(async()=> {
         if(input.memberId.length === 0) return;
         if(input.memberPw.length === 0) return;
-
-        const resp = await axios.post("/member/login", input);
-        //console.log(resp.data);
-        setLoginId(resp.data.memberId);
-        setLoginGrade(resp.data.memberGrade);
-
-        //accessToken은 이후의 axios 요청에 포함시켜서 서버로 가져가야함
-        axios.defaults.headers.common['Authorization'] = resp.data.accessToken;
-
-        //refreshToken을 localStorage에 저장
-        window.localStorage.setItem("refreshToken", resp.data.refreshToken);
-
-        //로그인 후 메인 페이지로 이동
-        navigator("/")
+        try {
+            const resp = await axios.post("/member/login", input);
+            //console.log(resp.data);
+            setLoginId(resp.data.memberId);
+            setLoginGrade(resp.data.memberGrade);
+    
+            //accessToken은 이후의 axios 요청에 포함시켜서 서버로 가져가야함
+            axios.defaults.headers.common['Authorization'] = resp.data.accessToken;
+    
+            //refreshToken을 localStorage에 저장
+            window.localStorage.setItem("refreshToken", resp.data.refreshToken);
+    
+            //로그인 후 메인 페이지로 이동
+            navigator("/")
+        } catch(e) {
+            alert("아이디 혹은 비밀번호가 틀렸습니다.");
+        }
     }, [input]);
 
     return (
-        <>
+        <div className="login-wrap">
             <Jumbotron title="로그인" content="Login"/>
 
             <div className="row mt-4">
@@ -67,22 +70,32 @@ const Login = () => {
 
             <div className='row mt-4'>
                 <div className='col text-center'>
-                    <button className='btn btn-success' onClick={e=>login()}>
+                    <button className='btn btn-success w-100' onClick={e=>login()}>
                         로그인
                     </button>
                 </div>
             </div>
-            <div className="row mt-4">
-                <div className="col">
-                <label>
-                    <input type="checkbox"/>
-                    자동로그인
-                </label>
+
+            <div className="row mt">
+                <div className="w-100 left">
+                    <label>
+                        <input type="checkbox"/>
+                        자동로그인
+                    </label>                
                 </div>
+                <div className="w-100 text-center">
+                    <Link to="/findId">아이디 찾기</Link> │
+                    <Link to="/findPw">비밀번호 찾기</Link> │ 
+                    <Link to="/SignUP">회원가입</Link>
+                </div>
+                
             </div>
             
-        </>
+            
+        </div>
     );
 };
 
-export default Login;
+
+//브랜치테스트
+export default Login;    
