@@ -108,6 +108,8 @@ const SignUp = () => {
         }
         // 중복 확인이 완료된 경우, 회원가입 요청을 보냄
         const resp = await axios.post("/member/", input);
+
+        navigator("/") // 메인 페이지로 이동
     }, [checkId.flag, checkEmail.flag]);
 
     //등록취소
