@@ -1,7 +1,7 @@
 import './MyLayout.css';
 import { Link } from 'react-router-dom';
 
-const MyLayout = () => {
+const MyLayout = ({ reservationList }) => {
     return (
         <div className='profile-wrap'>
             <div className='mypage-layout'>
