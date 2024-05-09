@@ -1,4 +1,4 @@
-import '/MyLayout.css';
+import './MyLayout.css';
 import { Link } from 'react-router-dom';
 
 const MyLayout = () => {
