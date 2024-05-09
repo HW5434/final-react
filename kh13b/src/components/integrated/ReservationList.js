@@ -21,7 +21,8 @@ const ReservationList = () => {
 
     return (
         <>
-            <Jumbotron title="예매내역 목록" />
+            <Jumbotron title="전체 예매내역 목록" />
+            
             <div className="container w-100">
                 <div className="row justify-content-center">
                     <div className="col-md-10">
@@ -29,9 +30,9 @@ const ReservationList = () => {
                             <table className="table text-center">
                                 <thead>
                                     <tr>
+                                        <th>예매 번호</th>
                                         <th>예매일</th>
                                         <th>공연 정보</th>
-                                        <th>예매 번호</th>
                                         <th>예매 상태</th>
                                         <th>예매 상세 내역</th>
                                     </tr>
@@ -39,9 +40,9 @@ const ReservationList = () => {
                                 <tbody className="text-center">
                                     {reservations.map(reservation => (
                                         <tr key={reservation.reservationNo}>
+                                            <td>{reservation.reservationNo}</td>
                                             <td>{reservation.reservationPayDate}</td>
                                             <td>{reservation.reservationConcertTitle}</td>
-                                            <td>{reservation.reservationNo}</td>
                                             <td>{reservation.reservationStatus}</td>
                                             <td>
                                                 <Link to={`/reservationList/${reservation.reservationNo}`}>
