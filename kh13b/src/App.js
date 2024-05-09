@@ -29,12 +29,7 @@ import { useCallback, useEffect } from 'react';
 import ConcertScheduleInfo from './components/integrated/concert/ConcertScheduleInfo';
 import ReservationList from './components/integrated/ReservationList';
 import ReservationDetail from './components/integrated/ReservationDetail';
-
-
-
-
-
-
+import Reservation from './components/integrated/Reservation';
 
 function App() {
 
@@ -97,13 +92,16 @@ function App() {
             <Route path="/approve" element={<Approve />} />
 
             <Route path="/concertScheduleInfo" element={<ConcertScheduleInfo/>} />
+
+            <Route path="/reservation/:concertNo" element={<Reservation/>} />
+            <Route path="/approve/:concertRequestNo" element={<RequestDetail/>}/> 
+            <Route path="/approve" element={<Approve/>}/>
+
             <Route path="/login" element={<Login/>}/>
             <Route path='/notice' element={<Notice/>}/>
             <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
             <Route path="/reservationList" element={<ReservationList/>}/>
             <Route path="/reservationList:reservationNo" element={<ReservationDetail/>}/>
-
-
           </Routes>
         </div>
       </div>
