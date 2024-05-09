@@ -1,7 +1,7 @@
 import Jumbotron from "../../Jumbotron";
 import { useState, useEffect, useCallback } from 'react';
 import axios from '../../utils/CustomAxios';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaCreditCard } from "react-icons/fa";
 import ConcertScheduleInfo from "./ConcertScheduleInfo"; // 일정 목록 컴포넌트 import
 
@@ -37,6 +37,16 @@ const ConcertDetail = () => {
         setShowSchedule(prevState => !prevState);
     };
 
+    // 티켓 예매 버튼 클릭 시 이벤트 핸들러
+    // const handleTicketReservation = () => {
+    //     const confirmReservation = window.confirm("티켓 예매 페이지로 이동하시겠습니까?");
+    //     if (confirmReservation) {
+    //         // Link 컴포넌트를 사용하여 페이지 이동
+    //         return <Link to="/reservation" />;
+    //     }
+    //     // 확인을 누르지 않으면 아무것도 반환하지 않음
+    //     return null;
+    // };
     return (
         <>
             <Jumbotron title="뮤지컬 정보 상세" />
@@ -52,7 +62,11 @@ const ConcertDetail = () => {
                                         <img src="https://www.charlottetheater.co.kr/_upload/ART/2024222133311_17637.jpg" className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} />
                                     </div>
                                     <div className="text-center mt-4 mb-4">
-                                        <button className="btn btn-primary"><FaCreditCard />&nbsp;&nbsp;티켓예매</button>
+                                        <button className="btn btn-primary">
+                                            <Link to={`/reservation/${concertNo}`} style={{ color: "inherit", textDecoration: "none" }}>
+                                                <FaCreditCard />&nbsp;&nbsp;티켓예매
+                                            </Link>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="col-md-9">

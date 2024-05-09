@@ -3,7 +3,7 @@ import axios from '../../utils/CustomAxios';
 
 const ConcertScheduleInfo = ({ concertNo }) => {
     const [schedules, setSchedules] = useState([]);
-    console.log("concertNo:", concertNo);
+    //console.log("concertNo:", concertNo);
 
     useEffect(() => {
         loadSchedules();
