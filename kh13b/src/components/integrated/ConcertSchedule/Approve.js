@@ -53,7 +53,7 @@ const Approve = () => {
                                         </Link>
                                     </td>
                                 </tr>
-                            ))};
+                            ))}
                         </tbody>
                     </table>
             </div>
