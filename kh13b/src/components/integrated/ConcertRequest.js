@@ -140,6 +140,7 @@ function ConcertRequest() {
             method: "post",
             //data: {...applicant, ...rent, ...concert, actors:actors},
             data: { applicant: applicant, rent: rent, concert: concert, actors: actors },
+            
         })
             .then(resp => {
                 //등록이 완료되면? 목록 갱신
