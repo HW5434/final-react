@@ -101,7 +101,7 @@ function App() {
             <Route path='/notice' element={<Notice/>}/>
             <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
             <Route path="/reservationList" element={<ReservationList/>}/>
-            <Route path="/reservationList:reservationNo" element={<ReservationDetail/>}/>
+            <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
           </Routes>
         </div>
       </div>

@@ -69,6 +69,7 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
+                                    <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
                                 </div>
                             </li>
                             {/* 고객센터 */}
@@ -91,13 +92,6 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/concert">공연 정보</NavLink>
-                                </div>
-                            </li>
-                             {/* 좌석 */}
-                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle"href="#" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/reservationList">예매 내역</NavLink>
                                 </div>
                             </li>
                         </ul>
