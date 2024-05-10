@@ -40,10 +40,15 @@ const Bnr02 = () => {
                 pagination={{
                     clickable: true,
                 }}
-                navigation={true}
+                navigation={true} 
                 modules={[EffectFade, Autoplay, Pagination, Navigation]}
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
                 className="mySwiper"
+                style={{
+                    "--swiper-theme-color": "none",
+                    "--swiper-navigation-color": "#55EE00",
+                    "--swiper-navigation-size": "25px",
+                  }}
             >
                 {/* 이미지 슬라이드 */}
                 {imagePaths.map((imagePath, index) => (
