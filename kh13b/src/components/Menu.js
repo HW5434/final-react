@@ -27,6 +27,8 @@ function Menu() {
         //recoil 저장소에 대한 정리 + axios의 헤더 제거
         setLoginId('');
         setLoginGrade('');
+        localStorage.removeItem('refreshToken');
+        
         delete axios.defaults.headers.common['Authorization'];
     }, [loginId, loginGrade]);
 
@@ -73,6 +75,7 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
+                                    <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
                                 </div>
                             </li>
                             {/* 고객센터 */}

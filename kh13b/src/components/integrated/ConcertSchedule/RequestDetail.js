@@ -8,6 +8,8 @@ import { Modal } from 'bootstrap';
 import { IoIosSave } from "react-icons/io";
 import { GiCancel } from "react-icons/gi";
 import { FaPlus } from "react-icons/fa";
+import 'react-datepicker/dist/react-datepicker.css';
+import ReactDatePicker from "react-datepicker";
 
 
 const RequestDetail = () => {
@@ -17,6 +19,24 @@ const RequestDetail = () => {
     const [selectedActors, setSelectedActors] = useState([]);
 
     const [actors, setActors] = useState([]);
+    const [startDate, setStartDate] = useState(new Date());
+    const [startTime, setStartTime] = useState(new Date());
+    const [endTime, setEndTime] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+   // 시작 시간과 날짜를 합친 값
+const startDateTime = new Date(startDate);
+startDateTime.setHours(startTime.getHours(), startTime.getMinutes());
+
+// 종료 시간과 날짜를 합친 값
+const endDateTime = new Date(endDate);
+endDateTime.setHours(endTime.getHours(), endTime.getMinutes());
+
+// 모달에서 선택한 날짜와 시간을 합쳐서 저장할 상태를 추가
+const combinedDateTime = {
+    start: startDateTime.toISOString(),
+    end: endDateTime.toISOString()
+};
 
     //actor 목록 출력 구문
     const loadData2 = useCallback(async () => {
@@ -53,6 +73,10 @@ const RequestDetail = () => {
             setConcertRequests(resp2.data.concertRequestDto);
             setConcertRequests(resp2.data.listActorDto);
             setConcertRequests(resp.data);
+            setAdds(prevAdds => ({
+                ...prevAdds,
+                concertRequestNo: resp.data.concertRequestNo
+            }));
         } catch (error) {
             console.error("Error loading data:", error);
         }
@@ -87,6 +111,23 @@ const RequestDetail = () => {
 
     //등록
     const saveAdd = useCallback(() => {
+        // 모달에서 선택한 날짜와 시간을 가져오기
+        const startDateTime = new Date(startDate);
+        const endDateTime = new Date(endDate);
+
+        // 선택한 시간 설정
+        startDateTime.setHours(startTime.getHours(), startTime.getMinutes());
+        endDateTime.setHours(endTime.getHours(), endTime.getMinutes());
+        startDateTime.setHours(startTime.getHours(), startTime.getMinutes());
+        endDateTime.setHours(endTime.getHours(), endTime.getMinutes());
+
+        // adds 객체 업데이트
+        setAdds(prevAdds => ({
+            ...prevAdds,
+            concertScheduleStart: startDateTime.toISOString(), // ISO 형식의 문자열로 변환
+            concertScheduleEnd: endDateTime.toISOString() // ISO 형식의 문자열로 변환
+        }));
+
         axios({
             url: "/schedule/",
             method: "post",
@@ -106,7 +147,9 @@ const RequestDetail = () => {
 
                 closeModal();
             });
-    }, [adds, concertRequestNo]);
+    }, [adds, concertRequestNo, startDate, startTime, endDate, endTime]);
+
+
 
     //등록 취소 
     const cancelAdd = useCallback(() => {
@@ -125,14 +168,12 @@ const RequestDetail = () => {
 
     //수정
     const changeAdd = useCallback((e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        setAdds({
-            ...adds,
+        const { name, value } = e.target;
+        setAdds(prevAdds => ({
+            ...prevAdds,
             [name]: value
-        });
-    }, [adds]);
+        }));
+    }, []);
 
 
 
@@ -142,11 +183,11 @@ const RequestDetail = () => {
     //입력값 초기화
     const clearAdd = useCallback(() => {
         setAdds({
-                    concertRequestNo: "",
-                    concertRequestConcertName: "",
-                    concertScheduleStart: "",
-                    concertScheduleEnd: "",
-                    actorName: ""
+            concertRequestNo: "",
+            concertRequestConcertName: "",
+            concertScheduleStart: "",
+            concertScheduleEnd: "",
+            actorName: ""
         });
     }, [adds]);
     // const toggleActorSelection = useCallback((actorNo) => {
@@ -168,6 +209,8 @@ const RequestDetail = () => {
         // 선택된 배우 리스트 업데이트
         setSelectedActors(updatedSelectedActors);
     };
+
+
 
 
 
@@ -325,23 +368,52 @@ const RequestDetail = () => {
                                         className='form-control' />
                                 </div>
                             </div>
+
+                            {/* 기존 입력 요소들 */}
                             <div className='row mt-4'>
                                 <div className='col'>
-                                    <label>공연시작시간</label>
-                                    <input type="text" name="concertScheduleStart"
-                                        value={adds.concertScheduleStart}
-                                        onChange={e => changeAdd(e)}
-                                        className='form-control' />
+                                    <label>공연 등록 날짜</label>
+                                    <ReactDatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartTime(date)}
+                                        dateFormat="yyyy년 MM월 dd일"
+                                        className="form-control"
+                                    />
+
                                 </div>
                             </div>
 
                             <div className='row mt-4'>
                                 <div className='col'>
-                                    <label>공연종료시간</label>
-                                    <input type="text" name="concertScheduleEnd"
-                                        value={adds.concertScheduleEnd}
-                                        onChange={e => changeAdd(e)}
-                                        className='form-control' />
+                                    <label>공연 시작 시간</label>
+                                    <ReactDatePicker
+                                        selected={startTime}
+                                        onChange={(time) => setStartTime(time)}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        // value={adds.concertScheduleStart}
+                                        timeIntervals={30}
+                                        timeCaption="시간"
+                                        dateFormat="HH:mm"
+                                        className="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='row mt-4'>
+                                <div className='col'>
+                                    <label>공연 종료 시간</label>
+                                    <ReactDatePicker
+                                        selected={endTime}
+                                        onChange={(time) => setEndTime(time)}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        // value={adds.concertScheduleEnd}
+                                        timeIntervals={30}
+                                        timeCaption="시간"
+                                        dateFormat="HH:mm"
+                                        className="form-control"
+                                    />
                                 </div>
                             </div>
 
@@ -369,7 +441,6 @@ const RequestDetail = () => {
                                             </label>
                                         </div>
                                     ))}
-
                                 </div>
                             </div>
 

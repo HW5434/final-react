@@ -11,6 +11,9 @@ import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
 import Login from './components/member/Login';
+import Mypage from './components/member/Mypage/Mypage';
+import FindId from './components/member/Find/FindId';
+import FindPw from './components/member/Find/FindPw';
 import Approve from './components/integrated/ConcertSchedule/Approve';
 import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
 
@@ -81,6 +84,9 @@ function App() {
             {/* 로그인 */}
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/findId" element={<FindId />} />
+            <Route path="/findPw" element={<FindPw />} />
 
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />
@@ -102,7 +108,7 @@ function App() {
             <Route path='/notice' element={<Notice/>}/>
             <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
             <Route path="/reservationList" element={<ReservationList/>}/>
-            <Route path="/reservationList:reservationNo" element={<ReservationDetail/>}/>
+            <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
           </Routes>
           <Footer />
         </div>
