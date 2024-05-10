@@ -2,9 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import axios from "../src/components/utils/CustomAxios";
 import './App.css';
 import Menu from './components/Menu'; //메뉴
-import Home from './components/Home'; //홈 화면
+import Home from './components/Home/Home'; //홈 화면
 //테스트 파일
-import Test01 from './components/Test01';
 import Test02 from './components/Test02';
 import Test03 from './components/Test03';
 import Qna from './components/integrated/Qna';
@@ -36,6 +35,8 @@ import Reservation from './components/integrated/Reservation';
 import RequestList from './components/integrated/ConcertSchedule/RequestList';
 import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertScheduleAdd';
 
+import Introduce from './components/introduce';
+import Footer from './components/Home/Footer';
 
 function App() {
 
@@ -79,7 +80,7 @@ function App() {
           <Menu />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/test01" element={<Test01 />} />
+            <Route path="/stage" element={<Introduce />} />
             <Route path="/test02" element={<Test02 />} />
             <Route path="/test03" element={<Test03 />} />
 
@@ -114,6 +115,7 @@ function App() {
             <Route path="/requestList" element={<RequestList/>}/>
             <Route path="/concertScheduleAdd" element={<ConcertScheduleAdd/>}/>
           </Routes>
+          <Footer />
         </div>
       </div>
 
