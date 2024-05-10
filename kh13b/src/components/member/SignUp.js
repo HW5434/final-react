@@ -1,7 +1,6 @@
 import { useCallback, useState, useRef } from 'react';
 import AddressSearch from "./AddressSearch/AddressSearch";
 import axios from "../utils/CustomAxios";
-import Jumbotron from './../Jumbotron';
 import './Member.css';
 import { useNavigate } from 'react-router-dom';
 import { MdRemoveRedEye } from "react-icons/md";
@@ -249,17 +248,18 @@ const SignUp = () => {
                         <label>이름</label>
                         <input type="text" name="memberName" value={input.memberName} className="input-control"  onChange={handleSignUpInputChange} placeholder='이름' />
                         <p className={inputValid.memberName ? "trueValid" : "falseValid"}>
-                            {input.memberName === "" ? "" : inputValid.memberName ? "이름 잘 입력했어" : "이름 입력해"}
+                            {input.memberName === "" ? "" : inputValid.memberName ? "형식에 맞게 입력하셨습니다" : "이름을 입력해주세요"}
                         </p>
                     </div>
                 </div>
                 <div className='mb-3'>
                     <div className='col'>
                         <label>아이디</label>
+                        <input type="text" name="memberId" value={input.memberId} className="input-control" onChange={handleSignUpInputChange} 
+                                placeholder='영문 소문자 시작, 숫자 포함 8~20자로 작성' />
                         <p className={checkId.flag ? "trueValid" : "falseValid"}>
                             {checkId.message === "" ? "" : checkId.message}
                         </p>
-                        <input type="text" name="memberId" value={input.memberId} className="input-control" onChange={handleSignUpInputChange} placeholder='아이디' />
                         <button type='button' className={`mt-3 ${inputValid.memberId ? "openData" : "noneData"}`} onClick={() => doubleCheckId(input.memberId)}>아이디 중복확인</button>
                     </div>  
                 </div>
@@ -267,13 +267,14 @@ const SignUp = () => {
                     <div className='col'>
                         <label>비밀번호</label>
                         <div>
-                            <input type="password" name="memberPw" value={input.memberPw} className="input-control" onChange={handleSignUpInputChange} ref={passwordRef} placeholder='비밀번호' />
+                            <input type="password" name="memberPw" value={input.memberPw} className="input-control" onChange={handleSignUpInputChange} ref={passwordRef} 
+                                    placeholder='영문 대,소문자와 숫자, 특수문자(!, @, #, $)가 포함 되어야 합니다' />
                             <p className='passwor-flag' onClick={handleShowPwChecked}>
                                 <MdRemoveRedEye />
                             </p>
                         </div>
                         <p className={inputValid.memberPw ? "trueValid" : "falseValid"}>
-                            {input.memberPw === "" ? "" : inputValid.memberPw ? "비밀번호 잘 입력했어" : "비밀번호 다시 입력해"}
+                            {input.memberPw === "" ? "" : inputValid.memberPw ? "올바른 비밀번호 형식입니다" : "형식에 맞게 입력해주세요"}
                         </p>
                     </div>
                 </div>
@@ -282,7 +283,7 @@ const SignUp = () => {
                         <label>비밀번호 확인</label>
                         <input type="password" name="memberPwCheck" value={input.memberPwCheck} className="input-control" onChange={handleSignUpInputChange} placeholder='비밀번호 확인' />
                         <p className={inputValid.memberPwCheck ? "trueValid" : "falseValid"}>
-                            {input.memberPwCheck === "" ? "" : inputValid.memberPwCheck ? "비밀번호 일치해" : "비밀번호 일치하지않아"}
+                            {input.memberPwCheck === "" ? "" : inputValid.memberPwCheck ? "비밀번호가 일치합니다" : "비밀번호가 일치하지 않습니다"}
                         </p>
                     </div>
                 </div>
@@ -295,9 +296,9 @@ const SignUp = () => {
                 <div className='mb-3'>
                     <div className='col'>
                         <label>연락처 (숫자만 입력)</label>
-                        <input type="tel" name="memberContact" value={input.memberContact} className="input-control" onChange={handleSignUpInputChange} placeholder='연락처' />
+                        <input type="tel" name="memberContact" value={input.memberContact} className="input-control" onChange={handleSignUpInputChange} placeholder='ex)01012345678' />
                         <p className={inputValid.memberContact ? "trueValid" : "falseValid"}>
-                            {input.memberContact === "" ? "" : inputValid.memberContact ? "연락처 잘 입력했어" : "연락처 입력해"}
+                            {input.memberContact === "" ? "" : inputValid.memberContact ? "형식에 맞게 입력하셨습니다" : "연락처를 입력하세요"}
                         </p>
                     </div>
                 </div>
