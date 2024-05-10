@@ -22,6 +22,8 @@ import './Poster.css';
 
 // const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
+
+
 // 이미지 불러오기
 const Poster = () => {
     const imagePaths = [
@@ -31,6 +33,8 @@ const Poster = () => {
         sample_images_3,
         sample_images_4
     ];
+
+    
 
     return (
         <>
@@ -49,6 +53,10 @@ const Poster = () => {
                 pagination={true}
                 modules={[EffectCoverflow, Pagination]}
                 className="mySwiper"
+                style={{
+                    "--swiper-pagination-display": "none",
+                    "--swiper-navigation-color": "#55EE00",
+                  }}
             >
                 {imagePaths.map((imagePath, index) => (
                     <SwiperSlide key={index}>
