@@ -5,6 +5,10 @@
 
  /* 메뉴 글자 크기 수정 */
 .navbar-nav .nav-link {
-    font-size: 30px; /* 원하는 크기로 수정 */
+    font-size: 20px; /* 원하는 크기로 수정 */
 }
 
+.logo {
+    width: 150;
+    height: 150;
+}
