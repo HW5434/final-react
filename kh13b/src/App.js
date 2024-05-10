@@ -33,6 +33,9 @@ import ConcertScheduleInfo from './components/integrated/concert/ConcertSchedule
 import ReservationList from './components/integrated/ReservationList';
 import ReservationDetail from './components/integrated/ReservationDetail';
 import Reservation from './components/integrated/Reservation';
+import RequestList from './components/integrated/ConcertSchedule/RequestList';
+import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertScheduleAdd';
+
 
 function App() {
 
@@ -108,6 +111,8 @@ function App() {
             <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
             <Route path="/reservationList" element={<ReservationList/>}/>
             <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
+            <Route path="/requestList" element={<RequestList/>}/>
+            <Route path="/concertScheduleAdd" element={<ConcertScheduleAdd/>}/>
           </Routes>
         </div>
       </div>
