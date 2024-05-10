@@ -3,6 +3,7 @@ import Jumbotron from '../Jumbotron';
 import axios from '../utils/CustomAxios';
 import { Modal } from 'bootstrap';
 import './Qna.css';
+import Wrapper from '../Home/Wrapper';
 
 
 function Qna() {
@@ -130,8 +131,6 @@ function Qna() {
                 </div>
             </div>
 
-
-
             {/* 목록 */}
             <div className='row-4 mt-3 mb-3'>
                 <div className='col'>
@@ -139,17 +138,17 @@ function Qna() {
                         <div className="accordion accordion-flush" id={`accordion${qna.qnaNo}`} key={qna.qnaNo}>
                             <div className="accordion-item">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button collapsed" type="button" onClick={() => toggleExpand(qna.qnaNo)}>
-                                        <span>Q</span>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <span>{qna.qnaTitle}</span>
-                                    </button>
+                                <button className="accordion-button collapsed" type="button" onClick={() => toggleExpand(qna.qnaNo)}>
+    <span>Q</span>
+    &nbsp;&nbsp;&nbsp;
+    <span>{qna.qnaTitle}</span>
+</button>
                                 </h2>
 
                                 {/* 클릭 했을때 보이는 질문글의 내용들 */}
-                                <div className={expandedQna === qna.qnaNo ? "accordion-collapse collapse show" : "accordion-collapse collapse"} id={`collapse${qna.qnaNo}`} aria-labelledby={`heading${qna.qnaNo}`}
-                                    data-bs-parent={`#accordion${qna.qnaNo}`}>
-                                    <div className="accordion-body">
+                                <div className={expandedQna === qna.qnaNo ? "accordion-collapse collapse show" : "accordion-collapse collapse"} id={`collapse${qna.qnaNo}`} aria-labelledby={`heading${qna.qnaNo}`} data-bs-parent={`#accordion${qna.qnaNo}`}>
+    {/* 답변 영역 */}
+    <div className="accordion-body">
                                         {/* 답변 영역 */}
                                         <div className='row'>
                                             <div className='col mt-3'>
@@ -252,26 +251,14 @@ function Qna() {
                                                 </div> */}
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     ))}
                 </div>
