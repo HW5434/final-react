@@ -1,14 +1,15 @@
 #app {
     height: 100%;
   }
-  html,
-  body {
+  html, body {
     position: relative;
     height: 100%;
   }
   
+/* 메인에 있는 body도 변함 */
+
   body {
-    background: #eee;
+    background-color: #EEEEEE;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #000;
@@ -21,6 +22,7 @@
     height: 100%;
   }
   
+  /* 글씨 */
   .swiper-slide {
     text-align: center;
     font-size: 18px;
@@ -36,8 +38,7 @@
     display: block;
     width: 100%;
     height: 100%;
+    
     object-fit: cover;
   }
-
-  
   
