@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 
 
 function ConcertRequest() {
+
     const [concertRequests, setConcertRequests] = useState([]);
     const [applicant, setApplicant] = useState({
         //memberNo: "",
@@ -60,6 +61,7 @@ function ConcertRequest() {
         actorNo: 1, actorName: ''
     }]);
 
+
     const changeActors = useCallback((e, target) => {
         const copy = [...actors];//actors 복사
         const copy2 = copy.map(actor => {//copy 뒤져가면서
@@ -102,14 +104,66 @@ function ConcertRequest() {
 
 
     const bsModal = useRef();
-    const openModal = useCallback(() => {
-        const modal = new Modal(bsModal.current);
-        modal.show();
-        closeModal();
-    }, [bsModal]);
+    // const openModal = useCallback(() => {
+    //     const modal = new Modal(bsModal.current);
+    //     modal.show();
+    //     closeModal();
+    // }, [bsModal]);
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
-        
+        setApplicant({
+            concertRequestNo: "",
+            concertRequestCompanyName: "",
+            concertRequestCompanyNumber: "",
+            concertRequestRepresentative: "",
+            concertRequestManager: "",
+            concertRequestAddress: "",
+            concertRequestOfficeNumber: "",
+            concertRequestPhoneNumber: "",
+            concertRequestEmail: "",
+            concertRequestFax: ""
+        });
+        setConcert({
+            concertRequestConcertName: "",
+            concertRequestConcertGenre: "",
+            concertRequestAge: "",
+            concertRequestRuntimeFirst: "",
+            concertRequestIntermission: "",
+            concertRequestRuntimeSecond: "",
+            concertRequestSeatvip: "",
+            concertRequestSeatr: "",
+            concertRequestSeats: "",
+            concertRequestSeata: "",
+        });
+        setConcert({
+            concertRequestConcertName: "",
+            concertRequestConcertGenre: "",
+            concertRequestAge: "",
+            concertRequestRuntimeFirst: "",
+            concertRequestIntermission: "",
+            concertRequestRuntimeSecond: "",
+            concertRequestSeatvip: "",
+            concertRequestSeatr: "",
+            concertRequestSeats: "",
+            concertRequestSeata: "",
+        });
+
+        setActors([{
+            actorNo: 1, actorName: ''
+        }]);
+
+
+        setRent({
+            concertRequestHeadDay: "",
+            concertRequestFooterDay: "",
+            concertRequestReadyhDay: "",
+            concertRequestReadyfDay: "",
+            concertRequestStarthDay: "",
+            concertRequestStartfDay: "",
+            concertRequestWithdrawhDay: "",
+            concertRequestWithdrawfDay: "",
+            concertRequestState: "n"
+        });
     }, [bsModal]);
 
 
@@ -139,7 +193,7 @@ function ConcertRequest() {
             url: "/concertRequest/",
             method: "post",
             //data: {...applicant, ...rent, ...concert, actors:actors},
-            data: { applicant: applicant, rent: rent, concert: concert, actors: actors },
+            data: { applicant: applicant, rent: rent, concert: concert, actors: actors, attachs: attachs },
 
         })
             .then(resp => {
@@ -181,9 +235,9 @@ function ConcertRequest() {
                     concertRequestSeats: "",
                     concertRequestSeata: "",
                 });
-                setActors({
-                    actorNo: 1, actorName: ''
-                });
+
+
+
                 setRent({
                     concertRequestHeadDay: "",
                     concertRequestFooterDay: "",
@@ -195,17 +249,28 @@ function ConcertRequest() {
                     concertRequestWithdrawfDay: "",
                     concertRequestState: "n"
                 });
+
+                setAttachs([{
+                    attachNo:"",
+                    attachName:"",
+                    attachType:"",
+                    attachSize:"",
+                }]);
+
                 closeModal();
             });
     }, [applicant, rent, concert, actors]);
 
+    const [attachs, setAttachs] = useState(null);
 
+    const handleAttachsChange = (e) => {
+        setAttachs(e.target.files);
+    };
 
-
+    
 
     return (
         <>
-
             <div className="container mt-4 ms-3">
                 <h1>공연 대관 문의</h1>
                 <div className="row">
@@ -239,7 +304,6 @@ function ConcertRequest() {
                     </div>
                 </div>
             </div>
-
 
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -458,7 +522,7 @@ function ConcertRequest() {
                                         {actors.map(actor => (
                                             <div className="row mb-2" key={actor.id}>
                                                 <div className='col'>
-                                                    <input type="text" value={actor.value} name='actorName'
+                                                    <input type="text" value={actor.actorName} name='actorName'
                                                         onChange={e => changeActors(e, actor)} required />
                                                 </div>
                                             </div>
@@ -557,22 +621,22 @@ function ConcertRequest() {
                                             className='form-control' required />
                                     </div>
                                 </div>
-                                {/* <div className='row mt-4'>
+                                <div className='row mt-4'>
                                     <div className='col mb-4'>
                                         <label>포스터 첨부</label>
-                                        <input type="file" name="concertRequestNo"
-                                            value={input.concertRequestNo}
-                                            onChange={e => changeInput(e)}
+                                        <input type="file" name="attachNo"
+                                           
+                                            onChange={e => handleAttachsChange(e)}
                                             className='form-control' />
                                     </div>
 
-                                </div> */}
+                                </div>
                             </div>
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-primary" onClick={saveInput}>접수신청</button>
 
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={closeModal}>닫기</button>
                             </div>
 
                         </div>
@@ -588,6 +652,6 @@ function ConcertRequest() {
 
 
 
-}
 
+}
 export default ConcertRequest;
