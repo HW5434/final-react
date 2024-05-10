@@ -76,6 +76,7 @@ function Menu() {
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
                                     <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
+                                    <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
                                 </div>
                             </li>
                             {/* 고객센터 */}
