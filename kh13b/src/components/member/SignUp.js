@@ -333,7 +333,7 @@ const SignUp = () => {
                             {emailVerification.flag ? 
                                 <div className='email-check'>
                                     <input type='text' onChange={handleEmailCheckInputChange}/>
-                                    <button className="ml checkButton" onClick={() => userInputCode(inputCode)}>인증확인</button>
+                                    <button type='button' className="ml checkButton" onClick={() => userInputCode(inputCode)}>인증확인</button>
                                 </div> : 
                                 <button type='button' className={`ml ${checkEmail.flag ? 'openData' : 'noneData'}`} onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
                             }
