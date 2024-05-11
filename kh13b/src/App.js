@@ -15,6 +15,7 @@ import Login from './components/member/Login/Login';
 import Mypage from './components/member/Mypage/Mypage';
 import FindId from './components/member/Find/FindId';
 import FindPw from './components/member/Find/FindPw';
+import KakaoAuth from './components/member/Auth/KakaoAuth';
 import Approve from './components/integrated/ConcertSchedule/Approve';
 import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
 
@@ -86,7 +87,8 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/findId" element={<FindId />} />
             <Route path="/findPw" element={<FindPw />} />
-
+            <Route path="/auth" element={<KakaoAuth />} />
+            
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />
             <Route path="/ConcertRequest" element={<ConcertRequest />} />

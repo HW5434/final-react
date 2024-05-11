@@ -35,7 +35,7 @@ const Login = () => {
         if(input.memberPw.length === 0) return;
         try {
             const resp = await axios.post("/member/login", input);
-            //console.log(resp.data);
+
             setLoginId(resp.data.memberId);
             setLoginGrade(resp.data.memberGrade);
     
@@ -55,7 +55,7 @@ const Login = () => {
 
 
     const handleKakaoLogin = () => {
-        const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
+        const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_TEMP_API_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
         window.location.href = kakaoURL;
     }
 
