@@ -11,7 +11,7 @@ import Qna from './components/integrated/Qna';
 import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
-import Login from './components/member/Login';
+import Login from './components/member/Login/Login';
 import Mypage from './components/member/Mypage/Mypage';
 import FindId from './components/member/Find/FindId';
 import FindPw from './components/member/Find/FindPw';
