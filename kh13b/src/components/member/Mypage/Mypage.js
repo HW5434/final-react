@@ -43,7 +43,7 @@ const Mypage = () => {
                     {layout === 'update' && (
                         <div>
                             수정화면
-                            <button className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
+                            <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
                         </div>
                     )}
                     {layout === 'delete' && (
