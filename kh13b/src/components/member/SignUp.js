@@ -108,6 +108,8 @@ const SignUp = () => {
         }
         // 중복 확인이 완료된 경우, 회원가입 요청을 보냄
         const resp = await axios.post("/member/", input);
+
+        navigator("/") // 메인 페이지로 이동
     }, [checkId.flag, checkEmail.flag]);
 
     //등록취소
@@ -331,7 +333,7 @@ const SignUp = () => {
                             {emailVerification.flag ? 
                                 <div className='email-check'>
                                     <input type='text' onChange={handleEmailCheckInputChange}/>
-                                    <button className="ml checkButton" onClick={() => userInputCode(inputCode)}>인증확인</button>
+                                    <button type='button' className="ml checkButton" onClick={() => userInputCode(inputCode)}>인증확인</button>
                                 </div> : 
                                 <button type='button' className={`ml ${checkEmail.flag ? 'openData' : 'noneData'}`} onClick={() => sendEmail(input.memberEmail)}>이메일 인증</button>
                             }

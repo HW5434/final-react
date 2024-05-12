@@ -1,0 +1,135 @@
+.login-main {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-height: 100%;
+    padding-top: 120px;
+}
+
+.login {
+    display: flex;
+    width: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.login-wrap {
+    flex: 1 0 auto;
+    margin: 0px auto;
+    max-width: 300px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 40px 0px;
+}
+
+.login-logo {
+    margin-bottom: 30px;
+}
+
+.login-logoImage {
+    width: auto;
+    height: 50px;
+    margin: 0px auto;
+}
+
+.login-form {
+    width: 300px;
+}
+
+.login-id {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 4px 4px 0px 0px;
+    transition: box-shadow 0.2s ease 0s, background-color 0.2s ease 0s;
+    z-index: 1;
+    padding: 13px 15px 14px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 21px;
+    resize: none;
+}
+
+.login-pw {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 0px 0px 4px 4px;
+    margin-top: -1px;
+    transition: box-shadow 0.2s ease 0s, background-color 0.2s ease 0s;
+    padding: 13px 15px 14px;
+}
+
+.login-button {
+    margin: 20px 0px;
+    width: 100%;
+    padding: 15px 10px;
+    line-height: 20px;
+    font-size: 17px;
+    min-height: 50px;
+    background-color: #681116;
+    border-color: #fff;
+    color: #fff;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-weight: 700;
+    text-align: center;
+    transition: color 0.1s ease 0s, background-color 0.1s ease 0s, border-color 0.1s ease 0s;
+    border-radius: 4px;
+}
+
+.login-option {
+    width: 100%;
+    text-align: center;
+}
+
+.option-first {
+    margin-left: 0px;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+}
+
+.option-other {
+    margin-left: 20px;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+}
+
+.kakao-login {
+    margin: 0px 10px;
+    transition: opacity 0.1s ease 0s;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    border: none;
+}
+
+.social-login {
+    text-align: center;
+}
+
+.social-text {
+    margin: 35px 0px 15px;
+    color: rgb(117, 117, 117);
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.33;
+    text-align: center;
+}

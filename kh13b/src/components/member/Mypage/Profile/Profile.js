@@ -1,7 +1,7 @@
 import './Profile.css';
 import { Link } from 'react-router-dom';
 
-const Profile = ({ member }) => {
+const Profile = ({ member, layoutChange }) => {
 
     return (
         <div className='l-profile-wrap'>
@@ -20,7 +20,8 @@ const Profile = ({ member }) => {
                                             <dd className='datarap-data'>0</dd>
                                         </dl>
                                         <div className='bottom-updaterap'>
-                                            <Link href="" className='update-link'>설정</Link>
+                                            <button type='button' onClick={() => layoutChange('my')} className='update-link'>내정보</button>
+                                            <button type='button' onClick={() => layoutChange('update')} className='update-link'>수정</button>
                                         </div>
                                     </div>
                                 </div>

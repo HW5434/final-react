@@ -16,9 +16,9 @@ import { RecoilRoot } from "recoil";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RecoilRoot>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </RecoilRoot>
 );
 
