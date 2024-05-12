@@ -73,7 +73,7 @@ const Login = () => {
                         <div className="">
                             <input type="password" name="memberPw" value={input.memberPw} className="login-pw" onChange={e=>changeInput(e)} placeholder='비밀번호' />
                         </div>
-                        <button className='login-button' onClick={e=>login()}>
+                        <button type="button" className='login-button' onClick={e=>login()}>
                             로그인
                         </button>
                         <section className='login-option'>
