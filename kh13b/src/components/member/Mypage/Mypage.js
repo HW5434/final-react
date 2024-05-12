@@ -7,6 +7,7 @@ import axios from '../../utils/CustomAxios';
 import Profile from './Profile/Profile';
 import MyLayout from './MyLayout/MyLayout';
 import Withdrawal from './Withdrawal/Withdrawal';
+import InfoEdit from './InfoEdit/InfoEdit';
 
 const Mypage = () => {
 
@@ -42,7 +43,7 @@ const Mypage = () => {
                     )}
                     {layout === 'update' && (
                         <div>
-                            수정화면
+                            <InfoEdit/>
                             <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
                         </div>
                     )}

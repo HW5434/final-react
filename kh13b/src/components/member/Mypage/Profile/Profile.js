@@ -20,7 +20,7 @@ const Profile = ({ member, layoutChange }) => {
                                             <dd className='datarap-data'>0</dd>
                                         </dl>
                                         <div className='bottom-updaterap'>
-                                            <button type='button' onClick={() => layoutChange('my')} className='update-link'>내정보</button>
+                                            <button type='button' onClick={() => layoutChange('my')} className='update-link'>예매내역</button>
                                             <button type='button' onClick={() => layoutChange('update')} className='update-link'>수정</button>
                                         </div>
                                     </div>
