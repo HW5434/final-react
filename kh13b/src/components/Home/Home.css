@@ -1,0 +1,24 @@
+.main-wrapper {
+    background-color: #47484A
+}
+
+/* Footer */
+.footer-wrapper {
+    /* 배경색상 */
+    background-color: #800E13;
+    /* 글자색상 */
+    color: rgba(240, 248, 255, 0.705);
+    /* 글사크기 */
+    flex: 1;
+}
+
+/* 포스터 크기 */
+.poster-main {
+  height: 355px;
+}
+
+/* Banner 사이즈 [1 ,2 ,3] */
+.banner{
+  width: 30%;
+  height: 150px;
+}
