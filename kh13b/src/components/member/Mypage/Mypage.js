@@ -5,13 +5,15 @@ import { useRecoilState } from "recoil";
 import { loginIdState } from "../../utils/RecoilData";
 import axios from '../../utils/CustomAxios';
 import Profile from './Profile/Profile';
-import MyLayout from './MyLayout/MyLayout'
+import MyLayout from './MyLayout/MyLayout';
+import Withdrawal from './Withdrawal/Withdrawal';
 
 const Mypage = () => {
 
     const [loginId, setLoginId] = useRecoilState(loginIdState);
     const [member, setMember] = useState({});
     const [reservationList, setReservationList] = useState([]);
+    const [layout, setLayout] = useState('my');
 
     const load = useCallback(async() => {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -30,11 +32,24 @@ const Mypage = () => {
     return (
         <div className='mypage'>
             <div className='mypage-container'>
-                <Profile member={member} />
+                <Profile member={member} layoutChange={setLayout}/>
                 <div className='my-empty'>
                     <div className='empty-sub'></div>
                 </div>
-                <MyLayout reservationList={reservationList} />
+                <div className='profile-wrap'>
+                    {layout === 'my' && (
+                        <MyLayout reservationList={reservationList} />
+                    )}
+                    {layout === 'update' && (
+                        <div>
+                            수정화면
+                            <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
+                        </div>
+                    )}
+                    {layout === 'delete' && (
+                        <Withdrawal/>
+                    )}
+                </div>
             </div>
         </div>
     )

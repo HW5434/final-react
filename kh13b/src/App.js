@@ -10,10 +10,11 @@ import Qna from './components/integrated/Qna';
 import Seat from './components/integrated/Seat';
 import ConcertRequest from './components/integrated/ConcertRequest';
 import SignUp from './components/member/SignUp';
-import Login from './components/member/Login';
+import Login from './components/member/Login/Login';
 import Mypage from './components/member/Mypage/Mypage';
 import FindId from './components/member/Find/FindId';
 import FindPw from './components/member/Find/FindPw';
+import KakaoAuth from './components/member/Auth/KakaoAuth';
 import Approve from './components/integrated/ConcertSchedule/Approve';
 import RequestDetail from './components/integrated/ConcertSchedule/RequestDetail';
 
@@ -32,6 +33,9 @@ import ConcertScheduleInfo from './components/integrated/concert/ConcertSchedule
 import ReservationList from './components/integrated/ReservationList';
 import ReservationDetail from './components/integrated/ReservationDetail';
 import Reservation from './components/integrated/Reservation';
+import RequestList from './components/integrated/ConcertSchedule/RequestList';
+import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertScheduleAdd';
+
 import Introduce from './components/introduce';
 import Footer from './components/Home/Footer';
 
@@ -87,7 +91,8 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/findId" element={<FindId />} />
             <Route path="/findPw" element={<FindPw />} />
-
+            <Route path="/auth" element={<KakaoAuth />} />
+            
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />
             <Route path="/ConcertRequest" element={<ConcertRequest />} />
@@ -109,6 +114,8 @@ function App() {
             <Route path="/notice/:noticeNo" element={<NoticeDetail/>}/>
             <Route path="/reservationList" element={<ReservationList/>}/>
             <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
+            <Route path="/requestList" element={<RequestList/>}/>
+            <Route path="/concertScheduleAdd" element={<ConcertScheduleAdd/>}/>
           </Routes>
           <Footer />
         </div>

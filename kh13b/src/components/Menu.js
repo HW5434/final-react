@@ -37,14 +37,11 @@ function Menu() {
         <>
             {/* 로고 */}  
             <NavLink className="navbar-brand" to="/">
-                <div className='logo text-center'><img src={logo} style={{ width: 'auto', height: '100px' }} /></div>
+                <div className='text-center'><img src={logo} style={{ width: 'auto', height: '100px' }} /></div>
             </NavLink>
             <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
                 <Wrapper>
                     {/* React에서는 페이지간 이동을 NavLink 태그로 한다 */}
-                    <NavLink className="navbar-brand" to="/">
-                        
-                    </NavLink>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -76,6 +73,7 @@ function Menu() {
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
                                     <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
+                                    <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
                                 </div>
                             </li>
                             {/* 고객센터 */}

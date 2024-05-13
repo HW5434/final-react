@@ -44,10 +44,12 @@ const Bnr02 = () => {
                 modules={[EffectFade, Autoplay, Pagination, Navigation]}
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
                 className="mySwiper"
+
+  
+                // 버튼 스타일 변경
                 style={{
-                    "--swiper-theme-color": "none",
+                    "--swiper-pagination-color": "#ffffff",
                     "--swiper-navigation-color": "#55EE00",
-                    "--swiper-navigation-size": "25px",
                   }}
             >
                 {/* 이미지 슬라이드 */}

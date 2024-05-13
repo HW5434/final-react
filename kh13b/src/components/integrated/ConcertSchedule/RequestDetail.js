@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Jumbotron from "../../Jumbotron";
 import axios from '../../utils/CustomAxios';
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, redirect } from "react-router-dom";
 import ConcertRequest from './../ConcertRequest';
 import { Modal } from 'bootstrap';
 import { IoIosSave } from "react-icons/io";
@@ -14,220 +14,55 @@ import ReactDatePicker from "react-datepicker";
 
 const RequestDetail = () => {
     const { concertRequestNo } = useParams();
-    const [concertRequests, setConcertRequests] = useState([]); // 초기값을 null로 설정
+    const [concertRequests, setConcertRequests] = useState({});
+    const [confirmApproval, setConfirmApproval] = useState(false);
 
-    const [selectedActors, setSelectedActors] = useState([]);
-
-    const [actors, setActors] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
-    const [startTime, setStartTime] = useState(new Date());
-    const [endTime, setEndTime] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-
-   // 시작 시간과 날짜를 합친 값
-const startDateTime = new Date(startDate);
-startDateTime.setHours(startTime.getHours(), startTime.getMinutes());
-
-// 종료 시간과 날짜를 합친 값
-const endDateTime = new Date(endDate);
-endDateTime.setHours(endTime.getHours(), endTime.getMinutes());
-
-// 모달에서 선택한 날짜와 시간을 합쳐서 저장할 상태를 추가
-const combinedDateTime = {
-    start: startDateTime.toISOString(),
-    end: endDateTime.toISOString()
-};
-
-    //actor 목록 출력 구문
-    const loadData2 = useCallback(async () => {
-        try {
-            const resp = await axios.get("/actor/");
-            setActors(resp.data);
-        } catch (error) {
-            console.error("Error loading actor data:", error);
-        }
-    }, []);
-
-
-    const [adds, setAdds] = useState({
-        concertRequestNo: "",
-        concertRequestConcertName: "",
-        concertScheduleStart: "",
-        concertScheduleEnd: "",
-        actorName: ""
-    });
-    const [input, setInput] = useState({
-        concertRequestState: "n" // 기본값은 'y'로 설정합니다.
-    });
 
     useEffect(() => {
         loadData();
-        loadData2();
     }, [concertRequestNo]);
-
 
     const loadData = useCallback(async () => {
         try {
             const resp = await axios.get(`concertRequest/${concertRequestNo}`);
-            const resp2 = await axios.get(`/concertRequest/${concertRequestNo}/actors`);
-            setConcertRequests(resp2.data.concertRequestDto);
-            setConcertRequests(resp2.data.listActorDto);
             setConcertRequests(resp.data);
-            setAdds(prevAdds => ({
-                ...prevAdds,
-                concertRequestNo: resp.data.concertRequestNo
-            }));
         } catch (error) {
             console.error("Error loading data:", error);
         }
     }, [concertRequestNo]);
 
-    // const loadData = useCallback(async () => {
-    //     try {
-    //         const resp = await axios.get(`/concert_request/${concertRequestNo}`); // 수정된 부분
-    //         const { concertRequestDto, listActorDto } = resp.data; // 요청에서 받은 데이터를 한 번에 설정
-    //         setConcertRequests(concertRequestDto);
-    //         setActors(listActorDto); // 배우 목록 설정
-    //     } catch (error) {
-    //         console.error("Error loading data:", error);
-    //     }
-    // }, [concertRequestNo]);
-
-    const approveState = useCallback(async () => {
-        // concertRequestState 값을 'Y'로 변경하여 업데이트합니다.
-        const updatedInput = { ...input, concertRequestState: 'y' };
-
-        try {
-            // PATCH 요청을 보내어 데이터를 업데이트합니다.
-            const resp = await axios.patch(`/concertRequest/${concertRequestNo}`, updatedInput);
-            // 데이터를 다시 불러옵니다.
-            loadData();
-            openModal();
-        } catch (error) {
-            console.error("Error updating data:", error);
-        }
-
-    }, [input, concertRequestNo, loadData, adds]);
-
-    //등록
-    const saveAdd = useCallback(() => {
-        // 모달에서 선택한 날짜와 시간을 가져오기
-        const startDateTime = new Date(startDate);
-        const endDateTime = new Date(endDate);
-
-        // 선택한 시간 설정
-        startDateTime.setHours(startTime.getHours(), startTime.getMinutes());
-        endDateTime.setHours(endTime.getHours(), endTime.getMinutes());
-        startDateTime.setHours(startTime.getHours(), startTime.getMinutes());
-        endDateTime.setHours(endTime.getHours(), endTime.getMinutes());
-
-        // adds 객체 업데이트
-        setAdds(prevAdds => ({
-            ...prevAdds,
-            concertScheduleStart: startDateTime.toISOString(), // ISO 형식의 문자열로 변환
-            concertScheduleEnd: endDateTime.toISOString() // ISO 형식의 문자열로 변환
-        }));
-
-        axios({
-            url: "/schedule/",
-            method: "post",
-            data: adds
-        })
-            .then(resp => {
-                //등록이 완료되면? 목록 갱신
-                loadData(); //정보 불러오기
-
-                setAdds({ //새로 넣기
-                    concertRequestNo: "",
-                    concertRequestConcertName: "",
-                    concertScheduleStart: "",
-                    concertScheduleEnd: "",
-                    actorName: ""
-                });
-
-                closeModal();
-            });
-    }, [adds, concertRequestNo, startDate, startTime, endDate, endTime]);
-
-
-
-    //등록 취소 
-    const cancelAdd = useCallback(() => {
-        //필요하다면 확인창 추가
-
-        setAdds({
-            concertRequestNo: "",
-            concertRequestConcertName: "",
-            concertScheduleStart: "",
-            concertScheduleEnd: "",
-            actorName: ""
-        });
-        clearAdd();
-        closeModal();
-    }, [adds]);
-
-    //수정
-    const changeAdd = useCallback((e) => {
-        const { name, value } = e.target;
-        setAdds(prevAdds => ({
-            ...prevAdds,
-            [name]: value
-        }));
+    //승인
+    const handleApproval = useCallback(async () => {
+        setConfirmApproval(true);
     }, []);
 
+    //승인
+    const approveState = useCallback(async (confirmation) => {
+        if (confirmation) {
+            try {
+                const choice = window.confirm("승인하시겠습니까?");
+                if (choice === false) {
 
+                    handleCancel();
+                    return;
+                }
+                    
+                // PATCH 요청을 보내어 데이터를 업데이트합니다.
+                await axios.patch(`/concertRequest/${concertRequestNo}`, { concertRequestState: 'y' });
+                // 데이터를 다시 불러옵니다.
+                loadData();
 
+            } catch (error) {
+                console.error("Error updating data:", error);
+            }
+        }
+        setConfirmApproval(false);
+    }, [concertRequestNo, loadData]);
 
-
-
-    //입력값 초기화
-    const clearAdd = useCallback(() => {
-        setAdds({
-            concertRequestNo: "",
-            concertRequestConcertName: "",
-            concertScheduleStart: "",
-            concertScheduleEnd: "",
-            actorName: ""
-        });
-    }, [adds]);
-    // const toggleActorSelection = useCallback((actorNo) => {
-    //     setInput(prevState => ({
-    //         ...prevState,
-    //         selectedActors: prevState.selectedActors.includes(actorNo)
-    //             ? prevState.selectedActors.filter(id => id !== actorNo)
-    //             : [...prevState.selectedActors, actorNo]
-    //     }));
-    // }, []);
-    const toggleActorSelection = (actorNo) => {
-        // 이미 선택된 배우인지 확인
-        const isSelected = selectedActors.includes(actorNo);
-        // 새로운 선택 상태를 반전시킴
-        const updatedSelectedActors = isSelected
-            ? selectedActors.filter(id => id !== actorNo) // 선택 해제
-            : [...selectedActors, actorNo]; // 선택
-
-        // 선택된 배우 리스트 업데이트
-        setSelectedActors(updatedSelectedActors);
-    };
-
-
-
-
-
-
-    //모달 
-    const bsModal = useRef();//리모컨
-    const openModal = useCallback(() => {
-        const modal = new Modal(bsModal.current);
-        modal.show();
-    }, [bsModal]);
-    const closeModal = useCallback(() => {
-        const modal = Modal.getInstance(bsModal.current);
-        modal.hide();
-        clearAdd();
-    }, [bsModal]);
-
-
+    const handleCancel = useCallback(() => {
+        // 이전 페이지로 이동합니다.
+        window.history.back();
+    }, []);
 
 
     return (
@@ -329,138 +164,16 @@ const combinedDateTime = {
                             </table>
                             <div>
                                 <div className="text-center mt-3">
-                                    <button className="btn btn-success" onClick={approveState} >
-                                        승인<Link to={`/approve/${concertRequests.concertRequestNo}`}>
-                                        </Link>
-                                    </button>
+                                    <Link to={`/requestList`}>
+                                        <button className="btn btn-success" onClick={approveState}>
+                                            승인
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
+
                         </div>
                     </div >
-                </div>
-            </div>
-            {/* Modal */}
-            <div ref={bsModal} className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">공연정보 등록</h1>
-                            <button type="button" className="btn-close" aria-label="Close" onClick={e => cancelAdd()}></button>
-                        </div>
-
-
-                        {/* 
-                        concertRequestConcertName:"",
-                        concertRequestConcertGenre:"",
-                        concertRequestHeadDay:"",
-                        concertRequestFooterDay:"",
-                        concertScheduleStart:"",
-                        concertScheduleEnd:"",
-                        actorName:"" 
-                        */}
-                        <div className="modal-body">
-                            {/* 등록 화면 */}
-                            <div className='row mt-4'>
-                                <div className='col'>
-                                    <input type="hidden" name="concertRequestNo"
-                                        value={concertRequests.concertRequestNo}
-                                        onChange={e => changeAdd(e)}
-                                        className='form-control' />
-                                </div>
-                            </div>
-
-                            {/* 기존 입력 요소들 */}
-                            <div className='row mt-4'>
-                                <div className='col'>
-                                    <label>공연 등록 날짜</label>
-                                    <ReactDatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartTime(date)}
-                                        dateFormat="yyyy년 MM월 dd일"
-                                        className="form-control"
-                                    />
-
-                                </div>
-                            </div>
-
-                            <div className='row mt-4'>
-                                <div className='col'>
-                                    <label>공연 시작 시간</label>
-                                    <ReactDatePicker
-                                        selected={startTime}
-                                        onChange={(time) => setStartTime(time)}
-                                        showTimeSelect
-                                        showTimeSelectOnly
-                                        // value={adds.concertScheduleStart}
-                                        timeIntervals={30}
-                                        timeCaption="시간"
-                                        dateFormat="HH:mm"
-                                        className="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className='row mt-4'>
-                                <div className='col'>
-                                    <label>공연 종료 시간</label>
-                                    <ReactDatePicker
-                                        selected={endTime}
-                                        onChange={(time) => setEndTime(time)}
-                                        showTimeSelect
-                                        showTimeSelectOnly
-                                        // value={adds.concertScheduleEnd}
-                                        timeIntervals={30}
-                                        timeCaption="시간"
-                                        dateFormat="HH:mm"
-                                        className="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className='row mt-4'>
-                                <div className='col'>
-                                    {/* <label>배우선택</label>
-                                    {actors.map(actor => (
-                                        <div key={actor.id}>
-                                            {actor.actorNo}
-                                            {actor.actorName}
-                                            {actor.concertRequestNo}
-                                        </div>
-                                    ))}  */}
-                                    <label>배우선택</label>
-                                    {actors.map(actor => (
-                                        <div key={actor.actorNo}>
-                                            <input
-                                                type="checkbox"
-                                                id={`actor-${actor.actorNo}`}
-                                                value={actor.actorNo}
-                                                onChange={() => toggleActorSelection(actor.actorNo)}
-                                            />
-                                            <label htmlFor={`actor-${actor.actorNo}`}>
-                                                {actor.actorName}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* 등록 및 등록 취소 버튼  */}
-                            <div className="modal-footer">
-                                <button className='btn btn-success me-2'
-                                    onClick={e => saveAdd()}>
-                                    <IoIosSave />
-                                    &nbsp;
-                                    등록
-                                </button>
-                                <button className='btn btn-danger'
-                                    onClick={e => cancelAdd()}>
-                                    <GiCancel />
-                                    &nbsp;
-                                    취소
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </>
