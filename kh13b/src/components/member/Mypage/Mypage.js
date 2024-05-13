@@ -43,7 +43,7 @@ const Mypage = () => {
                     )}
                     {layout === 'update' && (
                         <div>
-                            <InfoEdit/>
+                            <InfoEdit memberId={loginId}/>
                             <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
                         </div>
                     )}
