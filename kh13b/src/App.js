@@ -115,7 +115,7 @@ function App() {
             <Route path="/reservationList" element={<ReservationList/>}/>
             <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
             <Route path="/requestList" element={<RequestList/>}/>
-            <Route path="/concertScheduleAdd" element={<ConcertScheduleAdd/>}/>
+            <Route path="/requestList/:concertRequestNo" element={<ConcertScheduleAdd/>}/>
           </Routes>
           <Footer />
         </div>
