@@ -57,8 +57,25 @@ const EditPw = ({memberId}) => {
     }, [pw]);
 
     const saveEditPw = useCallback(async () => {
-        const resp = await axios.patch(`/member/`, pw);
-    }, []);
+        try {
+            // 서버로 비밀번호 변경 요청을 보냅니다.
+            await axios.patch(`/member/`, {
+                memberId: memberId,
+                currentPassword: pw.currentPw,
+                newPassword: pw.newPw,
+            });
+    
+            // 비밀번호 변경이 성공한 경우, 사용자에게 알림을 표시할 수 있습니다.
+            alert('비밀번호가 성공적으로 변경되었습니다.');
+    
+            // 비밀번호 변경 후에는 메인 페이지로 이동할 수 있습니다.
+            navigator("/");
+        } catch (error) {
+            // 비밀번호 변경에 실패한 경우, 사용자에게 에러를 표시할 수 있습니다.
+            console.error('비밀번호 변경에 실패했습니다:', error);
+            alert('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
+        }
+    }, [pw.currentPw, pw.newPw, memberId]);
 
     //네비게이터
     const navigator = useNavigate();
