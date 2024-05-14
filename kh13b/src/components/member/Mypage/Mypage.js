@@ -49,7 +49,7 @@ const Mypage = () => {
                         </div>
                     )}
                     {layout === 'editPassword' && (
-                        <EditPw memberId={loginId}/>
+                        <EditPw memberId={loginId} setLayout={setLayout}/>
                     )}
                     {layout === 'delete' && (
                         <Withdrawal/>

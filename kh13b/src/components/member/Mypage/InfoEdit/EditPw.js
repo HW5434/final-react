@@ -1,12 +1,11 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
-import Jumbotron from './../../../Jumbotron';
 import axios from '../../../utils/CustomAxios'
 import './InfoEdit.css';
 import { useNavigate } from 'react-router-dom';
 import { MdRemoveRedEye } from "react-icons/md";
 
-const EditPw = ({memberId}) => {
+const EditPw = ({memberId, setLayout}) => {
 
     const [pw, setPw] = useState({
         currentPw: "",
@@ -29,7 +28,7 @@ const EditPw = ({memberId}) => {
 
     //const [backup, setBackup] = useState(null);
     
-    const checkPw = (e) => {
+    const inputPw = (e) => {
         const { name, value } = e.target;
         setPw(prevState => ({
             ...prevState,
@@ -50,19 +49,27 @@ const EditPw = ({memberId}) => {
         }
     };
 
-    const isPasswordMatch = useMemo(() => pw.newPw === pw.confirmPw, [pw]);
-
+    const isPasswordMatch = useMemo(() => 
+        pw.newPw === pw.confirmPw
+    , [pw.newPw, pw.confirmPw]);
+    
     const cancelEditPw = useCallback(() => {
-        navigator("/") // 메인페이지로 이동
-    }, [pw]);
+        setLayout('my'); // 메인페이지로 이동
+    }, []);
 
     const saveEditPw = useCallback(async () => {
         try {
             // 서버로 비밀번호 변경 요청을 보냅니다.
-            await axios.patch(`/member/`, {
-                memberId: memberId,
-                currentPassword: pw.currentPw,
-                newPassword: pw.newPw,
+            await axios({
+                url:'/member/editPassword', 
+                method: 'POST',
+                data: { 
+                    memberId: memberId,
+                    memberPw: pw.currentPw,
+                    newPassword: pw.newPw
+                },
+                baseURL : "http://localhost:8080",
+                timeout : 5000,
             });
     
             // 비밀번호 변경이 성공한 경우, 사용자에게 알림을 표시할 수 있습니다.
@@ -121,16 +128,13 @@ const EditPw = ({memberId}) => {
         }
     }
 
-    
     return (
         <div>
-            <Jumbotron title="비밀번호 변경" content="EditPw"/>
-    
             <div className='mb-3'>
                     <div className='col'>
                         <label>현재 비밀번호</label>
                             <div>
-                                <input type="password" name="currentPw" value={pw.currentPw} className="input-control" onChange={e => checkPw(e)} ref={currentPwRef} 
+                                <input type="password" name="currentPw" value={pw.currentPw} className="input-control" onChange={e => inputPw(e)} ref={currentPwRef} 
                                         placeholder='현재 비밀번호' />
                                 <p className='passwor-flag' onClick={handleShowCurrentPw}>
                                     <MdRemoveRedEye />
@@ -142,26 +146,26 @@ const EditPw = ({memberId}) => {
                 <div className='mb-3'>
                     <div className='col'>
                     <label>새 비밀번호</label>
-                        <input type="password" name="newPw" value={pw.newPw} className="input-control" onChange={e => checkPw(e)} 
+                        <input type="password" name="newPw" value={pw.newPw} className="input-control" onChange={e => inputPw(e)} 
                         placeholder='영문 대,소문자와 숫자, 특수문자(!, @, #, $)가 포함 되어야 합니다' ref={newPwRef} />
                         <p className='passwor-flag' onClick={handleShowNewPw}>
                             <MdRemoveRedEye />
                         </p>
                         <p className={inputValid.memberPw ? "trueValid" : "falseValid"}>
-                            {pw.memberPw === "" ? "" : inputValid.memberPw ? "올바른 비밀번호 형식입니다" : "형식에 맞게 입력해주세요"}
+                            {(pw.newPw === "") || (pw.newPw === undefined) ? "" : (inputValid.memberPw ? "올바른 비밀번호 형식입니다" : "형식에 맞게 입력해주세요")}
                         </p>
                     </div>
                 </div>
                 <div className='mb-3'>
                     <div className='col'>
                     <label>새 비밀번호 확인</label>
-                        <input type="password" name="confirmPw" value={pw.confirmPw} className="input-control" onChange={e => checkPw(e)} 
+                        <input type="password" name="confirmPw" value={pw.confirmPw} className="input-control" onChange={e => inputPw(e)} 
                         placeholder='새 비밀번호 확인' ref={confirmPwRef} />
                         <p className='passwor-flag' onClick={handleShowConfirmPw}>
                             <MdRemoveRedEye />
                         </p>
                         <br/>
-                        {isPasswordMatch ? null : <div style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</div>}
+                        {pw.confirmPw === '' ? "" : isPasswordMatch ? null : <div style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</div>}
                     </div>
                 </div>
 

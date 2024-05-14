@@ -16,6 +16,7 @@ const InfoEdit = ({ memberId }) => {
 
     const loadData = useCallback(async () => {
         const resp = await axios.get(`/member/getMember2/${memberId}`);
+        console.log(resp.data);
         setInput(resp.data);
     }, []);
 
@@ -57,6 +58,9 @@ const InfoEdit = ({ memberId }) => {
     // 현재 날짜를 ISO 형식으로 가져오기
     const currentDate = new Date().toLocaleDateString('en-CA');
 
+    console.log("데이터 체크");
+    console.log(typeof input.memberBirth)
+
     // view
     return (
         <div>
@@ -75,15 +79,15 @@ const InfoEdit = ({ memberId }) => {
                 </div>
                 <div>
                     <label>우편번호</label>
-                    <input type="text" className="input-control" value={input.memberPost} name="memberPost" onChange={e => changeMember(e)} />
+                    <input type="text" className="input-control" value={input.memberPost || ""} name="memberPost" onChange={e => changeMember(e)} />
                 </div>
                 <div>
                     <label>주소</label>
-                    <input type="text" className="input-control" value={input.memberAddress1} name="memberAddress1" onChange={e => changeMember(e)} />
+                    <input type="text" className="input-control" value={input.memberAddress1 || ""} name="memberAddress1" onChange={e => changeMember(e)} />
                 </div>
                 <div>
                     <label>상세주소</label>
-                    <input type="text" className="input-control" value={input.memberAddress2} name="memberAddress2" onChange={e => changeMember(e)} />
+                    <input type="text" className="input-control" value={input.memberAddress2 || ""} name="memberAddress2" onChange={e => changeMember(e)} />
                 </div>
                 
                 <div className="infoEdit-button">
