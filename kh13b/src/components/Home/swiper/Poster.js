@@ -8,7 +8,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 
 // import required modules
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 
 // 폴더에 있는 이미지들
 import sample_images_0 from './Bannerimg/0.png';
@@ -22,8 +22,6 @@ import './Poster.css';
 
 // const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
-
-
 // 이미지 불러오기
 const Poster = () => {
     const imagePaths = [
@@ -33,15 +31,14 @@ const Poster = () => {
         sample_images_3,
         sample_images_4
     ];
-
     
-
     return (
         <>
             <Swiper
                 effect={'coverflow'}
                 grabCursor={true}
                 centeredSlides={true}
+                navigation={true}
                 slidesPerView={'auto'}
                 coverflowEffect={{
                     rotate: 50,
@@ -50,8 +47,9 @@ const Poster = () => {
                     modifier: 1,
                     slideShadows: true,
                 }}
+                
                 pagination={true}
-                modules={[EffectCoverflow, Pagination]}
+                modules={[EffectCoverflow, Pagination, Navigation]}
                 className="mySwiper"
                 style={{
                     "--swiper-pagination-display": "none",

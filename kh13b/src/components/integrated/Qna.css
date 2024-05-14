@@ -5,7 +5,7 @@
 /* 게시글 내용에 대한 디자인 */
 .accordion-body{
     /* 배경색 */
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     /* 글꼴 */
     font-family: '빙그레 메로나체';
 }
