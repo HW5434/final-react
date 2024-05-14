@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "../../utils/CustomAxios";
 import Jumbotron from "../../Jumbotron";
+import { useNavigate } from "react-router-dom";
 
 
 const FindId = () => {
@@ -9,15 +10,17 @@ const FindId = () => {
 
     const [findId, setFindId] = useState('');
 
+    const navigator = useNavigate();
+
     const getFindId = async () => {
-        const response = await axios.post('/member/findId', input);
-        console.log(response);
-        if (!response.data.memberId) {
-            alert('입력하신 정보로 등록된 아이디를 찾을 수 없습니다.');
-        } else {
-            alert(`고객님의 정보와 일치하는 아이디입니다 : ${response.data.memberId}`)
-            setFindId(response.data.id);
-        }
+        await axios.post('/member/findId', input)
+            .then((res) => {
+                alert(`고객님의 정보와 일치하는 아이디입니다 : [${res.data.memberId}]`)
+                setFindId(res.data.id);
+                navigator('/login');
+            }).catch((e) => {
+                alert('입력하신 정보로 등록된 계정을 찾을 수 없습니다. 이름 또는 이메일을 다시 확인해주세요.');
+            });
     };
 
     const handleFindIdInputChange = (e) => {
@@ -31,7 +34,7 @@ const FindId = () => {
     return (
         <div>
             <Jumbotron title="아이디 찾기" content="FindId" />
-            <form onSubmit={getFindId} className="text-center">
+            <div onSubmit={getFindId} className="text-center">
                 <div>
                     <label>이름:</label>
                     <input type="text" name="memberName" value={input.memberName} onChange={(e) => handleFindIdInputChange(e)} />
@@ -40,8 +43,8 @@ const FindId = () => {
                     <label>이메일:</label>
                     <input type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindIdInputChange(e)} />
                 </div>
-                <button type="submit">아이디 찾기</button>
-            </form>
+                <button type="button" onClick={getFindId}>아이디 찾기</button>
+            </div>
         </div>
     );
 

@@ -111,7 +111,7 @@ function Menu() {
                         <div className="d-flex">
                             {isLogin ? ( /*isLogin : 로그인이 되어 있을 경우*/
                                 <>
-                                    <NavLink className="dropdown-item me-2" to="#" onClick={e => logout()}>로그아웃</NavLink>
+                                    <NavLink className="dropdown-item me-2" to="/" onClick={e => logout()}>로그아웃</NavLink>
                                     <NavLink className="dropdown-item" to="/mypage">마이페이지</NavLink>
                                 </>
                             ) : (

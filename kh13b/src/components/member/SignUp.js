@@ -109,12 +109,12 @@ const SignUp = () => {
         // 중복 확인이 완료된 경우, 회원가입 요청을 보냄
         const resp = await axios.post("/member/", input);
 
-        navigator("/") // 메인 페이지로 이동
+        navigator("/login") // 로그인 페이지로 이동
     }, [checkId.flag, checkEmail.flag]);
 
     //등록취소
     const cancelInput = useCallback(()=> {
-        const choice = window.confirm("작성 중인 내용이 모두 삭제되고 메인 페이지로 돌아갑니다. 진행하시겠습니까");
+        const choice = window.confirm("작성 중인 내용이 모두 삭제되고 메인 페이지로 돌아갑니다. 진행하시겠습니까?");
         if(choice === false) return;
         navigator("/") // 메인 페이지로 이동
     }, [input]);
@@ -134,7 +134,7 @@ const SignUp = () => {
         } else {
             setCheckId({
                 flag: false,
-                message: "다시 입력해"
+                message: "사용 중인 아이디입니다."
             });
         }
     }
@@ -149,12 +149,12 @@ const SignUp = () => {
         if(res.data) {
             setCheckEmail({
                 flag: true,
-                message: "사용할 수 있는 이메일입니다."
+                message: "사용할 수 있는 이메일입니다. 이메일 인증을 눌러주세요"
             });
         } else {
             setCheckEmail({
                 flag: false,
-                message: "다시 입력해"
+                message: "사용 중인 이메일입니다."
             });
         }
     }
@@ -176,9 +176,9 @@ const SignUp = () => {
     //인증번호 확인
     const userInputCode = (inputCode) => {
         if(inputCode === String(emailVerification.authenticationCode)) {
-            alert("인증완료");
+            alert("인증 되었습니다.");
         } else {
-            alert("인증실패");
+            alert("다시 시도해주세요.");
         }
     }
 

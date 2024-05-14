@@ -8,6 +8,7 @@ import Profile from './Profile/Profile';
 import MyLayout from './MyLayout/MyLayout';
 import Withdrawal from './Withdrawal/Withdrawal';
 import InfoEdit from './InfoEdit/InfoEdit';
+import EditPw from './InfoEdit/EditPw';
 
 const Mypage = () => {
 
@@ -46,6 +47,9 @@ const Mypage = () => {
                             <InfoEdit memberId={loginId}/>
                             <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
                         </div>
+                    )}
+                    {layout === 'editPassword' && (
+                        <EditPw />
                     )}
                     {layout === 'delete' && (
                         <Withdrawal/>

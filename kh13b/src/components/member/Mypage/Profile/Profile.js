@@ -22,6 +22,7 @@ const Profile = ({ member, layoutChange }) => {
                                         <div className='bottom-updaterap'>
                                             <button type='button' onClick={() => layoutChange('my')} className='update-link'>예매내역</button>
                                             <button type='button' onClick={() => layoutChange('update')} className='update-link'>수정</button>
+                                            <button type='button' onClick={() => layoutChange('editPassword')} className='update-link'>비밀번호변경</button>
                                         </div>
                                     </div>
                                 </div>
