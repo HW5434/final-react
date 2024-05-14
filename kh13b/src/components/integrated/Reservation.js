@@ -389,16 +389,53 @@ const Reservation = () => {
             setReservationTid(resp.data.tid);
             setReservationVo(resp.data.vo);
     
-            // 새 창을 열고 결제 프로세스 시작
-            window.open(resp.data.nextRedirectPcUrl, "_blank", "width=400px, height=800px");
-            return resp; // 결제 결과 반환
+            // 결제 승인이 완료될 때까지 대기하고, 승인 정보 반환
+            return purchaseApprove(await waitForApproval());
         } catch (error) {
             console.error("Error processing kakaopay:", error);
             throw error; // 예외를 상위로 다시 던져 처리
         }
     }, [checkedSeats, inputReservation]);
     
-    // purchaseApprove 및 useEffect는 이전과 동일하게 유지됩니다.
+    const purchaseApprove = async (pgToken) => {
+        try {
+            const postData = {
+                reservationPartnerOrderId,
+                reservationPartnerUserId,
+                reservationTid,
+                pgToken,
+            };
+            const resp = await axios.post("/purchase/success", postData);
+            // 상태 설정 함수 호출
+            setReservationPartnerOrderId("");
+            setReservationPartnerUserId("");
+            setReservationTid("");
+            setReservationVo("");
+            //navigate('/purchase/success-complete');
+            return resp.data; // 결제 승인 응답 반환
+        } catch (error) {
+            console.error("Error processing purchase:", error);
+        }
+    };
+    
+    const waitForApproval = () => new Promise(resolve => {
+        const handleMessage = (e) => {
+            if (e.data.type && e.data.type === 'successComplete') {
+                resolve(e.data.pgToken);
+            }
+        };
+        window.addEventListener('message', handleMessage);
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
+    });
+    
+    useEffect(() => {
+        return () => {};
+    }, []);
+
+
+
 
     const cancelInputReservation = useCallback(() => {
         const choice = window.confirm("작성을 취소하시겠습니까?");
