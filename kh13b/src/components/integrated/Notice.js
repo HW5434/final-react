@@ -5,10 +5,19 @@ import { Link } from "react-router-dom";
 import { Modal } from "bootstrap";
 import { MdDelete } from "react-icons/md";
 import Wrapper from "../Home/Wrapper";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 const Notice = () => {
 
-    const [notices, setNotices] = useState([]);
+    //state
+    const [notices, setNotices] = useState([]); //공지사항
+    //목록
+
+    //페이징 시스템 구현하기
+    const [page, setPage] = useState(1);//현재 페이지 번호
+    const [size, setSize] = useState(5);//목록 개수
+    const [count, setCount] = useState(0); 
+
 
     const [input, setInput] = useState({
         noticeNo: "",
@@ -20,12 +29,13 @@ const Notice = () => {
 
     useEffect(() => {
         loadData();
-    }, []);
+    }, [page, size]);
 
     const loadData = useCallback(async () => {
-        const resp = await axios.get("/notice/");
-        setNotices(resp.data);
-    }, [notices]);
+        const resp = await axios.get(`/notice/page/${page}/size/${size}`);
+        setNotices(resp.data.list);
+        setCount(resp.data.pageVO.totalPage);//페이지 숫자 표시
+    }, [page, size]);
 
     const changeInput = useCallback((e) => {
         setInput({
@@ -78,6 +88,21 @@ const Notice = () => {
         const resp = await axios.delete("/notice/" + target.noticeNo);
         loadData();
     }, []);
+
+    //페이지네이션
+    const previousPage = () => {
+        setPage(prevPage => Math.max(prevPage - 1, 1)); // 이전 페이지로 이동하는 함수
+    };
+
+    const nextPage = () => {
+        setPage(prevPage => Math.min(prevPage + 1, count)); // 다음 페이지로 이동하는 함수
+    };
+
+    const pageChange = (pageNumber) => {
+        setPage(pageNumber); // 페이지 번호를 직접 선택하여 이동하는 함수
+    };
+
+    
 
     return (
         <>
@@ -175,6 +200,45 @@ const Notice = () => {
                     </div>
                 </div>
             </Wrapper>
+
+            <div className="text-end">
+                <select value={size} onChange={e => setSize(parseInt(e.target.value))} className="me-1">
+                <option value="1">1</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                개씩 보기
+            </div>
+
+            {/* 페이지네이션 UI */}
+            <div className="row mt-2">
+                <div className="col">
+                    <nav aria-label="...">
+                        <ul className="pagination justify-content-center">
+                            <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
+                                <button className="page-link" onClick={previousPage}>
+                                    <GrFormPrevious />
+                                </button>
+                            </li>
+                            {[...Array(count).keys()].map(pageNumber => (
+                                <li key={pageNumber + 1} className={`page-item ${page === pageNumber + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => pageChange(pageNumber + 1)}>{pageNumber + 1}</button>
+                                </li>
+                            ))}
+                            <li className={`page-item ${page === count ? 'disabled' : ''}`}>
+                                <button className="page-link" onClick={nextPage}>
+                                    <GrFormNext />
+                                </button>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {/* 페이지네이션 UI 끝 */}
+                
         </>
 
     );
