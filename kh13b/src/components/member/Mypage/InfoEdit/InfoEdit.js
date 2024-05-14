@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "../../../utils/CustomAxios";
 import './InfoEdit.css';
 
-const InfoEdit = ({ memberId }) => {
+const InfoEdit = ({ memberId, layoutChange }) => {
     const [infoEdits, setInfoEdits] = useState([]);
     const [input, setInput] = useState({
         memberName: "",
@@ -16,7 +16,6 @@ const InfoEdit = ({ memberId }) => {
 
     const loadData = useCallback(async () => {
         const resp = await axios.get(`/member/getMember2/${memberId}`);
-        console.log(resp.data);
         setInput(resp.data);
     }, []);
 
@@ -26,20 +25,8 @@ const InfoEdit = ({ memberId }) => {
 
 
     const cancelEditMember = useCallback(() => {
-        const copy = [...infoEdits];
-        const copy2 = copy.map(member => {
-            if (backup && member.memberId === backup.memberId) { // 백업된 회원 정보를 찾아 취소
-                return {
-                    ...backup,
-                    edit: false,
-                };
-            } else {
-                return { ...member };
-            }
-        });
-
-        setInfoEdits(copy2);
-    }, [infoEdits, backup]);
+        layoutChange('my');
+    }, []);
 
     const changeMember = (e) => {
         const { name, value } = e.target;
@@ -57,9 +44,6 @@ const InfoEdit = ({ memberId }) => {
 
     // 현재 날짜를 ISO 형식으로 가져오기
     const currentDate = new Date().toLocaleDateString('en-CA');
-
-    console.log("데이터 체크");
-    console.log(typeof input.memberBirth)
 
     // view
     return (

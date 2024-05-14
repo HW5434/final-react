@@ -5,7 +5,7 @@ import './InfoEdit.css';
 import { useNavigate } from 'react-router-dom';
 import { MdRemoveRedEye } from "react-icons/md";
 
-const EditPw = ({memberId, setLayout}) => {
+const EditPw = ({memberId, layoutChange}) => {
 
     const [pw, setPw] = useState({
         currentPw: "",
@@ -54,7 +54,7 @@ const EditPw = ({memberId, setLayout}) => {
     , [pw.newPw, pw.confirmPw]);
     
     const cancelEditPw = useCallback(() => {
-        setLayout('my'); // 메인페이지로 이동
+        layoutChange('my'); // 메인페이지로 이동
     }, []);
 
     const saveEditPw = useCallback(async () => {

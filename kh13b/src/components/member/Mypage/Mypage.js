@@ -44,12 +44,12 @@ const Mypage = () => {
                     )}
                     {layout === 'update' && (
                         <div>
-                            <InfoEdit memberId={loginId}/>
+                            <InfoEdit memberId={loginId} layoutChange={setLayout}/>
                             <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
                         </div>
                     )}
                     {layout === 'editPassword' && (
-                        <EditPw memberId={loginId} setLayout={setLayout}/>
+                        <EditPw memberId={loginId} layoutChange={setLayout}/>
                     )}
                     {layout === 'delete' && (
                         <Withdrawal/>
