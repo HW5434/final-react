@@ -66,6 +66,7 @@ function App() {
       //결과를 적절한 위치에 설정한다
       setLoginId(resp.data.memberId);
       setLoginGrade(resp.data.memberGrade);
+      console.log(resp)
       axios.defaults.headers.common["Authorization"] = resp.data.accessToken;
       window.localStorage.setItem("refreshToken", resp.data.refreshToken);
     }
