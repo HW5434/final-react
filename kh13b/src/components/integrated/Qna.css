@@ -10,6 +10,15 @@
     font-family: '빙그레 메로나체';
 }
 
+.Question-Q {
+    color: #55efc4;
+}
+.Question-N {
+    color: red;
+}
+
+.accordion-button.collapsed{}
+
 /* 페이지 네이션 디자인 */
 .pagination{
 
