@@ -33,11 +33,6 @@
     line-height: 1;
 }
 
-.my-title-count {
-    margin-left: 0.4ch;
-    color: rgb(217 143 11);
-}
-
 .my-nav {
     margin: 0px -10px;
     a {
@@ -55,6 +50,7 @@
     flex-wrap: wrap;
     color: rgb(41, 41, 41);
     margin: 0px -10px -20px;
+    text-align: center;
 }
 
 .my-list-data {
@@ -63,3 +59,24 @@
     box-sizing: border-box;
     padding: 0px 10px 20px;
 }
+
+.page-link {
+    color: #000; 
+    background-color: #EEEEEE;
+    border: none;
+  }
+  
+  .page-item.active .page-link {
+   z-index: 1;
+   color: #555;
+   font-weight:bold;
+   background-color: #f1f1f1;
+   border-color: #EEEEEE;
+   
+  }
+  
+  .page-link:focus, .page-link:hover {
+    color: #000;
+    background-color: #EEEEEE;
+    border-color: #ccc;
+  }

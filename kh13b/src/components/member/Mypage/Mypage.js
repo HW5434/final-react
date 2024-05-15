@@ -17,19 +17,32 @@ const Mypage = () => {
     const [reservationList, setReservationList] = useState([]);
     const [layout, setLayout] = useState('my');
 
+    //페이징 시스템 구현하기
+    const [page, setPage] = useState(1);//현재 페이지 번호
+    const [size] = useState(10);//목록 개수
+    const [count, setCount] = useState(0);
+
     const load = useCallback(async() => {
         const refreshToken = localStorage.getItem('refreshToken');
+        const data = {
+            refreshToken: refreshToken,
+            page: page,
+            size: size
+        }
         await axios.get(`/member/getMember/${refreshToken}`).then((res) => {
             setMember(res.data);
         });
-        await axios.get(`/member/getMyReservationList/${refreshToken}`).then((res) => {
+        await axios.post(`/member/getMyReservationList/`,
+            data
+        ).then((res) => {
             setReservationList(res.data);
+            setCount(res.data.pageVO.totalPage);
         });
-    });
+    }, [page, size]);
 
     useEffect(() => {
         load();
-    }, []);
+    }, [page, size]);
 
     return (
         <div className='mypage'>
@@ -40,7 +53,13 @@ const Mypage = () => {
                 </div>
                 <div className='profile-wrap'>
                     {layout === 'my' && (
-                        <MyLayout reservationList={reservationList} />
+                        <MyLayout 
+                            reservationList={reservationList.reservationList}
+                            page={page}
+                            size={size}
+                            count={count}
+                            setPage={setPage}
+                        />
                     )}
                     {layout === 'update' && (
                         <div>

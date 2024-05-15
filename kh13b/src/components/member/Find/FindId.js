@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "../../utils/CustomAxios";
 import Jumbotron from "../../Jumbotron";
 import { useNavigate } from "react-router-dom";
+import './Find.css';
 
 
 const FindId = () => {
@@ -33,17 +34,23 @@ const FindId = () => {
 
     return (
         <div>
-            <Jumbotron title="아이디 찾기" content="FindId" />
-            <div onSubmit={getFindId} className="text-center">
-                <div>
-                    <label>이름:</label>
-                    <input type="text" name="memberName" value={input.memberName} onChange={(e) => handleFindIdInputChange(e)} />
+            <Jumbotron title="아이디 찾기" />
+            <div onSubmit={getFindId} className="inquiry_write">
+                <div className="mb-3">
+                    <div className="col">
+                        <label>이름</label>
+                        <input className="input-control" type="text" name="memberName" value={input.memberName} onChange={(e) => handleFindIdInputChange(e)} 
+                                placeholder="이름을 입력해주세요"/>
+                    </div>
                 </div>
-                <div>
-                    <label>이메일:</label>
-                    <input type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindIdInputChange(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>이메일</label>
+                        <input className="input-control" type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindIdInputChange(e)} 
+                                placeholder="가입한 이메일 주소를 입력해주세요."/>
+                    </div>
                 </div>
-                <button type="button" onClick={getFindId}>아이디 찾기</button>
+                <button className="findButton" type="button" onClick={getFindId}>아이디 찾기</button>
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "../../utils/CustomAxios";
 import Jumbotron from "../../Jumbotron";
 import { useNavigate } from 'react-router-dom';
+import './Find.css';
 
 const FindPw = () => {
 
@@ -31,17 +32,23 @@ const FindPw = () => {
     //view
     return(
         <div>
-            <Jumbotron title="비밀번호 찾기" content="FindPw" />
-            <div className="text-center">
-                <div>
-                    <label>아이디:</label>
-                    <input type="text" name="memberId" value={input.memberId} onChange={(e) => handleFindPwInputChange(e)} />
+            <Jumbotron title="비밀번호 찾기" />
+            <div className="inquiry_write">
+                <div className="mb-3">
+                    <div className="col">
+                        <label>아이디:</label>
+                        <input className="input-control" type="text" name="memberId" value={input.memberId} onChange={(e) => handleFindPwInputChange(e)} 
+                                placeholder="아이디를 입력해주세요"/>
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="email">이메일:</label>
-                    <input type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindPwInputChange(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label htmlFor="email">이메일:</label>
+                        <input className="input-control" type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindPwInputChange(e)} 
+                                placeholder="가입한 이메일 주소를 입력해주세요."/>
+                    </div>
                 </div>
-                <button type="button" onClick={getFindPw}>비밀번호 찾기</button>
+                <button className="findButton" type="button" onClick={getFindPw}>비밀번호 찾기</button>
             </div>
         </div>
     );
