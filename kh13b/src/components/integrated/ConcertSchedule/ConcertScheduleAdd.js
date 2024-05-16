@@ -95,6 +95,7 @@ const ConcertScheduleAdd = () => {
         };
         console.log(req);
 
+
         axios.post("/schedule/new", req)
             .then(response => {
                 console.log("Schedule saved successfully", response.data);
@@ -104,12 +105,6 @@ const ConcertScheduleAdd = () => {
                 console.error("Error saving schedule:", error);
             });
     }, [concertRequestNo, startDateTime, endDateTime]);
-
-
-
-
-
-
 
     return (
         <>
