@@ -22,6 +22,8 @@ function Menu() {
         return loginId.length > 0 && loginGrade.length > 0;
     }, [loginId, loginGrade]);
 
+    //관리자 로그인시
+
     //callback
     const logout = useCallback(() => {
         //recoil 저장소에 대한 정리 + axios의 헤더 제거
