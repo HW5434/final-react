@@ -13,10 +13,14 @@ const RequestList = () => {
         loadData();
     }, []);
 
-    const loadData = useCallback(async () => {
-        const resp = await axios.get("/concertRequest/state");
-        setConcertRequests(resp.data);
-    }, [concertRequests]);
+    const loadData = async () => {
+        try {
+            const resp = await axios.get("/concertRequest/state");
+            setConcertRequests(resp.data);
+        } catch (error) {
+            console.error("Error loading data:", error);
+        }
+    };
 
     return (
         <>
@@ -50,11 +54,13 @@ const RequestList = () => {
                                             <td>{ConcertRequest.concertRequestStartfDay}</td>
                                             <td>{ConcertRequest.concertRequestState}</td>
                                             <td>
-                                            <Link to={`/concertScheduleAdd/`}>
+                                            <Link to={`/requestList/${ConcertRequest.concertRequestNo}`}>
                                                 <button className="justify-content-end align-middle btn right btn-100">
                                                     등록
                                                 </button>
                                             </Link>
+
+                                            
                                             </td>
                                         </tr>
                                     ))}
