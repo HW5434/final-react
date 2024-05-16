@@ -19,7 +19,7 @@ const ReservationFinish = () => {
 
                             <div className="row mt-4 text-center">
                                 <div className="col-6 ">
-                                    <Link to={`/reservationList/`}>
+                                    <Link to={`/mypage/`}>
                                         <button className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }}>
                                             <h4>예매내역 보기</h4>
                                         </button>
