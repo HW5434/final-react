@@ -38,6 +38,9 @@ import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertS
 
 import Introduce from './components/introduce';
 import Footer from './components/Home/Footer';
+import ReservationFinish from './components/integrated/ReservationFinish';
+
+import KaKaoPaySuccess from './components/integrated/KaKao/KaKaoPaySuccess';
 
 function App() {
 
@@ -93,6 +96,9 @@ function App() {
             <Route path="/findId" element={<FindId />} />
             <Route path="/findPw" element={<FindPw />} />
             <Route path="/auth" element={<KakaoAuth />} />
+
+            {/* 테스트 */}
+            <Route path="/kakaopay/purchase/success" element={<KaKaoPaySuccess />} />
             
             <Route path="/qna" element={<Qna />} />
             <Route path="/seat" element={<Seat />} />
@@ -107,6 +113,7 @@ function App() {
             <Route path="/concertScheduleInfo" element={<ConcertScheduleInfo/>} />
 
             <Route path="/reservation/:concertNo" element={<Reservation/>} />
+            <Route path="/reservationFinish" element={<ReservationFinish/>} />
             <Route path="/approve/:concertRequestNo" element={<RequestDetail/>}/> 
             <Route path="/approve" element={<Approve/>}/>
 

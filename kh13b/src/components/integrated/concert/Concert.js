@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from '../../utils/CustomAxios';
 import Jumbotron from "../../Jumbotron";
 import { Link } from "react-router-dom";
-
+//** 현재 날짜 기준 지난 공연들은 안나오게 구현
 const Concert = () => {
     const [concerts, setConcerts] = useState([]);
 
@@ -13,8 +13,12 @@ const Concert = () => {
     const loadData = useCallback(async () => {
         try {
             const resp = await axios.get("/concertRequest/");
-            // 승인 상태가 'y'인 공연만 필터링하여 저장
-            const approvedConcerts = resp.data.filter(concert => concert.concertRequestState === 'y');
+            // 승인 상태가 'y'이고 현재 날짜 이후인 공연만 필터링하여 저장**
+            const now = new Date();
+            const approvedConcerts = resp.data.filter(concert => {
+                const endDate = new Date(concert.concertRequestStartfDay);
+                return concert.concertRequestState === 'y' && endDate > now;
+            });
             setConcerts(approvedConcerts);
         } catch (error) {
             console.error("Error loading data:", error);
@@ -49,8 +53,9 @@ const Concert = () => {
                                                     </div>
                                                     <div className="col-md-9">
                                                         <div className="card-body">
-                                                            <h5 className="card-title">{concert.concertRequestConcertName}</h5>
-                                                            <p className="card-text"><strong>공연 일정:</strong> {formatDate(concert.concertRequestStarthDay)} ~ {formatDate(concert.concertRequestStartfDay)}</p>
+                                                        <p className="card-text mt-2" style={{ fontWeight: 'bold' }}>[ {concert.concertRequestConcertGenre} ]</p>
+                                                            <h5 className="card-title mt-2" style={{ fontWeight: 'bold' }}>{concert.concertRequestConcertName}</h5>
+                                                            <p className="card-text mt-4"><strong>공연 일정:</strong> {formatDate(concert.concertRequestStarthDay)} ~ {formatDate(concert.concertRequestStartfDay)}</p>
                                                             <p className="card-text"><strong>제작사:</strong> {concert.concertRequestCompanyName}</p>
                                                         </div>
                                                     </div>
