@@ -62,7 +62,7 @@ const ConcertDetail = () => {
                                         <img src="https://www.charlottetheater.co.kr/_upload/ART/2024222133311_17637.jpg" className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} />
                                     </div>
                                     <div className="text-center mt-4 mb-4">
-                                        <button className="btn btn-primary">
+                                        <button className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }}>
                                             <Link to={`/reservation/${concertNo}`} style={{ color: "inherit", textDecoration: "none" }}>
                                                 <FaCreditCard />&nbsp;&nbsp;티켓예매
                                             </Link>
@@ -98,7 +98,7 @@ const ConcertDetail = () => {
                             <div className="row mt-4">
                                 <div className="col">
                                     <div>
-                                        <button className="btn btn-primary" onClick={toggleSchedule}>일정 및 출연진</button>
+                                        <button className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }} onClick={toggleSchedule}>일정 및 출연진</button>
                                         {showSchedule && (
                                             <ConcertScheduleInfo concertNo={concertNo} /> // 일정 목록 컴포넌트 추가
                                         )}

@@ -182,7 +182,7 @@ const Seat = () => {
             <div className="container w-100">
                 <div className="row justify-content-center">
                     <div className="col-md-8">
-                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-100">
+                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
 
                             <div className='row mt-4'>
                                 <div className='col'>
@@ -211,77 +211,89 @@ const Seat = () => {
 
 
 
-            {/* 신규등록 버튼(모달띄우기) */}
-            <div className="row mt-4 text-end">
-                <div className="col">
-                    <button className="btn btn-primary" onClick={e => openModal()}>
-                        <FaPlus />
-                        &nbsp;신규등록
-                    </button>
+
+            {/* 목록 출력(데이터출력(표)) */}
+
+            <div className="container w-100">
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
+
+                            {/* 신규등록 버튼(모달띄우기) */}
+                            <div className="row mt-4 text-end">
+                                <div className="col">
+                                    <button className="btn btn-primary" onClick={e => openModal()}>
+                                        <FaPlus />
+                                        &nbsp;좌석등록
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="row mt-4">
+                                <div className="col">
+                                    <table className="table">
+                                        <thead className="text-center">
+                                            <tr className="text-center">
+                                                <th>좌석식별자</th>
+                                                <th>좌석 열번호</th>
+                                                <th>좌석 행번호</th>
+                                                <th>좌석 등급</th>
+                                                <th>관리</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="text-center">
+                                            {seats.map(seat => (
+                                                <tr key={seat.seatNo} className="text-center">
+                                                    {seat.edit === true ? (
+                                                        <>
+                                                            <td>{seat.seatNo}</td>
+                                                            <td>
+                                                                <input type="text" className="form-control"
+                                                                    value={seat.seatCol} name="seatCol"
+                                                                    onChange={e => changeSeat(e, seat)} />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" className="form-control"
+                                                                    value={seat.seatRow} name="seatRow"
+                                                                    onChange={e => changeSeat(e, seat)} />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" className="form-control"
+                                                                    value={seat.seatLevel} name="seatLevel"
+                                                                    onChange={e => changeSeat(e, seat)} />
+                                                            </td>
+                                                            <td>
+                                                                <FaCheck className="text-success me-2"
+                                                                    onClick={e => saveEditSeat(seat)} />
+                                                                <TbPencilCancel className="text-danger"
+                                                                    onClick={e => cancelEditSeat(seat)} />
+                                                            </td>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <td>{seat.seatNo}</td>
+                                                            <td>{seat.seatCol}</td>
+                                                            <td>{seat.seatRow}</td>
+                                                            <td>{seat.seatLevel}</td>
+                                                            <td>
+                                                                <FaEdit className="text-warning me-2"
+                                                                    onClick={e => editSeat(seat)} />
+                                                                <MdDelete className="text-danger"
+                                                                    onClick={e => deleteSeat(seat)} />
+                                                            </td>
+                                                        </>
+                                                    )}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* 목록 출력(데이터출력(표)) */}
-            <div className="row mt-4">
-                <div className="col">
-                    <table className="table">
-                        <thead className="text-center">
-                            <tr className="text-center">
-                                <th>좌석식별자</th>
-                                <th>좌석 열번호</th>
-                                <th>좌석 행번호</th>
-                                <th>좌석 등급</th>
-                                <th>관리</th>
-                            </tr>
-                        </thead>
-                        <tbody className="text-center">
-                            {seats.map(seat => (
-                                <tr key={seat.seatNo} className="text-center">
-                                    {seat.edit === true ? (
-                                        <>
-                                            <td>{seat.seatNo}</td>
-                                            <td>
-                                                <input type="text" className="form-control"
-                                                    value={seat.seatCol} name="seatCol"
-                                                    onChange={e => changeSeat(e, seat)} />
-                                            </td>
-                                            <td>
-                                                <input type="text" className="form-control"
-                                                    value={seat.seatRow} name="seatRow"
-                                                    onChange={e => changeSeat(e, seat)} />
-                                            </td>
-                                            <td>
-                                                <input type="text" className="form-control"
-                                                    value={seat.seatLevel} name="seatLevel"
-                                                    onChange={e => changeSeat(e, seat)} />
-                                            </td>
-                                            <td>
-                                                <FaCheck className="text-success me-2"
-                                                    onClick={e => saveEditSeat(seat)} />
-                                                <TbPencilCancel className="text-danger"
-                                                    onClick={e => cancelEditSeat(seat)} />
-                                            </td>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <td>{seat.seatNo}</td>
-                                            <td>{seat.seatCol}</td>
-                                            <td>{seat.seatRow}</td>
-                                            <td>{seat.seatLevel}</td>
-                                            <td>
-                                                <FaEdit className="text-warning me-2"
-                                                    onClick={e => editSeat(seat)} />
-                                                <MdDelete className="text-danger"
-                                                    onClick={e => deleteSeat(seat)} />
-                                            </td>
-                                        </>
-                                    )}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             {/* Modal  */}
             <div ref={bsModal} className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
