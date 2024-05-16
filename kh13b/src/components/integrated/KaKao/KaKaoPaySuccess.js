@@ -23,12 +23,22 @@ const KaKaoPaySuccess =()=>{
     const load = useCallback(async() => {
         try {
             const postData = {
+                pgToken: pgToken,
                 partnerOrderId: kakaoPayData.partnerOrderId,
                 partnerUserId: kakaoPayData.partnerUserId,
                 tid: kakaoPayData.tid,
-                pgToken: pgToken,
+                reservationData: kakaoPayData.reservationData,
+                concertScheduleNo: kakaoPayData.reservationData.concertScheduleNo,
+                seatNo: kakaoPayData.reservationData.seatNo,
+                reservationConcertTitle: kakaoPayData.reservationData.reservationConcertTitle,
+                reservationConcertDate: kakaoPayData.reservationData.reservationConcertDate,
+                reservationPrice: kakaoPayData.reservationData.reservationPrice,
+                reservationPersonName: kakaoPayData.reservationData.reservationPersonName,
+                reservationPersonTell: kakaoPayData.reservationData.reservationPersonTell,
+                reservationPersonEmail: kakaoPayData.reservationData.reservationPersonEmail,
             };
             const resp = await axios.post("/kakaopay/success", postData);
+            localStorage.removeItem("kakaoPayData");
             console.log("결제 승인 완료");
             console.log(resp);
             navigator("/ReservationFinish");

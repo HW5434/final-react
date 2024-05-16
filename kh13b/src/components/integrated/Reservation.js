@@ -356,13 +356,16 @@ const Reservation = () => {
     const saveInputReservation = useCallback( async () => {
         try {
             const seatNumbers = checkedSeats.map(seat => seat.seatNo); // 선택한 좌석들의 번호 배열
-
-            await kakaopay(); // 카카오페이 처리
-
-            const resp = await axios.post("/reservation/", {
+            const reservationData = {
                 ...inputReservation,
                 seatNo: seatNumbers, // 선택한 좌석들의 번호 배열 추가
-            });
+            }
+            await kakaopay(reservationData); // 카카오페이 처리
+
+            // const resp = await axios.post("/reservation/", {
+            //     ...inputReservation,
+            //     seatNo: seatNumbers, // 선택한 좌석들의 번호 배열 추가
+            // });
 
 
         } catch (error) {
@@ -370,7 +373,7 @@ const Reservation = () => {
         }
     }, [inputReservation]);
     
-    const kakaopay = useCallback(async () => {
+    const kakaopay = useCallback(async (reservationData) => {
         try {
             const seatNumbers = checkedSeats.map(seat => seat.seatNo);
             const data = {
@@ -382,17 +385,21 @@ const Reservation = () => {
     
             const resp = await axios.post("/kakaopay/purchase", data);
 
-            window.localStorage.setItem("kakaoPayData", JSON.stringify({
-                partnerOrderId: resp.data.partnerOrderId,
-                partnerUserId: resp.data.partnerUserId,
-                tid: resp.data.tid,
-                vo: resp.data.vo,
-            }));
+            window.localStorage.setItem("kakaoPayData", JSON.stringify(
+                {
+                    partnerOrderId: resp.data.partnerOrderId,
+                    partnerUserId: resp.data.partnerUserId,
+                    tid: resp.data.tid,
+                    vo: resp.data.vo,
+                    reservationData
+                }
+            ));
             
             window.location.href = resp.data.nextRedirectPcUrl;
             
         } catch (error) {
             console.error("Error processing kakaopay:", error);
+            localStorage.removeItem("kakaoPayData");
             throw error; // 예외를 상위로 다시 던져 처리
         }
     }, [checkedSeats, inputReservation]);

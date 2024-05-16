@@ -32,7 +32,7 @@ const ConcertScheduleInfo = ({ concertNo }) => {
         const time = new Date(timeString);
         const hours = String(time.getHours()).padStart(2, '0');
         const minutes = String(time.getMinutes()).padStart(2, '0');
-        return `${hours}:${minutes}`;
+        return `${hours}시 ${minutes}분`;
     };
 
     return (
@@ -42,9 +42,9 @@ const ConcertScheduleInfo = ({ concertNo }) => {
                     <div key={schedule.concertScheduleNo} className="col-lg-6 mb-4">
                         <div className="card h-100">
                             <div className="card-body">
-                                <h5 className="card-title">{formatDate(schedule.concertScheduleStart)}</h5>
-                                <p className="card-text"><strong>시간:</strong> {formatTime(schedule.concertScheduleStart)} - {formatTime(schedule.concertScheduleEnd)}</p>
-                                <p className="card-text"><strong>배우:</strong></p>
+                                <p className="card-title"><strong>{formatDate(schedule.concertScheduleStart)}</strong></p>
+                                <p className="card-text"><strong>시간</strong> {formatTime(schedule.concertScheduleStart)} - {formatTime(schedule.concertScheduleEnd)}</p>
+                                {/* <p className="card-text"><strong>배우:</strong></p> */}
                             </div>
                         </div>
                     </div>

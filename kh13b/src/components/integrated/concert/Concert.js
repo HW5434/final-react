@@ -53,10 +53,10 @@ const Concert = () => {
                                                     </div>
                                                     <div className="col-md-9">
                                                         <div className="card-body">
-                                                        <p className="card-text mt-2" style={{ fontWeight: 'bold' }}>[ {concert.concertRequestConcertGenre} ]</p>
+                                                        <p className="card-text" style={{ fontWeight: 'bold' }}>[ {concert.concertRequestConcertGenre} ]</p>
                                                             <h5 className="card-title mt-2" style={{ fontWeight: 'bold' }}>{concert.concertRequestConcertName}</h5>
                                                             <p className="card-text mt-4"><strong>공연 일정:</strong> {formatDate(concert.concertRequestStarthDay)} ~ {formatDate(concert.concertRequestStartfDay)}</p>
-                                                            <p className="card-text"><strong>제작사:</strong> {concert.concertRequestCompanyName}</p>
+                                                            <p className="card-text "><strong>제작사:</strong> {concert.concertRequestCompanyName}</p>
                                                         </div>
                                                     </div>
                                                 </div>
