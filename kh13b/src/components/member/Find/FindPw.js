@@ -36,14 +36,14 @@ const FindPw = () => {
             <div className="inquiry_write">
                 <div className="mb-3">
                     <div className="col">
-                        <label>아이디:</label>
+                        <label>아이디</label>
                         <input className="input-control" type="text" name="memberId" value={input.memberId} onChange={(e) => handleFindPwInputChange(e)} 
                                 placeholder="아이디를 입력해주세요"/>
                     </div>
                 </div>
                 <div className="mb-3">
                     <div className="col">
-                        <label htmlFor="email">이메일:</label>
+                        <label htmlFor="email">이메일</label>
                         <input className="input-control" type="text" name="memberEmail" value={input.memberEmail} onChange={(e) => handleFindPwInputChange(e)} 
                                 placeholder="가입한 이메일 주소를 입력해주세요."/>
                     </div>

@@ -89,8 +89,8 @@ const InfoEdit = ({ memberId, layoutChange }) => {
                 </div>
                 <div className="mb-3 edit-button">
                     <div className="col">
-                        <button type="button" onClick={e=> cancelEditMember(input)}>취소</button>
-                        <button type="button" onClick={e=> saveEditMember(input)}>저장</button>
+                        <button className="edit-button" type="button" onClick={e=> cancelEditMember(input)}>취소</button>
+                        <button className="edit-button" type="button" onClick={e=> saveEditMember(input)}>저장</button>
                     </div>
                 </div>
             </div>

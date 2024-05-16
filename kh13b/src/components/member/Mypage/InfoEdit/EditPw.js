@@ -171,9 +171,9 @@ const EditPw = ({memberId, layoutChange}) => {
                     </div>
                 </div>
 
-                <div className="edit-button">
-                    <button type="button" onClick={cancelEditPw}>취소</button>
-                    <button type="button" onClick={e=> saveEditPw(pw)}>저장</button>
+                <div>
+                    <button className="edit-button" type="button" onClick={cancelEditPw}>취소</button>
+                    <button className="edit-button" type="button" onClick={e=> saveEditPw(pw)}>저장</button>
                 </div>
         </div>
     );
