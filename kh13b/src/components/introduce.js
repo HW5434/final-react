@@ -1,18 +1,33 @@
 import Wrapper from "./Home/Wrapper";
-import Jumbotron from "./Jumbotron";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useRef, useState } from 'react';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+
+
+// import required modules
+
 
 function Introduce() {
+
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
     return (
         <>
             <div className="intro-wrapper">
-                <Wrapper>
-                    <div className="row justify-content-center">
-                        <div className="col-md-5">
+                <div className="row justify-content-center">
+                    <div className="col-5">
+                        <Wrapper>
                             <div className="row text-start">
                                 <div className="col my-5">
                                     <h1>
                                         <strong>
-                                            소개 (더미글 바꿀예정)
+                                            소개
                                         </strong>
                                     </h1>
                                 </div>
@@ -20,11 +35,11 @@ function Introduce() {
 
                             <div className="row text-start">
                                 <div className="col mb-5">
-                                    <h2>
+                                    <h3>
                                         <strong>
                                             대한민국 최초이자 최고의 뮤지컬 전용 극장 샤롯데씨어터
                                         </strong>
-                                    </h2>
+                                    </h3>
                                 </div>
                             </div>
 
@@ -68,13 +83,66 @@ function Introduce() {
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </Wrapper>
+                    </div>
 
-                        <div className="col">
-                            1
+                    <div className="col-5 mt-5">
+                        <div className="intro-banner">
+                        <Wrapper>
+                            <Swiper
+                                style={{
+                                    '--swiper-navigation-color': '#fff',
+                                    '--swiper-pagination-color': '#fff',
+
+                                }}
+                                loop={true}
+                                spaceBetween={10}
+                                navigation={true}
+                                thumbs={{ swiper: thumbsSwiper }}
+                                modules={[FreeMode, Navigation, Thumbs]}
+                                className="mySwiper2 py-2"
+                            >
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                                </SwiperSlide>
+                            </Swiper>
+                            <Swiper
+                                onSwiper={setThumbsSwiper}
+                                loop={true}
+                                spaceBetween={10}
+                                slidesPerView={4}
+                                freeMode={true}
+                                watchSlidesProgress={true}
+                                modules={[FreeMode, Navigation, Thumbs]}
+                                className="mySwiper pb-2"
+                            >
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                                </SwiperSlide>
+                            </Swiper>
+                        </Wrapper>
                         </div>
                     </div>
-                </Wrapper>
+                </div>
+
             </div>
         </>
     );

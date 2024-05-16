@@ -66,6 +66,7 @@ function App() {
       //결과를 적절한 위치에 설정한다
       setLoginId(resp.data.memberId);
       setLoginGrade(resp.data.memberGrade);
+      console.log(resp)
       axios.defaults.headers.common["Authorization"] = resp.data.accessToken;
       window.localStorage.setItem("refreshToken", resp.data.refreshToken);
     }
@@ -115,7 +116,7 @@ function App() {
             <Route path="/reservationList" element={<ReservationList/>}/>
             <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
             <Route path="/requestList" element={<RequestList/>}/>
-            <Route path="/concertScheduleAdd" element={<ConcertScheduleAdd/>}/>
+            <Route path="/requestList/:concertRequestNo" element={<ConcertScheduleAdd/>}/>
           </Routes>
           <Footer />
         </div>
