@@ -10,15 +10,31 @@ const ConcertScheduleAdd = () => {
 
     const [startDateTime, setStartDateTime] = useState(new Date()); // 시작일시
     const [endDateTime, setEndDateTime] = useState(new Date()); // 종료일시
+    const [castActors, setCastActors] = useState([]); //배우 그룹번호
     const [selectedActors, setSelectedActors] = useState([]);
+    const [concertSchedules, setConcertSchedules] = useState([]);
     const [actors, setActors] = useState([]);
-    const [request,setRequests] = useState({});
-    
-    
+    const [request, setRequests] = useState({});
 
     useEffect(() => {
         loadActors();
     }, []);
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+        try {
+            const schedule = await axios.get("/schedule/");
+            const actor = await axios.get("/castActor/");
+            setConcertSchedules(schedule.data);
+            setCastActors(actor.data);
+
+        } catch (error) {
+            console.error("Error loading data:", error);
+        }
+    };
 
     const loadActors = useCallback(async () => {
         try {
@@ -29,10 +45,10 @@ const ConcertScheduleAdd = () => {
         }
     }, []);
 
-    const   loadRequestList = useCallback (async ()=>{
+    const loadRequestList = useCallback(async () => {
         const resp = await axios.get(`/concertRequest/${concertRequestNo}`);
         setRequests(request.data);
-    },[])
+    }, [])
     console.log(request);
 
     // 시작일시 변경 핸들러
@@ -45,6 +61,7 @@ const ConcertScheduleAdd = () => {
         setEndDateTime(date);
     }
 
+    //버튼 클릭시 이벤트
     const toggleActorSelection = (actorNo) => {
         const isSelected = selectedActors.includes(actorNo);
         const updatedSelectedActors = isSelected
@@ -59,27 +76,26 @@ const ConcertScheduleAdd = () => {
         const day = String(date.getDate()).padStart(2, "0");
         const hours = String(date.getHours()).padStart(2, "0");
         const minutes = String(date.getMinutes()).padStart(2, "0");
-        const seconds = String(date.getSeconds()).padStart(2, "0");
-        const milliseconds = String(date.getMilliseconds()).padStart(3, "0");
-        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
     };
 
     const saveAdd = useCallback(() => {
         const formattedStartDateTime = formatDate(startDateTime);
         const formattedEndDateTime = formatDate(endDateTime);
-    
+
         const req = {
             concertRequestNo: concertRequestNo,
+            concertScheduleStart: formattedStartDateTime,
+            concertScheduleEnd: formattedEndDateTime,
+            // 묶어서 보내지 않고 풀어서 전송함
             // concertScheduleNo:"",
-            concertSchedule: {
-                concertScheduleStart: formattedStartDateTime,
-                concertScheduleEnd: formattedEndDateTime,
-            },
-            actors: selectedActors,
+            // concertSchedule: {
+            // },
+            // actors: selectedActors,
         };
         console.log(req);
-    
-        axios.post("/schedule/", req)
+
+        axios.post("/schedule/new", req)
             .then(response => {
                 console.log("Schedule saved successfully", response.data);
                 // 저장 성공 시 필요한 로직 추가
@@ -87,17 +103,48 @@ const ConcertScheduleAdd = () => {
             .catch(error => {
                 console.error("Error saving schedule:", error);
             });
-    }, [concertRequestNo, startDateTime, endDateTime, selectedActors]);
+    }, [concertRequestNo, startDateTime, endDateTime]);
 
 
 
 
 
-    
+
 
     return (
         <>
             <Jumbotron title="공연일정 등록" />
+
+            {/* 목록 */}
+            <div className="container w-100 justify-content-end mt-3">
+                <div className="row justify-content-center">
+                    <div className="col-md-10">
+                        <div className="shadow-lg p-3 my-3 bg-light rounded w-100 h-100">
+                            <table className="table text-center align-middle justify-content-end">
+                                <thead>
+                                    <tr>
+                                        <th>공연 신청번호</th>
+                                        <th>시작 날짜/시간</th>
+                                        <th>종료 날짜/시간</th>
+                                        <th>일정 등록 번호 </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-center align-middle justify-content-end">
+                                    {concertSchedules.map(concertSchedule => (
+                                        <tr key={concertSchedule.concertScheduleNo}>
+                                            <td>{concertSchedule.concertScheduleNo}</td>
+                                            <td>{concertSchedule.concertScheduleStart}</td>
+                                            <td>{concertSchedule.concertScheduleEnd}</td>
+                                            <td>{concertSchedule.concertRequestNo}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div className="row mt-4">
                 <div className="col text-center">
@@ -116,8 +163,11 @@ const ConcertScheduleAdd = () => {
                                                 value={request.concertRequestNo}
                                                 className='form-control' />
                                         </div>
-                                       
+
                                     </div>
+
+                                    {/* 시작날짜 */}
+
                                     <div className="row mt-4">
                                         <div className="col">
                                             <DatePicker
@@ -131,6 +181,9 @@ const ConcertScheduleAdd = () => {
                                             />
                                         </div>
                                     </div>
+
+                                    {/* 종료날짜 */}
+
                                     <div className="row mt-4">
                                         <div className="col">
                                             <DatePicker
@@ -144,24 +197,26 @@ const ConcertScheduleAdd = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className='row mt-4'>
-                                        <div className='col'>
-                                            <label>배우 선택</label>
-                                            {actors.map(actor => (
-                                                <div key={actor.actorNo}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id={`actor-${actor.actorNo}`}
-                                                        value={actor.actorNo}
-                                                        onChange={() => toggleActorSelection(actor.actorNo)}
-                                                    />
-                                                    <label htmlFor={`actor-${actor.actorNo}`}>
-                                                        {actor.actorName}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+
+                                    {/* 배우선택 */}
+
+                                    <div className='row mt-4' style={{ whiteSpace: 'nowrap' }}>
+    {actors.map(actor => (
+        <div key={actor.actorNo} className='col'>
+            <label>
+                <input
+                    type="checkbox"
+                    id={`actor-${actor.actorNo}`}
+                    value={actor.actorNo}
+                    onChange={() => toggleActorSelection(actor.actorNo)}
+                />
+                {actor.actorName}
+            </label>
+        </div>
+    ))}
+</div>
+
+                                    {/* 등록버튼 */}
                                     <div className="row mt-4">
                                         <div className="col">
                                             <button onClick={saveAdd} className="btn btn-primary">
