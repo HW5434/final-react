@@ -35,11 +35,10 @@ import ReservationDetail from './components/integrated/ReservationDetail';
 import Reservation from './components/integrated/Reservation';
 import RequestList from './components/integrated/ConcertSchedule/RequestList';
 import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertScheduleAdd';
-
 import Introduce from './components/introduce';
 import Footer from './components/Home/Footer';
+import ScheduleList from './components/integrated/ConcertSchedule/ScheduleList';
 import ReservationFinish from './components/integrated/ReservationFinish';
-
 import KaKaoPaySuccess from './components/integrated/KaKao/KaKaoPaySuccess';
 
 function App() {
@@ -124,6 +123,7 @@ function App() {
             <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
             <Route path="/requestList" element={<RequestList/>}/>
             <Route path="/requestList/:concertRequestNo" element={<ConcertScheduleAdd/>}/>
+            <Route path="/scheduleList" element={<ScheduleList/>}/>
           </Routes>
           <Footer />
         </div>
