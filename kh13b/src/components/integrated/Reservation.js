@@ -349,6 +349,7 @@ const Reservation = () => {
 
 
     //==============================================================================
+    //카카오페이 reservation 에 먼저 담기는거 확인하기
     //navigator
     const navigator = useNavigate();
     //--saveInputReservation에서 카카오 페이까지 다 처리할 수 있게끔 구현,,!
