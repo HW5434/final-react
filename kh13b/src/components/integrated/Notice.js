@@ -6,6 +6,8 @@ import { Modal } from "bootstrap";
 import { MdDelete } from "react-icons/md";
 import Wrapper from "../Home/Wrapper";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { loginIdState } from '../utils/RecoilData'; //로그인 State
+import { useRecoilValue } from "recoil";
 
 const Notice = () => {
 
@@ -14,6 +16,7 @@ const Notice = () => {
     const [page, setPage] = useState(1);//현재 페이지 번호
     const [size, setSize] = useState(5);//목록 개수
     const [count, setCount] = useState(0); //페이징 시스템 구현하기
+    const userId = useRecoilValue(loginIdState)//로그인 정보 불러오기 위한 함수
     const [input, setInput] = useState({
         noticeNo: "",
         noticeTitle: "",
@@ -21,6 +24,7 @@ const Notice = () => {
         noticeWdate: 0,
         noticeView: 0
     }); //등록
+
 
     useEffect(() => {
         loadData();
@@ -120,6 +124,7 @@ const Notice = () => {
                                             <th width="50%">제목</th>
                                             <th>작성날짜</th>
                                             <th>조회수</th>
+                                            <th>작성자</th>
                                             <th>삭제버튼</th>
                                         </tr>
                                     </thead>
@@ -134,10 +139,14 @@ const Notice = () => {
                                                     </Link>
                                                 </td>
                                                 <td>{notice.noticeWdate}</td>
+                                                <td>{notice.noticeWriter}</td>
                                                 <td>{notice.noticeView}</td>
-                                                <td>
+                                                {/* 관리자 */}
+                                                {/* {isLogin && loginGrade === '관리자' && ( */}
+                                                    <td>
                                                     <MdDelete className="text-danger" onClick={e => deleteNotice(notice)} />
                                                 </td>
+                                                {/* )} */}
                                             </tr>
                                         ))}
                                     </tbody>

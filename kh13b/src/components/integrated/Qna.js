@@ -6,7 +6,6 @@ import { useRecoilValue } from 'recoil'; //리코일
 import { loginIdState } from '../utils/RecoilData'; //로그인 State
 import { TbUserQuestion } from "react-icons/tb"; //질문글 마크
 import { TbUserCheck } from "react-icons/tb"; //답변글 마크
-
 import Jumbotron from '../Jumbotron'; //소개글
 import axios from '../utils/CustomAxios'; //axios
 
