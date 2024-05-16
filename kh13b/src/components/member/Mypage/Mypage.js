@@ -19,7 +19,7 @@ const Mypage = () => {
 
     //페이징 시스템 구현하기
     const [page, setPage] = useState(1);//현재 페이지 번호
-    const [size] = useState(10);//목록 개수
+    const [size] = useState(6);//목록 개수
     const [count, setCount] = useState(0);
 
     const load = useCallback(async() => {
@@ -55,6 +55,7 @@ const Mypage = () => {
                     {layout === 'my' && (
                         <MyLayout 
                             reservationList={reservationList.reservationList}
+                            seatList={reservationList.seatList}
                             page={page}
                             size={size}
                             count={count}

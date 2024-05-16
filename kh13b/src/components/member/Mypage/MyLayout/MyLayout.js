@@ -4,6 +4,7 @@ import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
 const MyLayout = ({ 
     reservationList,
+    seatList,
     page,
     size,
     count,
@@ -21,7 +22,7 @@ const MyLayout = ({
     const pageChange = (pageNumber) => {
         setPage(pageNumber); // 페이지 번호를 직접 선택하여 이동하는 함수
     };
-        
+
     return (
         <div className='mypage-layout'>
             <div>
@@ -33,36 +34,71 @@ const MyLayout = ({
                         <div className='my-nav'>
                             <Link>전체보기</Link>
                         </div>
-                    </div>
-                    <div className='layout-list'>
-                        <div className='my-list-data'>
-                            <label>공연명</label>
-                        </div>
-                        <div className='my-list-data'>
-                            <label>예약자명</label>
-                        </div>
-                        <div className='my-list-data'>
-                            <label>공연일자</label>
-                        </div>
-                        <div className='my-list-data'>
-                            <label>결제상태</label>
-                        </div>
-                    </div>
-                    {reservationList && reservationList.map((item) => (
-                        <div key={item} className='layout-list'>
-                            <div className='my-list-data'>
-                                <div className='data'>{item.RESERVATION_CONCERT_TITLE}</div>
+                    </div>                   
+                    {reservationList && reservationList.map((item, idx) => (
+                        <div className="box-info">
+                            <div className="detail-area">
+                                <div className="reservation-info-wrap">
+                                    <h2 className="box-contents artHouse">
+                                        <span className="res-title">{item.RESERVATION_CONCERT_TITLE}</span>
+                                        <span className="res-price">{item.SUM_PRICE}원</span>
+                                    </h2>
+                                    <ul className="reservation-mv-info">
+                                        <li>
+                                            <dl>
+                                                <dt>예약자명</dt>
+                                                <dd>{item.RESERVATION_PERSON_NAME}</dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>관람인원</dt>
+                                                <dd>{item.RESERVATION_COUNT}명</dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>관람일시</dt>
+                                                <dd className="txt-red">{item.PAY_DATE}</dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>관람좌석</dt>
+                                                <dd>
+                                                    {seatList[idx].map((data, i) => {
+                                                        let seat = "";
+                                                        console.log(i);
+                                                        if(data.RESERVATION_PAY_DATE === item.PAY_DATE) {
+                                                            if(seatList[idx].length === 1) {
+                                                                seat += data.SEAT_CHOICE;
+                                                            } else if(i === seatList[idx].length-1) {
+                                                                seat += data.SEAT_CHOICE;
+                                                            } else {
+                                                                seat += data.SEAT_CHOICE+", ";
+                                                            }
+                                                        }
+                                                        return seat;
+                                                    })}
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>예약상태</dt>
+                                                <dd>{item.RESERVATION_STATUS}</dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>매수</dt>
+                                                <dd>{item.RESERVATION_COUNT}매</dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div className='my-list-data'>
-                                <div className='data'>{item.RESERVATION_PERSON_NAME}</div>
-                            </div>
-                            <div className='my-list-data'>
-                                <div className='data'>{item.RESERVATION_CONCERT_DATE}</div>
-                            </div>
-                            <div className='my-list-data'>
-                                <div className='data'>{item.RESERVATION_STATUS}</div>
-                            </div>
-                        </div>
+                        </div> 
                     ))}
                 </section>
             </div>
