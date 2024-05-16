@@ -62,7 +62,7 @@ const ConcertDetail = () => {
                                         <img src="https://www.charlottetheater.co.kr/_upload/ART/2024222133311_17637.jpg" className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} />
                                     </div>
                                     <div className="text-center mt-4 mb-4">
-                                        <button className="btn btn-primary">
+                                        <button className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }}>
                                             <Link to={`/reservation/${concertNo}`} style={{ color: "inherit", textDecoration: "none" }}>
                                                 <FaCreditCard />&nbsp;&nbsp;티켓예매
                                             </Link>
@@ -74,9 +74,9 @@ const ConcertDetail = () => {
                                         <h3>{concert.concertRequestConcertName}</h3>
                                         <hr />
 
-                                        <p><strong>공연 일정:</strong> {formatDate(concert.concertRequestStarthDay)} ~ {formatDate(concert.concertRequestStartfDay)}</p>
-                                        <p><strong>공연 장르:</strong>{concert.concertRequestConcertGenre}</p>
-                                        <p><strong>출연:</strong>
+                                        <p><strong>공연 일정: </strong> {formatDate(concert.concertRequestStarthDay)} ~ {formatDate(concert.concertRequestStartfDay)}</p>
+                                        <p><strong>공연 장르: </strong>{concert.concertRequestConcertGenre}</p>
+                                        <p><strong>출연: </strong>
                                             {actors.map((actor, index) => (
                                                 <span key={index}>
                                                     {index > 0 && ', '}
@@ -84,11 +84,11 @@ const ConcertDetail = () => {
                                                 </span>
                                             ))}
                                         </p>
-                                        <p><strong>티켓 가격:</strong>VIP석: {concert.concertRequestSeatvip}원/R석: {concert.concertRequestSeatr}원/S석: {concert.concertRequestSeats}원/A석:{concert.concertRequestSeata}원</p>
-                                        <p><strong>관람 연령:</strong> {concert.concertRequestAge}</p>
-                                        <p><strong>러닝 타임 1막:</strong> {concert.concertRequestRuntimeFirst}분</p>
-                                        <p><strong>인터미션:</strong> {concert.concertRequestIntermission}분</p>
-                                        <p><strong>러닝 타임 2막:</strong> {concert.concertRequestRuntimeSecond}분</p>
+                                        <p><strong>티켓 가격: </strong> VIP석 {concert.concertRequestSeatvip}원 | R석 {concert.concertRequestSeatr}원 | S석 {concert.concertRequestSeats}원 | A석 {concert.concertRequestSeata}원</p>
+                                        <p><strong>관람 연령: </strong> {concert.concertRequestAge}</p>
+                                        <p><strong>러닝 타임 1막: </strong> {concert.concertRequestRuntimeFirst}분</p>
+                                        <p><strong>인터미션: </strong> {concert.concertRequestIntermission}분</p>
+                                        <p><strong>러닝 타임 2막: </strong> {concert.concertRequestRuntimeSecond}분</p>
                                         <p><strong>제작:</strong>  {concert.concertRequestCompanyName}</p>
                                         <p><strong>공연 문의:</strong> {concert.concertRequestOfficeNumber}</p>
                                     </div>
@@ -98,7 +98,7 @@ const ConcertDetail = () => {
                             <div className="row mt-4">
                                 <div className="col">
                                     <div>
-                                        <button className="btn btn-primary" onClick={toggleSchedule}>일정 및 출연진</button>
+                                        <button className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }} onClick={toggleSchedule}>공연 일정</button>
                                         {showSchedule && (
                                             <ConcertScheduleInfo concertNo={concertNo} /> // 일정 목록 컴포넌트 추가
                                         )}

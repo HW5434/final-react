@@ -22,6 +22,8 @@ function Menu() {
         return loginId.length > 0 && loginGrade.length > 0;
     }, [loginId, loginGrade]);
 
+    //관리자 로그인시
+
     //callback
     const logout = useCallback(() => {
         //recoil 저장소에 대한 정리 + axios의 헤더 제거
@@ -74,6 +76,7 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
                                     <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
                                     <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
+                                    <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink>
                                 </div>
                             </li>
                             {/* 고객센터 */}
@@ -111,7 +114,7 @@ function Menu() {
                         <div className="d-flex">
                             {isLogin ? ( /*isLogin : 로그인이 되어 있을 경우*/
                                 <>
-                                    <NavLink className="dropdown-item me-2" to="#" onClick={e => logout()}>로그아웃</NavLink>
+                                    <NavLink className="dropdown-item me-2" to="/" onClick={e => logout()}>로그아웃</NavLink>
                                     <NavLink className="dropdown-item" to="/mypage">마이페이지</NavLink>
                                 </>
                             ) : (

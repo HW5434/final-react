@@ -14,7 +14,7 @@
 }
 
 .my-empty {
-    width: 8.33333%;
+    width: 6.33333%;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -23,4 +23,11 @@
     display: none;
     margin: 0px -10px 20px;
     border-bottom: 1px solid rgb(237, 237, 237);
+}
+
+.withdrawal-button {
+    margin-top: 100px; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
