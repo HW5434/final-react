@@ -38,6 +38,7 @@ import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertS
 
 import Introduce from './components/introduce';
 import Footer from './components/Home/Footer';
+import ScheduleList from './components/integrated/ConcertSchedule/ScheduleList';
 
 function App() {
 
@@ -117,6 +118,7 @@ function App() {
             <Route path="/reservationList/:reservationNo" element={<ReservationDetail/>}/>
             <Route path="/requestList" element={<RequestList/>}/>
             <Route path="/requestList/:concertRequestNo" element={<ConcertScheduleAdd/>}/>
+            <Route path="/scheduleList" element={<ScheduleList/>}/>
           </Routes>
           <Footer />
         </div>
