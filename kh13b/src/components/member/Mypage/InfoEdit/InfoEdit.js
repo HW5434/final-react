@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "../../../utils/CustomAxios";
 import './InfoEdit.css';
+import Jumbotron from "../../../Jumbotron";
 
 const InfoEdit = ({ memberId, layoutChange }) => {
     const [infoEdits, setInfoEdits] = useState([]);
@@ -48,35 +49,49 @@ const InfoEdit = ({ memberId, layoutChange }) => {
     // view
     return (
         <div>
+            <Jumbotron title="내 정보 수정" />
             <div>
-                <div>
-                    <label>이름</label>
-                    <input type="text" className="input-control" value={input.memberName} name="memberName" onChange={e => changeMember(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>이름</label>
+                        <input type="text" className="input-control" value={input.memberName} name="memberName" onChange={e => changeMember(e)} />
+                    </div>
                 </div>
-                <div>
-                    <label>연락처</label>
-                    <input type="tel" className="input-control" value={input.memberContact} name="memberContact" onChange={e => changeMember(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>연락처</label>
+                        <input type="tel" className="input-control" value={input.memberContact} name="memberContact" onChange={e => changeMember(e)} />
+                    </div>
                 </div>
-                <div>
-                    <label>생년월일</label>
-                    <input type="date" className="input-control" value={input.memberBirth} name="memberBirth" onChange={e => changeMember(e)} max={currentDate} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>생년월일</label>
+                        <input type="date" className="input-control" value={input.memberBirth} name="memberBirth" onChange={e => changeMember(e)} max={currentDate} />
+                    </div>
                 </div>
-                <div>
-                    <label>우편번호</label>
-                    <input type="text" className="input-control" value={input.memberPost || ""} name="memberPost" onChange={e => changeMember(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>우편번호</label>
+                        <input type="text" className="input-control" value={input.memberPost || ""} name="memberPost" onChange={e => changeMember(e)} />
+                    </div>
                 </div>
-                <div>
-                    <label>주소</label>
-                    <input type="text" className="input-control" value={input.memberAddress1 || ""} name="memberAddress1" onChange={e => changeMember(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>주소</label>
+                        <input type="text" className="input-control" value={input.memberAddress1 || ""} name="memberAddress1" onChange={e => changeMember(e)} />
+                    </div>
                 </div>
-                <div>
-                    <label>상세주소</label>
-                    <input type="text" className="input-control" value={input.memberAddress2 || ""} name="memberAddress2" onChange={e => changeMember(e)} />
+                <div className="mb-3">
+                    <div className="col">
+                        <label>상세주소</label>
+                        <input type="text" className="input-control" value={input.memberAddress2 || ""} name="memberAddress2" onChange={e => changeMember(e)} />
+                    </div>
                 </div>
-                
-                <div className="infoEdit-button">
-                    <button type="button" onClick={e=> cancelEditMember(input)}>취소</button>
-                    <button type="button" onClick={e=> saveEditMember(input)}>저장</button>
+                <div className="mb-3 edit-button">
+                    <div className="col">
+                        <button type="button" onClick={e=> cancelEditMember(input)}>취소</button>
+                        <button type="button" onClick={e=> saveEditMember(input)}>저장</button>
+                    </div>
                 </div>
             </div>
         </div>

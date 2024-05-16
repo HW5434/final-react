@@ -4,6 +4,7 @@ import axios from '../../../utils/CustomAxios'
 import './InfoEdit.css';
 import { useNavigate } from 'react-router-dom';
 import { MdRemoveRedEye } from "react-icons/md";
+import Jumbotron from '../../../Jumbotron';
 
 const EditPw = ({memberId, layoutChange}) => {
 
@@ -130,6 +131,7 @@ const EditPw = ({memberId, layoutChange}) => {
 
     return (
         <div>
+            <Jumbotron title="비밀번호 변경" />
             <div className='mb-3'>
                     <div className='col'>
                         <label>현재 비밀번호</label>
@@ -169,7 +171,7 @@ const EditPw = ({memberId, layoutChange}) => {
                     </div>
                 </div>
 
-                <div className="infoEdit-button">
+                <div className="edit-button">
                     <button type="button" onClick={cancelEditPw}>취소</button>
                     <button type="button" onClick={e=> saveEditPw(pw)}>저장</button>
                 </div>

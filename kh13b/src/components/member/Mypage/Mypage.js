@@ -64,7 +64,7 @@ const Mypage = () => {
                     {layout === 'update' && (
                         <div>
                             <InfoEdit memberId={loginId} layoutChange={setLayout}/>
-                            <button type="button" className='btn btn-danger' onClick={() => setLayout('delete')}>회원탈퇴</button>
+                            <button type="button" className='btn btn-danger withdrawal-button' onClick={() => setLayout('delete')}>회원탈퇴</button>
                         </div>
                     )}
                     {layout === 'editPassword' && (
