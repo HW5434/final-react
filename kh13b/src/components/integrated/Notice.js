@@ -11,21 +11,16 @@ const Notice = () => {
 
     //state
     const [notices, setNotices] = useState([]); //공지사항
-    //목록
-
-    //페이징 시스템 구현하기
     const [page, setPage] = useState(1);//현재 페이지 번호
     const [size, setSize] = useState(5);//목록 개수
-    const [count, setCount] = useState(0); 
-
-
+    const [count, setCount] = useState(0); //페이징 시스템 구현하기
     const [input, setInput] = useState({
         noticeNo: "",
         noticeTitle: "",
         noticeContent: "",
         noticeWdate: 0,
         noticeView: 0
-    });
+    }); //등록
 
     useEffect(() => {
         loadData();
@@ -57,12 +52,10 @@ const Notice = () => {
         const modal = new Modal(bsModal.current);
         modal.show();
     }, []);
-
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
         modal.hide();
     }, []);
-
     // 입력 취소
     const cancelInput = useCallback(() => {
         const choice = window.confirm("작성을 취소하시겠습니까?");
@@ -81,23 +74,20 @@ const Notice = () => {
             noticeView: 0
         });
     }, [input]);
-
     const deleteNotice = useCallback(async (target) => {
         const choice = window.confirm("정말 삭제하시겠습니까?");
         if (choice === false) return;
         const resp = await axios.delete("/notice/" + target.noticeNo);
         loadData();
-    }, []);
+    }, []); //삭제
 
     //페이지네이션
     const previousPage = () => {
         setPage(prevPage => Math.max(prevPage - 1, 1)); // 이전 페이지로 이동하는 함수
     };
-
     const nextPage = () => {
         setPage(prevPage => Math.min(prevPage + 1, count)); // 다음 페이지로 이동하는 함수
     };
-
     const pageChange = (pageNumber) => {
         setPage(pageNumber); // 페이지 번호를 직접 선택하여 이동하는 함수
     };
