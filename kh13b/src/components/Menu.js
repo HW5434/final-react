@@ -88,24 +88,19 @@ function Menu() {
                                 </div>
                             </li>
                             {/* 좌석 */}
+                            {isLogin && loginGrade === '관리자' && (
                             <li className="nav-item dropdown p-3">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
                                 </div>
                             </li>
+                            )}
                             {/* 공연 */}
                             <li className="nav-item dropdown p-3">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/concert">공연 정보</NavLink>
-                                </div>
-                            </li>
-                            {/* 좌석 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/reservationList">예매 내역</NavLink>
                                 </div>
                             </li>
                         </ul>
