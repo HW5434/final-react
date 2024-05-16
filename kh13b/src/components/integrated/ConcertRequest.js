@@ -100,10 +100,12 @@ function ConcertRequest() {
         loadData();
     }, []);//최초1회만
 
-    const [attachList, setAttachList] = useState(null);
+    const [attachList, setAttachList] = useState({
+        attachList:""
+    });
 
     const handleFileChange = (e) => {
-        setAttachList(e.target.files);
+        setAttachList(e.target.files[0]);
     };
 
 
