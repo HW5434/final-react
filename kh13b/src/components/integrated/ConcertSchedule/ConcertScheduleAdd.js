@@ -196,20 +196,20 @@ const ConcertScheduleAdd = () => {
                                     {/* 배우선택 */}
 
                                     <div className='row mt-4' style={{ whiteSpace: 'nowrap' }}>
-    {actors.map(actor => (
-        <div key={actor.actorNo} className='col'>
-            <label>
-                <input
-                    type="checkbox"
-                    id={`actor-${actor.actorNo}`}
-                    value={actor.actorNo}
-                    onChange={() => toggleActorSelection(actor.actorNo)}
-                />
-                {actor.actorName}
-            </label>
-        </div>
-    ))}
-</div>
+                                        {actors.map(actor => (
+                                            <div key={actor.actorNo} className='col'>
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`actor-${actor.actorNo}`}
+                                                        value={actor.actorNo}
+                                                        onChange={() => toggleActorSelection(actor.actorNo)}
+                                                    />
+                                                    {actor.actorName}
+                                                </label>
+                                            </div>
+                                        ))}
+                                    </div>
 
                                     {/* 등록버튼 */}
                                     <div className="row mt-4">
