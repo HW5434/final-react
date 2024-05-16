@@ -34,5 +34,32 @@ const isLoginState = selector({
         return loginId && loginId.length > 0 && loginGrade && loginGrade.length > 0;
     }
 });
+//카카오페이
+const partnerOrderId = atom({
+    key : 'partnerOrderId',
+    default : ''
+  }); 
 
-export {countState, loginIdState, loginGradeState, isLoginState};
+  const partnerUserId = atom({
+    key : 'partnerUserId',
+    default : ''
+  });
+
+  const tid = atom({
+    key : 'tid',
+    default : ''
+  });
+
+  const vo = atom({
+    key: 'vo',
+    default: []
+  });
+
+  const pgToken = atom({
+    key : 'pgToken',
+    default : ''
+  });
+  
+export {countState, loginIdState, loginGradeState, isLoginState,
+    partnerOrderId, partnerUserId, tid, vo, pgToken
+};

@@ -65,7 +65,6 @@ function Qna() {
         });
         loadData();
     }, [admin, qnaTargetNo]); //관리자글 등록
-
     // 입력 값 변경
     const changeInput = useCallback((e) => {
         setInput({
@@ -73,15 +72,10 @@ function Qna() {
             [e.target.name]: e.target.value
         });
     }, [input]);
-
-
     const saveInput = useCallback(async () => {
         const resp = await axios.post("/qna/", input);
         loadData();
     }, [input]); // 등록
-
-
-
     // 입력 값 초기화
     const clearInput = useCallback(() => {
         setInput({
@@ -91,8 +85,6 @@ function Qna() {
             qnaAnswer: ""
         });
     }, [input]);
-
-
     const cancelInput = useCallback(() => {
         const choice = window.confirm("작성을 취소하시겠습니까?");
         if (choice === false) return;
@@ -100,26 +92,19 @@ function Qna() {
         closeModal();
     }, [input]); // 입력 취소 [Modal]
 
-
-
     const bsModal = useRef();
-
     const openModal = useCallback(() => {
         const modal = new Modal(bsModal.current);
         modal.show();
     }, []); // Modal 열기
-
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
         modal.hide();
         clearInput();
     }, []); // Modal 닫기
-    // 토글버튼 클릭시 일부만 선택
     const selectToggle = useCallback((qnaNo) => {
         setQnaTargetNo(qnaTargetNo === qnaNo ? null : qnaNo);
-    }, [qnaTargetNo]);
-
-
+    }, [qnaTargetNo]); // 토글버튼 클릭시 일부만 선택
 
     //페이지네이션
     const previousPage = () => {
