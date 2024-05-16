@@ -221,15 +221,6 @@ const Reservation = () => {
             reservationPrice: selectedSeatPrice // 선택한 좌석의 가격을 예약 가격으로 저장
         }));
     }, [selectedSeatPrice]);
-    
-    useEffect(() => {
-        const seatNumbers = checkedSeats.map(seat => seat.seatNo); // 선택한 좌석들의 번호 배열
-        setInputReservation(inputReservation => ({
-            ...inputReservation,
-            seatNo: seatNumbers
-        }));
-    }, [checkedSeats]);
-
 
     //**예약 등록
     const changeInputReservation = useCallback((e) => {
@@ -269,7 +260,94 @@ const Reservation = () => {
         }
     }, [checkedSeats]);
 
-    
+    //굳이 필요 없는 코드
+    // useEffect(() => {
+    //     // selectedSchedule이 존재하고 선택된 좌석이 있다면 concertScheduleNo와 seatNo를 추출하여 items state에 설정
+    //     if (selectedSchedule && checkedSeats.length > 0) {
+    //         const newPurchaseList = checkedSeats.map(seat => ({
+    //             concertScheduleNo: selectedSchedule.concertScheduleNo,
+    //             seatNo: seat.seatNo
+    //         }));
+    //         // 추출한 데이터를 구매 state에 설정
+    //         setPurchaseList(newPurchaseList);
+    //     }
+    // }, [selectedSchedule, checkedSeats]);
+
+
+    //카카오페이 결제--------------------------------------------------------------
+    //let dataList;
+    // const kakaopay = useCallback(() => {
+    //     purchase(); //구매 비동기 함수... 
+    // }, []);
+
+    // const purchase = useCallback(async () => {
+    //     //purchaseList 자리에 들어갈 데이터를 계산하는 코드
+    //     const seatNumbers = checkedSeats.map(seat => seat.seatNo);
+    //     console.log(seatNumbers);
+    //     console.log(inputReservation);
+    //     const data = {
+    //         // concertScheduleNo : selectedSchedule.concertScheduleNo,//읽을 수 없다
+    //         concertScheduleNo: inputReservation.concertScheduleNo,
+    //         // seatNo : [ selectedSeatsInfo.seatNo ]
+    //         // seatNo : checkedSeats.map(seat => seat.seatNo)
+    //         //seatNo : [checkedSeats.seatNo]
+    //         seatNo: seatNumbers
+
+
+    //     };
+
+
+    //     const resp = await axios.post("/kakaopay/purchase", data);
+    //     //useState에 필요한 데이터 저장
+    //     setReservationPartnerOrderId(resp.data.partnerOrderId);
+    //     setReservationPartnerUserId(resp.data.partnerUserId);
+    //     setReservationTid(resp.data.tid);
+    //     setReservationVo(resp.data.vo);
+    //     //새 창을 열고 결제 프로세스 시작
+    //     window.open(resp.data.nextRedirectPcUrl, "_blank", "width=400px, height=800px");
+    // });
+
+    // const purchaseApprove = useCallback(async (pgToken) => {
+    //     //console.log("결제 성공");
+    //     const postData = {
+    //         reservationPartnerOrderId,
+    //         reservationPartnerUserId,
+    //         reservationTid,
+    //         pgToken,
+    //         //data
+    //     };
+    //     try {
+    //         const resp = await axios.post("/purchase/success", postData);
+    //         // Assuming these are state-setting functions
+    //         setReservationPartnerOrderId("");
+    //         setReservationPartnerUserId("");
+    //         setReservationTid("");
+    //         setReservationVo("");
+    //         //navigate('/purchase/success-complete');
+    //     } catch (error) {
+    //         console.error("Error processing purchase:", error);
+    //     }
+
+    // });
+
+    // useEffect(() => {
+    //     const handleMessage = (e) => {
+    //         if (e.data.type && e.data.type === 'successComplete') {
+    //             purchaseApprove(e.data.pgToken);
+    //         }
+    //     };
+    //     window.addEventListener('message', handleMessage);
+    //     return () => {
+    //         window.removeEventListener('message', handleMessage);
+    //     }
+    // }, [purchaseApprove]);
+
+
+
+
+
+
+
     //==============================================================================
     //카카오페이 reservation 에 먼저 담기는거 확인하기
     //navigator
@@ -278,13 +356,16 @@ const Reservation = () => {
     const saveInputReservation = useCallback( async () => {
         try {
             const seatNumbers = checkedSeats.map(seat => seat.seatNo); // 선택한 좌석들의 번호 배열
-
-            await kakaopay(); // 카카오페이 처리
-
-            const resp = await axios.post("/reservation/", {
+            const reservationData = {
                 ...inputReservation,
                 seatNo: seatNumbers, // 선택한 좌석들의 번호 배열 추가
-            });
+            }
+            await kakaopay(reservationData); // 카카오페이 처리
+
+            // const resp = await axios.post("/reservation/", {
+            //     ...inputReservation,
+            //     seatNo: seatNumbers, // 선택한 좌석들의 번호 배열 추가
+            // });
 
 
         } catch (error) {
@@ -292,7 +373,7 @@ const Reservation = () => {
         }
     }, [inputReservation]);
     
-    const kakaopay = useCallback(async () => {
+    const kakaopay = useCallback(async (reservationData) => {
         try {
             const seatNumbers = checkedSeats.map(seat => seat.seatNo);
             const data = {
@@ -304,21 +385,26 @@ const Reservation = () => {
     
             const resp = await axios.post("/kakaopay/purchase", data);
 
-            window.localStorage.setItem("kakaoPayData", JSON.stringify({
-                partnerOrderId: resp.data.partnerOrderId,
-                partnerUserId: resp.data.partnerUserId,
-                tid: resp.data.tid,
-                vo: resp.data.vo,
-            }));
+            window.localStorage.setItem("kakaoPayData", JSON.stringify(
+                {
+                    partnerOrderId: resp.data.partnerOrderId,
+                    partnerUserId: resp.data.partnerUserId,
+                    tid: resp.data.tid,
+                    vo: resp.data.vo,
+                    reservationData
+                }
+            ));
             
             window.location.href = resp.data.nextRedirectPcUrl;
             
         } catch (error) {
             console.error("Error processing kakaopay:", error);
+            localStorage.removeItem("kakaoPayData");
             throw error; // 예외를 상위로 다시 던져 처리
         }
     }, [checkedSeats, inputReservation]);
     
+
     const cancelInputReservation = useCallback(() => {
         const choice = window.confirm("작성을 취소하시겠습니까?");
         if (choice === false) return;
