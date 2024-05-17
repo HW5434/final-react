@@ -40,6 +40,7 @@ import Footer from './components/Home/Footer';
 import ScheduleList from './components/integrated/ConcertSchedule/ScheduleList';
 import ReservationFinish from './components/integrated/ReservationFinish';
 import KaKaoPaySuccess from './components/integrated/KaKao/KaKaoPaySuccess';
+import AdminMember from './components/integrated/admin/AdminMember';
 
 function App() {
 
@@ -124,6 +125,7 @@ function App() {
             <Route path="/requestList" element={<RequestList/>}/>
             <Route path="/requestList/:concertRequestNo" element={<ConcertScheduleAdd/>}/>
             <Route path="/scheduleList" element={<ScheduleList/>}/>
+            <Route path="/adminMember" element={<AdminMember/>}/>
           </Routes>
           <Footer />
         </div>
