@@ -102,7 +102,7 @@
 
 .sub-rap {
     display: flex;
-    color: rgb(41, 41, 41);
+    color: rgb(66, 66, 66);
 }
 
 .sub-link {
@@ -135,7 +135,7 @@
     line-height: 21px;
     font-weight: bold;
     text-align: center;
-    color: rgb(66, 66, 66);
+    color: rgb(255, 45, 45);
 }
 
 .profile-icon {
