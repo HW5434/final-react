@@ -110,13 +110,15 @@ function ConcertRequest() {
 
 
     const bsModal = useRef();
-    // const openModal = useCallback(() => {
-    //     const modal = new Modal(bsModal.current);
-    //     modal.show();
-    //     closeModal();
-    // }, [bsModal]);
+    const openModal = useCallback(() => {
+        const modal = new Modal(bsModal.current);
+        modal.show();
+        closeModal();
+    }, [bsModal]);
+
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
+        
         setApplicant({
             concertRequestNo: "",
             concertRequestCompanyName: "",
