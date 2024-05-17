@@ -30,16 +30,16 @@ function Menu() {
         setLoginId('');
         setLoginGrade('');
         localStorage.removeItem('refreshToken');
-        
+
         delete axios.defaults.headers.common['Authorization'];
     }, [loginId, loginGrade]);
 
     //view
     return (
         <>
-            {/* 로고 */}  
+            {/* 로고 */}
             <NavLink className="navbar-brand" to="/">
-                <div className='text-center'><img src={logo} style={{ width: 'auto', height: '100px' }} /></div>
+                <div className='navbar-logo text-center'><img src={logo} style={{ width: 'auto', height: '100px' }} /></div>
             </NavLink>
             <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
                 <Wrapper>
@@ -89,12 +89,12 @@ function Menu() {
                             </li>
                             {/* 좌석 */}
                             {isLogin && loginGrade === '관리자' && (
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
-                                </div>
-                            </li>
+                                <li className="nav-item dropdown p-3">
+                                    <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
+                                    <div className="dropdown-menu">
+                                        <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
+                                    </div>
+                                </li>
                             )}
                             {/* 공연 */}
                             <li className="nav-item dropdown p-3">

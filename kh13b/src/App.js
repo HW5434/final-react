@@ -36,7 +36,7 @@ import Reservation from './components/integrated/Reservation';
 import RequestList from './components/integrated/ConcertSchedule/RequestList';
 import ConcertScheduleAdd from './components/integrated/ConcertSchedule/ConcertScheduleAdd';
 import Introduce from './components/introduce';
-import Footer from './components/Home/Footer';
+import Footer from './components/Footer';
 import ScheduleList from './components/integrated/ConcertSchedule/ScheduleList';
 import ReservationFinish from './components/integrated/ReservationFinish';
 import KaKaoPaySuccess from './components/integrated/KaKao/KaKaoPaySuccess';
