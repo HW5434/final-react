@@ -166,8 +166,8 @@ label {
     font-size: 17px;
     line-height: 26px;
     border-color: #800E13;
-    background-color: #800E13;
-    color: #fff;
+    /* background-color: #800E13; */
+    color: #800E13;
 }
 
 .passwor-flag {

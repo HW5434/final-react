@@ -9,6 +9,9 @@ import { useCallback, useMemo } from 'react';
 import axios from "./utils/CustomAxios";
 import Wrapper from './Home/Wrapper';
 import logo from './Home/logo/logo.png';
+import { MdOutlineLogout, MdOutlineLogin, MdOutlineBroadcastOnPersonal } from "react-icons/md";
+import { LuUserPlus } from "react-icons/lu";
+
 
 //function
 function Menu() {
@@ -111,16 +114,26 @@ function Menu() {
                         </ul>
 
                         {/* 로그인관련 */}
-                        <div className="d-flex">
+                        <div className="d-flex login-font">
                             {isLogin ? ( /*isLogin : 로그인이 되어 있을 경우*/
                                 <>
-                                    <NavLink className="dropdown-item me-2" to="/" onClick={e => logout()}>로그아웃</NavLink>
-                                    <NavLink className="dropdown-item" to="/mypage">마이페이지</NavLink>
+                                    <NavLink className="dropdown-item me-2" to="/" onClick={e => logout()}>
+                                        Logout&nbsp;&nbsp;<MdOutlineLogout />
+                                    </NavLink>
+                                    <span className='me-2'>|</span>
+                                    <NavLink className="dropdown-item" to="/mypage">
+                                        My&nbsp;&nbsp;<MdOutlineBroadcastOnPersonal/>
+                                    </NavLink>
                                 </>
                             ) : (
                                 <>
-                                    <NavLink className="dropdown-item me-2" to="/login">로그인</NavLink>
-                                    <NavLink className="dropdown-item" to="/signUp">회원가입</NavLink>
+                                    <NavLink className="dropdown-item me-2" to="/login">
+                                        Login&nbsp;&nbsp;<MdOutlineLogin />
+                                    </NavLink>
+                                    <span className='me-2'>|</span>
+                                    <NavLink className="dropdown-item" to="/signUp">
+                                        SignUp&nbsp;&nbsp;<LuUserPlus />
+                                    </NavLink>
                                 </>
                             )}
                         </div>

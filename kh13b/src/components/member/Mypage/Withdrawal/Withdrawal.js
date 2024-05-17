@@ -58,7 +58,7 @@ const Withdrawal = () => {
                 </p>
             </div>
             <div className='withdrawal-submit'>
-                <button type="button" className='btn btn-danger' onClick={e=> withdrawalMember(member)}>
+                <button type="button" onClick={e=> withdrawalMember(member)}>
                     탈퇴하기
                 </button>
             </div>

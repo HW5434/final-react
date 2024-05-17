@@ -1,5 +1,4 @@
 import './MyLayout.css';
-import { Link } from 'react-router-dom';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
 const MyLayout = ({ 
@@ -31,9 +30,6 @@ const MyLayout = ({
                         <h1 className='my-title-text'>
                             예매내역
                         </h1>
-                        <div className='my-nav'>
-                            <Link>전체보기</Link>
-                        </div>
                     </div>                   
                     {reservationList && reservationList.map((item, idx) => (
                         <div className="box-info">
@@ -41,7 +37,7 @@ const MyLayout = ({
                                 <div className="reservation-info-wrap">
                                     <h2 className="box-contents artHouse">
                                         <span className="res-title">{item.RESERVATION_CONCERT_TITLE}</span>
-                                        <span className="res-price">{item.SUM_PRICE}원</span>
+                                        <span className="res-price">{item.SUM_PRICE.toLocaleString()}원</span>
                                     </h2>
                                     <ul className="reservation-mv-info">
                                         <li>

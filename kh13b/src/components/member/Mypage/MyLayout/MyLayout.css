@@ -23,7 +23,7 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    margin: 0px 0px 20px;
+    margin: 0px 0px 10px;
     border-bottom: solid 1px;
 }
 
@@ -32,18 +32,6 @@
     font-weight: bold;
     font-size: 18px;
     line-height: 1;
-}
-
-.my-nav {
-    margin: 0px -10px;
-    a {
-        margin: 0px 10px;
-        color: rgb(217 143 11);
-        font-size: 13px;
-        font-weight: bold;
-        transition: opacity 0.1s ease 0s;
-        text-decoration: none;
-    }
 }
 
 .layout-list {
@@ -58,7 +46,6 @@
     flex: 0 0 auto;
     width: 25%;
     box-sizing: border-box;
-    padding: 0px 10px 20px;
 }
 
 .page-link {
@@ -84,10 +71,13 @@
 .box-info {
     border-bottom: solid 1px;
     overflow: hidden;
+    padding-top: 10px;
 }
 
 .reservation-info-wrap {
     overflow: hidden;
+    height: 210px;
+    padding: 0px 10px 20px;
 }
 
 .box-contents {
@@ -99,7 +89,7 @@
     font-size: 14px;
     overflow: hidden;
     line-height: 1.6;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     ::after {
         clear: both;
         display: table;
@@ -124,7 +114,7 @@
 
 .reservation-mv-info {
     float: left;
-    font-size: 16px;
+    font-size: 14px;
     overflow: hidden;
     padding: 0;
     > li {
