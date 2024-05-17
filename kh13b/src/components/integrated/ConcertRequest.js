@@ -322,14 +322,14 @@ function ConcertRequest() {
                 </div>
             </div>
 
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">대관하기</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
 
                             {/* 등록 화면 */}
 
@@ -647,7 +647,7 @@ function ConcertRequest() {
 
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div className="modal-footer">
 
                                 <button type="button" class="btn btn-primary" onClick={saveInput}>접수신청</button>
 
