@@ -47,7 +47,6 @@ function Menu() {
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-
                     {/* 메뉴들과 로그인 상태 */}
                     <div className="collapse navbar-collapse " id="navbarColor01">
                         <ul className="navbar-nav me-auto">
@@ -69,16 +68,6 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/test03">테스트 3번</NavLink>
                                 </div>
                             </li>
-                            {/* 메뉴 3 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
-                                    <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
-                                    <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
-                                    <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink>
-                                </div>
-                            </li>
                             {/* 고객센터 */}
                             <li className="nav-item dropdown p-3">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
@@ -89,12 +78,24 @@ function Menu() {
                             </li>
                             {/* 좌석 */}
                             {isLogin && loginGrade === '관리자' && (
+                                <>
                                 <li className="nav-item dropdown p-3">
                                     <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
                                     <div className="dropdown-menu">
                                         <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
                                     </div>
                                 </li>
+                                {/* 관리자 */}
+                            <li className="nav-item dropdown p-3">
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
+                                <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
+                                    <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
+                                    <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
+                                    <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink>
+                                </div>
+                            </li>
+                            </>
                             )}
                             {/* 공연 */}
                             <li className="nav-item dropdown p-3">
@@ -104,7 +105,6 @@ function Menu() {
                                 </div>
                             </li>
                         </ul>
-
                         {/* 로그인관련 */}
                         <div className="d-flex">
                             {isLogin ? ( /*isLogin : 로그인이 되어 있을 경우*/

@@ -4,7 +4,6 @@ import axios from '../utils/CustomAxios';
 import { useParams } from "react-router-dom";
 import Wrapper from "../Home/Wrapper";
 
-
 const NoticeDetail = () => {
 
     const { noticeNo } = useParams();
@@ -13,8 +12,6 @@ const NoticeDetail = () => {
     useEffect(() => {
         loadData();
     }, [noticeNo]);
-
-
 
     const loadData = useCallback(async () => {
         const resp = await axios.get(`/notice/${noticeNo}`);
