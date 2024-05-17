@@ -40,10 +40,12 @@ const Bnr02 = () => {
                 pagination={{
                     clickable: true,
                 }}
-                navigation={true}
+                navigation={true} 
                 modules={[EffectFade, Autoplay, Pagination, Navigation]}
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
                 className="mySwiper"
+
+  
                 // 버튼 스타일 변경
                 style={{
                     "--swiper-pagination-color": "#ffffff",
