@@ -9,6 +9,12 @@
     font-family: '빙그레 메로나체';
 }
 
+
+.login-font {
+    font-weight: bold;
+}
+
+
 /* 로고 뒷 배경 색 */
 .navbar-logo {
     background-color: rgb(255, 255, 255);

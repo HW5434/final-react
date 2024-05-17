@@ -25,11 +25,11 @@ const ReservationDetail = () => {
     return (
         <>
             <Jumbotron title="예매 상세 내역" />
-            <div className="container w-100">
+            <div className="container w-100 justify-content-end mt-3">
                 <div className="row justify-content-center">
-                    <div className="col-md-8">
+                    <div className="col-md-10">
                         {reservations && ( // reservations가 null이 아닌 경우에만 렌더링
-                            <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-70 h-70">
+                            <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-60 h-80">
                                 <div>
                                     <ul>
                                         <li>
