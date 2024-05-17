@@ -10,15 +10,15 @@ const ConcertScheduleAdd = () => {
 
     const [startDateTime, setStartDateTime] = useState(new Date()); // 시작일시
     const [endDateTime, setEndDateTime] = useState(new Date()); // 종료일시
-    const [castActors, setCastActors] = useState([]); //배우 그룹번호
-    const [selectedActors, setSelectedActors] = useState([]);
+    // const [castActors, setCastActors] = useState([]); //배우 그룹번호
+    // const [selectedActors, setSelectedActors] = useState([]);
     const [concertSchedules, setConcertSchedules] = useState([]);
-    const [actors, setActors] = useState([]);
+    // const [actors, setActors] = useState([]);
     const [request, setRequests] = useState({});
 
-    useEffect(() => {
-        loadActors();
-    }, []);
+    // useEffect(() => {
+    //     loadActors();
+    // }, []);
 
     useEffect(() => {
         loadData();
@@ -27,23 +27,23 @@ const ConcertScheduleAdd = () => {
     const loadData = async () => {
         try {
             const schedule = await axios.get("/schedule/");
-            const actor = await axios.get("/castActor/");
+            // const actor = await axios.get("/castActor/");
             setConcertSchedules(schedule.data);
-            setCastActors(actor.data);
+            // setCastActors(actor.data);
 
         } catch (error) {
             console.error("Error loading data:", error);
         }
     };
 
-    const loadActors = useCallback(async () => {
-        try {
-            const response = await axios.get("/actor/");
-            setActors(response.data);
-        } catch (error) {
-            console.error("Error loading actors:", error);
-        }
-    }, []);
+    // const loadActors = useCallback(async () => {
+    //     try {
+    //         const response = await axios.get("/actor/");
+    //         setActors(response.data);
+    //     } catch (error) {
+    //         console.error("Error loading actors:", error);
+    //     }
+    // }, []);
 
     const loadRequestList = useCallback(async () => {
         const resp = await axios.get(`/concertRequest/${concertRequestNo}`);
@@ -61,14 +61,14 @@ const ConcertScheduleAdd = () => {
         setEndDateTime(date);
     }
 
-    //버튼 클릭시 이벤트
-    const toggleActorSelection = (actorNo) => {
-        const isSelected = selectedActors.includes(actorNo);
-        const updatedSelectedActors = isSelected
-            ? selectedActors.filter(id => id !== actorNo)
-            : [...selectedActors, actorNo];
-        setSelectedActors(updatedSelectedActors);
-    };
+    // //버튼 클릭시 이벤트
+    // const toggleActorSelection = (actorNo) => {
+    //     const isSelected = selectedActors.includes(actorNo);
+    //     const updatedSelectedActors = isSelected
+    //         ? selectedActors.filter(id => id !== actorNo)
+    //         : [...selectedActors, actorNo];
+    //     setSelectedActors(updatedSelectedActors);
+    // };
 
     const formatDate = (date) => {
         const year = date.getFullYear();
@@ -193,23 +193,23 @@ const ConcertScheduleAdd = () => {
                                         </div>
                                     </div>
 
-                                    {/* 배우선택 */}
+                                    {/* 배우선택
 
                                     <div className='row mt-4' style={{ whiteSpace: 'nowrap' }}>
-    {actors.map(actor => (
-        <div key={actor.actorNo} className='col'>
-            <label>
-                <input
-                    type="checkbox"
-                    id={`actor-${actor.actorNo}`}
-                    value={actor.actorNo}
-                    onChange={() => toggleActorSelection(actor.actorNo)}
-                />
-                {actor.actorName}
-            </label>
-        </div>
-    ))}
-</div>
+                                        {actors.map(actor => (
+                                            <div key={actor.actorNo} className='col'>
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`actor-${actor.actorNo}`}
+                                                        value={actor.actorNo}
+                                                        onChange={() => toggleActorSelection(actor.actorNo)}
+                                                    />
+                                                    {actor.actorName}
+                                                </label>
+                                            </div>
+                                        ))}
+                                    </div> */}
 
                                     {/* 등록버튼 */}
                                     <div className="row mt-4">

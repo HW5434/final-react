@@ -1,19 +1,29 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useMatch, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 //import { FaCreditCard } from "react-icons/fa";
 import Jumbotron from '../Jumbotron';
 import axios from '../utils/CustomAxios';
 import { useNavigate } from "react-router-dom";
-
+import { FaCreditCard } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import { useRecoilState } from 'recoil';
 import { partnerOrderId, partnerUserId, tid, vo, pgToken } from "../utils/RecoilData";
 //import { useRecoilState} from "../utils/RecoilData";
-
+import { MdAccessTime } from "react-icons/md";
+import { FaRegCalendarCheck } from "react-icons/fa";
+import { MdOutlineChair } from "react-icons/md";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { IoTicket } from "react-icons/io5";
 import { SeatGroup } from "hacademy-cinema-seat";
+import { LuAsterisk } from "react-icons/lu";
+import { MdCreditCard } from "react-icons/md";
+// import { FaCreditCard } from "react-icons/fa";
+
+import './Reservation.css';
+
 //react-datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Form from "react-bootstrap/Form";
 //import { ko } from "date-fns/esm/locale";
 
 const Reservation = () => {
@@ -41,6 +51,8 @@ const Reservation = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [schedules, setSchedules] = useState([]);
     const [selectedSchedule, setSelectedSchedule] = useState(null);
+
+    const [availableDates, setAvailableDates] = useState([]);
 
     const [seats, setSeats] = useState([]);
     const [showSeatSelection, setShowSeatSelection] = useState(false);
@@ -83,11 +95,29 @@ const Reservation = () => {
         loadSchedules();
     }, [concertNo, selectedDate]);
 
+    useEffect(() => {
+        loadAvailableDates();
+    }, [concertNo]);
+
+    const loadAvailableDates = async () => {
+        try {
+            const response = await axios.get(`/reservation/${concertNo}/byConcertRequestNo`);
+            const dates = response.data.map(schedule => new Date(schedule.concertScheduleStart));
+            setAvailableDates(dates);
+            if (dates.length > 0) {
+                const initialDate = dates.find(date => date >= new Date()) || dates[0];
+                setSelectedDate(initialDate);
+            }
+        } catch (error) {
+            console.error("Error loading available dates:", error);
+        }
+    };
     const loadSchedules = async () => {
         try {
             // 날짜를 ISO 형식으로 변환하지 않고, 직접 원하는 형식으로 포맷하여 URL에 추가
             const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')
                 }-${String(selectedDate.getDate()).padStart(2, '0')}`;
+            //선택한 날짜에 따른 시간 보여줄 수 있는axios
             const resp = await axios.get(`/reservation/concertRequestNo/${concertNo}/concertScheduleStart/${formattedDate}`);
             setSchedules(resp.data);
         } catch (error) {
@@ -116,6 +146,7 @@ const Reservation = () => {
         if (selectedSchedule === schedule) {
             setSelectedSchedule(null);
             setShowSeatSelection(false); // 선택 해제되면 좌석 선택 창 닫기
+
         } else {
             // 다른 일정을 선택했을 때 선택된 일정 설정
             setSelectedSchedule(schedule);
@@ -260,117 +291,41 @@ const Reservation = () => {
         }
     }, [checkedSeats]);
 
-    //굳이 필요 없는 코드
-    // useEffect(() => {
-    //     // selectedSchedule이 존재하고 선택된 좌석이 있다면 concertScheduleNo와 seatNo를 추출하여 items state에 설정
-    //     if (selectedSchedule && checkedSeats.length > 0) {
-    //         const newPurchaseList = checkedSeats.map(seat => ({
-    //             concertScheduleNo: selectedSchedule.concertScheduleNo,
-    //             seatNo: seat.seatNo
-    //         }));
-    //         // 추출한 데이터를 구매 state에 설정
-    //         setPurchaseList(newPurchaseList);
-    //     }
-    // }, [selectedSchedule, checkedSeats]);
-
-
-    //카카오페이 결제--------------------------------------------------------------
-    //let dataList;
-    // const kakaopay = useCallback(() => {
-    //     purchase(); //구매 비동기 함수... 
-    // }, []);
-
-    // const purchase = useCallback(async () => {
-    //     //purchaseList 자리에 들어갈 데이터를 계산하는 코드
-    //     const seatNumbers = checkedSeats.map(seat => seat.seatNo);
-    //     console.log(seatNumbers);
-    //     console.log(inputReservation);
-    //     const data = {
-    //         // concertScheduleNo : selectedSchedule.concertScheduleNo,//읽을 수 없다
-    //         concertScheduleNo: inputReservation.concertScheduleNo,
-    //         // seatNo : [ selectedSeatsInfo.seatNo ]
-    //         // seatNo : checkedSeats.map(seat => seat.seatNo)
-    //         //seatNo : [checkedSeats.seatNo]
-    //         seatNo: seatNumbers
-
-
-    //     };
-
-
-    //     const resp = await axios.post("/kakaopay/purchase", data);
-    //     //useState에 필요한 데이터 저장
-    //     setReservationPartnerOrderId(resp.data.partnerOrderId);
-    //     setReservationPartnerUserId(resp.data.partnerUserId);
-    //     setReservationTid(resp.data.tid);
-    //     setReservationVo(resp.data.vo);
-    //     //새 창을 열고 결제 프로세스 시작
-    //     window.open(resp.data.nextRedirectPcUrl, "_blank", "width=400px, height=800px");
-    // });
-
-    // const purchaseApprove = useCallback(async (pgToken) => {
-    //     //console.log("결제 성공");
-    //     const postData = {
-    //         reservationPartnerOrderId,
-    //         reservationPartnerUserId,
-    //         reservationTid,
-    //         pgToken,
-    //         //data
-    //     };
-    //     try {
-    //         const resp = await axios.post("/purchase/success", postData);
-    //         // Assuming these are state-setting functions
-    //         setReservationPartnerOrderId("");
-    //         setReservationPartnerUserId("");
-    //         setReservationTid("");
-    //         setReservationVo("");
-    //         //navigate('/purchase/success-complete');
-    //     } catch (error) {
-    //         console.error("Error processing purchase:", error);
-    //     }
-
-    // });
-
-    // useEffect(() => {
-    //     const handleMessage = (e) => {
-    //         if (e.data.type && e.data.type === 'successComplete') {
-    //             purchaseApprove(e.data.pgToken);
-    //         }
-    //     };
-    //     window.addEventListener('message', handleMessage);
-    //     return () => {
-    //         window.removeEventListener('message', handleMessage);
-    //     }
-    // }, [purchaseApprove]);
-
-
-
-
-
-
-
     //==============================================================================
     //카카오페이 reservation 에 먼저 담기는거 확인하기
     //navigator
     const navigator = useNavigate();
     //--saveInputReservation에서 카카오 페이까지 다 처리할 수 있게끔 구현,,!
-    const saveInputReservation = useCallback( async () => {
+    const saveInputReservation = useCallback(async (e) => {
+        e.preventDefault();
+
+        // 필수 필드 확인
+        if (!inputReservation.reservationPersonName || !inputReservation.reservationPersonTell) {
+            // 필수 필드가 비어 있는 경우 알림창 표시
+            alert("이름과 휴대폰 번호는 필수 입력 항목입니다. 작성 후 다시 시도해주세요.");
+            return;
+        }
+
         try {
             const seatNumbers = checkedSeats.map(seat => seat.seatNo); // 선택한 좌석들의 번호 배열
-
-            await kakaopay(); // 카카오페이 처리
-
-            const resp = await axios.post("/reservation/", {
+            const reservationData = {
                 ...inputReservation,
                 seatNo: seatNumbers, // 선택한 좌석들의 번호 배열 추가
-            });
+            }
+            await kakaopay(reservationData); // 카카오페이 처리
+
+            // const resp = await axios.post("/reservation/", {
+            //     ...inputReservation,
+            //     seatNo: seatNumbers, // 선택한 좌석들의 번호 배열 추가
+            // });
 
 
         } catch (error) {
             console.error("Error creating reservation:", error);
         }
     }, [inputReservation]);
-    
-    const kakaopay = useCallback(async () => {
+
+    const kakaopay = useCallback(async (reservationData) => {
         try {
             const seatNumbers = checkedSeats.map(seat => seat.seatNo);
             const data = {
@@ -379,30 +334,34 @@ const Reservation = () => {
                 seatNo: seatNumbers,
                 totalPrice: totalPrice
             };
-    
+
             const resp = await axios.post("/kakaopay/purchase", data);
 
-            window.localStorage.setItem("kakaoPayData", JSON.stringify({
-                partnerOrderId: resp.data.partnerOrderId,
-                partnerUserId: resp.data.partnerUserId,
-                tid: resp.data.tid,
-                vo: resp.data.vo,
-            }));
-            
+            window.localStorage.setItem("kakaoPayData", JSON.stringify(
+                {
+                    partnerOrderId: resp.data.partnerOrderId,
+                    partnerUserId: resp.data.partnerUserId,
+                    tid: resp.data.tid,
+                    vo: resp.data.vo,
+                    reservationData
+                }
+            ));
+
             window.location.href = resp.data.nextRedirectPcUrl;
-            
+
         } catch (error) {
             console.error("Error processing kakaopay:", error);
+            localStorage.removeItem("kakaoPayData");
             throw error; // 예외를 상위로 다시 던져 처리
         }
     }, [checkedSeats, inputReservation]);
-    
 
-    const cancelInputReservation = useCallback(() => {
-        const choice = window.confirm("작성을 취소하시겠습니까?");
-        if (choice === false) return;
-        clearInputReservation();
-    }, [inputReservation]);
+
+    // const cancelInputReservation = useCallback(() => {
+    //     const choice = window.confirm("작성을 취소하시겠습니까?");
+    //     if (choice === false) return;
+    //     clearInputReservation();
+    // }, [inputReservation]);
 
     const clearInputReservation = useCallback(() => {
         setInputReservation({
@@ -420,6 +379,23 @@ const Reservation = () => {
             //reservationStatus: ""//구매상태
         });
     }, [inputReservation]);
+    //취소 버튼 클릭시 담앗던 정보 reset
+    const clearAllSelections = () => {
+        //setSelectedDate(null);
+        setSelectedSchedule(null);
+        setShowSeatSelection(false);
+        setTotalPrice(0);
+        //setCheckedSeats([]);
+        //setSchedules([]);
+        setSeats([]);
+        clearInputReservation();  // inputReservation 상태를 초기화하는 함수 호출
+    };
+
+    const cancelInputReservation = () => {
+        if (window.confirm("작성을 취소하시겠습니까?")) {
+            clearAllSelections();
+        }
+    };
 
     return (
         <>
@@ -431,7 +407,13 @@ const Reservation = () => {
                         <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
                             <div className="row mt-2">
                                 <div className="col text-center">
-                                    <h4><span>뮤지컬*{concert.concertRequestConcertName}*MUTIPLE</span></h4>
+                                    <h4><span>
+                                        <IoTicket style={{ color: '#681116' }} />
+                                        &nbsp;&nbsp;뮤지컬  &nbsp;&nbsp;
+                                        <strong>{concert.concertRequestConcertName}</strong>
+                                        &nbsp;&nbsp; 티켓예매
+                                        &nbsp;&nbsp;<IoTicket style={{ color: '#681116' }} />
+                                    </span></h4>
                                 </div>
                             </div>
                         </div>
@@ -443,33 +425,29 @@ const Reservation = () => {
                 <div className="row justify-content-center">
                     <div className="col-md-8">
                         <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
-
-                            <div className="row mt-4">
-                                {/* <div className="col">
-                                    <h2>일정 선택</h2>
-                                </div> */}
-                            </div>
                             {/* 일정 선택 datepicker */}
-                            <div className="row">
-                                <div className="col-6">
-                                    <h4><span>날짜 선택</span></h4>
-                                    <hr />
+                            <div className="row mt-4">
+                                <div className="col-6 text-center">
+                                    <h4><span>
+                                        <FaRegCalendarCheck style={{ color: '#681116' }} />
+                                        &nbsp; 날짜 선택
+                                    </span></h4>
+                                    <hr style={{ color: '#681116', borderWidth: '2px', }} />
                                     <DatePicker
-                                        //locale={ko}                   // 한글로 변경
                                         selected={selectedDate}
                                         onChange={date => setSelectedDate(date)}
                                         showPopperArrow={false}
-                                        minDate={new Date()}//오늘 날짜 전은 선택 못하게
-                                        //open
+                                        includeDates={availableDates}
+                                        minDate={new Date()}
                                         dateFormat="yyyy-MM-dd"
-                                        customInput={            // 날짜 뜨는 인풋 커스텀
-                                            <Form.Control as="textarea" rows={1} style={{ width: "250px" }} />
-                                        }
+                                        inline
                                     />
                                 </div>
-                                <div className="col-6">
-                                    <h4><span>시간 선택</span></h4>
-                                    <hr />
+                                <div className="col-6 text-center">
+                                    <h4><span>
+                                        <MdAccessTime style={{ color: '#681116' }} />&nbsp;시간 선택
+                                    </span></h4>
+                                    <hr style={{ color: '#681116', borderWidth: '2px', }} />
                                     {schedules.length === 0 && <p>선택하신 날짜에 일정이 존재하지 않습니다</p>}
                                     {schedules.length > 0 && (
                                         <table className="table table-hover table-borderless">
@@ -501,10 +479,13 @@ const Reservation = () => {
                             <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
 
                                 <div className="row mt-4">
-                                    <div className="col">
-                                        <h4><span>선택한 일정</span></h4>
-                                        <hr />
-                                        <p>{formatDate(selectedSchedule.concertScheduleStart)}  {formatTime(selectedSchedule.concertScheduleStart)} ~ {formatTime(selectedSchedule.concertScheduleEnd)}</p>
+                                    <div className="col text-center">
+                                        <h4><span>
+                                            <FaRegCalendarCheck style={{ color: '#681116' }} />
+                                            &nbsp;선택한 일정
+                                        </span></h4>
+                                        <hr style={{ color: '#681116', borderWidth: '2px', }} />
+                                        <p>&nbsp;&nbsp; {formatDate(selectedSchedule.concertScheduleStart)}  {formatTime(selectedSchedule.concertScheduleStart)} ~ {formatTime(selectedSchedule.concertScheduleEnd)}</p>
                                         {/* <p>{selectedSchedule.concertScheduleNo}</p> */}
                                     </div>
                                 </div>
@@ -524,49 +505,23 @@ const Reservation = () => {
                             <div className="col-md-8">
                                 <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
 
+
                                     <div className="row mt-4">
-                                        <div className="col" >
-                                            <h4><span>좌석 등급별 가격</span></h4>
-                                            <hr />
-                                            <table className="table text-center">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style={{ fontWeight: 'bold' }}>VIP석</td>
-                                                        <td>{concert.concertRequestSeatvip}원</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={{ fontWeight: 'bold' }}>R석</td>
-                                                        <td>{concert.concertRequestSeatr}원</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={{ fontWeight: 'bold' }}>S석</td>
-                                                        <td>{concert.concertRequestSeats}원</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={{ fontWeight: 'bold' }}>A석</td>
-                                                        <td>{concert.concertRequestSeata}원</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <div className="col text-center">
+                                            <h4><span>
+                                                <MdOutlineChair style={{ color: '#681116' }} />&nbsp;좌석선택</span>
+                                            </h4>
+                                            <hr style={{ color: '#681116', borderWidth: '2px', }} />
                                         </div>
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div className="container w-100">
-                        <div className="row justify-content-center">
-                            <div className="col-md-8">
-                                <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
-
                                     <div className="row mt-4">
-                                        <div className="col">
-                                            <h4><span>좌석선택</span></h4>
-                                            <hr />
+                                        <div className="col text-center">
+                                            <div className='stage-space'>
+                                                    <strong>
+                                                        S&nbsp;&nbsp;T&nbsp;&nbsp;A&nbsp;&nbsp;G&nbsp;&nbsp;E
+                                                    </strong>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -596,37 +551,62 @@ const Reservation = () => {
                         </div>
                     </div>
 
+                    <div className="container w-100">
+                        <div className="row justify-content-center">
+                            <div className="col-md-8">
+                                <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
+
+                                    <div className="row mt-4">
+                                        <div className="col text-center" >
+                                            <h4><span>
+                                                <MdOutlineChair style={{ color: '#681116' }} />
+                                                &nbsp;좌석 등급별 가격
+                                            </span></h4>
+                                            <hr style={{ color: '#681116', borderWidth: '2px', }} />
+                                            <table className="table text-center">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ fontWeight: 'bold' }}>VIP석</td>
+                                                        <td>{concert.concertRequestSeatvip}원</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ fontWeight: 'bold' }}>R석</td>
+                                                        <td>{concert.concertRequestSeatr}원</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ fontWeight: 'bold' }}>S석</td>
+                                                        <td>{concert.concertRequestSeats}원</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ fontWeight: 'bold' }}>A석</td>
+                                                        <td>{concert.concertRequestSeata}원</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* 선택한 좌석과 가격 표시 */}
                     <div className="container w-100">
                         <div className="row justify-content-center">
                             <div className="col-md-8">
                                 <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
 
-                                    {/* <div className="row mt-4">
-                                        <div className="col">
-                                            <h4>선택한 좌석과 가격</h4>
-                                            <ul>
-                                                {checkedSeats.map(seat => (
-                                                    <li key={seat.seatNo}>
-                                                        좌석 :{seat.seatNo} |
-                                                        좌석 위치 : {seat.seatCol}-{seat.seatRow}|
-                                                        등급:{seat.seatLevel}/
-                                                        가격: {getSeatPrice(seat.seatLevel)}원
-                                                        {seat.seatLevel}석 {seat.seatCol}-{seat.seatRow}번
-                                                    </li>
-                                                ))}
-                                                <li>총 가격: {totalPrice}원</li>
-                                            </ul>
-                                        </div>
-                                    </div> */}
                                     <div className="row mt-4">
-                                        <div className="col">
-                                            <h4><span>선택한 좌석과 가격</span></h4>
-                                            <hr />
+                                        <div className="col text-center">
+                                            <h4><span>
+                                                <MdCreditCard style={{ color: '#681116' }}/>&nbsp;
+                                                선택한 좌석과 가격</span></h4>
+                                            <hr style={{ color: '#681116', borderWidth: '2px', }} />
                                             <table className="table text-center">
                                                 <thead>
                                                     <tr>
-                                                        <th>좌석</th>
+                                                        {/* <th>좌석</th> */}
                                                         <th>좌석 위치</th>
                                                         <th>좌석 등급</th>
                                                         <th>좌석 가격</th>
@@ -635,8 +615,8 @@ const Reservation = () => {
                                                 <tbody>
                                                     {checkedSeats.map(seat => (
                                                         <tr key={seat.seatNo}>
-                                                            <td>{seat.seatNo}</td>
-                                                            <td>{seat.seatCol} - {seat.seatRow}</td>
+                                                            {/* <td>{seat.seatNo}</td> */}
+                                                            <td>{seat.seatCol}열 {seat.seatRow}번</td>
                                                             <td>{seat.seatLevel} 석</td>
                                                             <td>{getSeatPrice(seat.seatLevel)} 원</td>
                                                         </tr>
@@ -674,21 +654,24 @@ const Reservation = () => {
                         <div className="col-md-8">
                             <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
                                 <div className="row mt-4">
-                                    <div className="col">
-                                        <h4><span>주문자 정보 입력</span></h4>
-                                        <hr />
+                                    <div className="col text-center">
+                                        <h4><span>
+                                            <IoInformationCircleOutline style={{ color: '#681116' }} />
+                                            &nbsp;주문자 정보 입력
+                                        </span></h4>
+                                        <hr style={{ color: '#681116', borderWidth: '2px', }} />
                                     </div>
                                 </div>
                                 <div className="row mt-4">
                                     <div className="col-4">
-                                        <label>이름*</label>
+                                        <label><LuAsterisk style={{ color: '#681116' }} />이름</label>
                                         <input type="text" name="reservationPersonName"
                                             value={inputReservation.reservationPersonName}
                                             className="form-control"
                                             onChange={e => changeInputReservation(e)} />
                                     </div>
                                     <div className="col-4">
-                                        <label>휴대폰번호*</label>
+                                        <label><LuAsterisk style={{ color: '#681116' }} />휴대폰번호</label>
                                         <input type="text" name="reservationPersonTell"
                                             value={inputReservation.reservationPersonTell}
                                             className="form-control"
@@ -709,12 +692,15 @@ const Reservation = () => {
                                             // onClick={e => kakaopay(e)}
                                             onClick={e => saveInputReservation(e)}
                                         >
-                                            예매
+                                            <FaCreditCard />
+                                            &nbsp;&nbsp;예매
                                         </button>
                                     </div>
                                     <div className="col-2 text-end">
-                                        <button className="btn btn-success w-100" style={{ backgroundColor: '#681116CC', borderColor: '#681116CC' }}
+                                        <button className="btn btn-success w-100" style={{ backgroundColor: '#681116', borderColor: '#681116CC' }}
                                             onClick={e => cancelInputReservation(e)}>
+                                            <MdCancel />
+                                            &nbsp;&nbsp;
                                             취소
                                         </button>
                                     </div>
