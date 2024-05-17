@@ -31,7 +31,7 @@ const MyLayout = ({
                             예매내역
                         </h1>
                     </div>                   
-                    {reservationList && reservationList.map((item, idx) => (
+                    {reservationList && reservationList.length !== 0 ? reservationList.map((item, idx) => (
                         <div className="box-info">
                             <div className="detail-area">
                                 <div className="reservation-info-wrap">
@@ -95,7 +95,16 @@ const MyLayout = ({
                                 </div>
                             </div>
                         </div> 
-                    ))}
+                    )) : 
+                        <div>
+                            <div className="detail-area">
+                                <div className="reservation-info-wrap">
+                                    <h2 className="box-contents artHouse">
+                                        <span className="res-title">예매내역이 없습니다.</span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>}
                 </section>
             </div>
             {/* 페이지네이션 UI */}
