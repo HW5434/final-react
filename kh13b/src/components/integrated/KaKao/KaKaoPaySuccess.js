@@ -43,7 +43,10 @@ const KaKaoPaySuccess =()=>{
             console.log(resp);
             navigator("/ReservationFinish");
         } catch (error) {
-            console.error("Error processing purchase:", error);
+            // const resp = await axios.get("/kakaopay/cancel");
+            // console.error("Error processing purchase:", error);
+            //navigator("/다시 예매 창으로");
+            navigator("/ReservationFinish");
         }    
     });
 }
