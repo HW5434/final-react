@@ -6,6 +6,22 @@
  /* 메뉴 글자 크기 수정 */
 .navbar-nav .nav-link {
     font-size: 20px; /* 원하는 크기로 수정 */
+    font-family: '빙그레 메로나체';
 }
 
+
+.login-font {
+    font-weight: bold;
+}
+
+
+/* 로고 뒷 배경 색 */
+.navbar-logo {
+    background-color: rgb(255, 255, 255);
+    padding: 0 !important; /* 패딩을 0으로 설정하고 !important로 강제 적용 */
+}
+
+.navbar-brand.active {
+    padding: 0 !important; /* 패딩을 0으로 설정하고 !important로 강제 적용 */
+}
 

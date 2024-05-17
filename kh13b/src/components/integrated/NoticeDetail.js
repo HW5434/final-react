@@ -4,7 +4,6 @@ import axios from '../utils/CustomAxios';
 import { useParams } from "react-router-dom";
 import Wrapper from "../Home/Wrapper";
 
-
 const NoticeDetail = () => {
 
     const { noticeNo } = useParams();
@@ -14,8 +13,6 @@ const NoticeDetail = () => {
         loadData();
     }, [noticeNo]);
 
-
-
     const loadData = useCallback(async () => {
         const resp = await axios.get(`/notice/${noticeNo}`);
         setNotice(resp.data)
@@ -23,22 +20,21 @@ const NoticeDetail = () => {
 
     return (
         <>
-            <Jumbotron title="상세페이지" content="공지글에 대한 페이지입니다." />
             <Wrapper>
                 <div className="row justify-content-center text-start">
                     <div className="col-md-10">
-
+            <Jumbotron title="상세페이지" content="공지글에 대한 페이지입니다." />
                         <div className="row mt-5">
                             <div className="col">
                                 <div className="">
                                     <h1>
                                         {notice.noticeNo}번째 글
                                     </h1>
-                                    <hr></hr>
+                                    <hr/>
                                 </div>
 
                                 <div className="col">
-                                    <div className="mt-5">
+                                    <div className="my-5">
                                         {/* 공지글 제목 */}
                                         <h2><strong>
                                             {notice.noticeTitle}
@@ -48,12 +44,13 @@ const NoticeDetail = () => {
                                 </div>
 
                                 <div className="col">
-                                    <div className="mt-5">
+                                    <div className="my-5">
                                         {/* 공지글 내용 */}
                                         <h3>
                                             {notice.noticeContent}
                                         </h3>
                                     </div>
+                                    <hr className="my-5"/>
                                 </div>
                             </div>
                         </div>

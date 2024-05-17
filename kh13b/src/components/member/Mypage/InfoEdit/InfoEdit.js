@@ -87,13 +87,11 @@ const InfoEdit = ({ memberId, layoutChange }) => {
                         <input type="text" className="input-control" value={input.memberAddress2 || ""} name="memberAddress2" onChange={e => changeMember(e)} />
                     </div>
                 </div>
-                <div className="mb-3 edit-button">
-                    <div className="col">
-                        <button className="edit-button" type="button" onClick={e=> cancelEditMember(input)}>취소</button>
-                        <button className="edit-button" type="button" onClick={e=> saveEditMember(input)}>저장</button>
-                    </div>
-                </div>
             </div>
+                <div className="editButton-group">
+                    <button className="cancel-button" type="button" onClick={e=> cancelEditMember(input)}>취소</button>
+                    <button className="save-button" type="button" onClick={e=> saveEditMember(input)}>저장</button>
+                </div>
         </div>
     );
 }
