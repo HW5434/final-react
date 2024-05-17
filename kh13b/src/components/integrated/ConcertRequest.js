@@ -1,10 +1,11 @@
 
 import axios from '../utils/CustomAxios';
-import { useRef, useCallback, useState, useEffect, ChangeEvent } from 'react';
+import { useRef, useCallback, useState, useEffect, } from 'react';
 import { Modal } from "bootstrap";
 import img_rent_step from './image/img_rent_step.jpg';
 import "./CSS.css";
 import { NavLink } from "react-router-dom";
+
 
 
 function ConcertRequest() {
@@ -100,12 +101,11 @@ function ConcertRequest() {
         loadData();
     }, []);//최초1회만
 
-    const [attachList, setAttachList] = useState({
-        attachList:""
-    });
+    
+    const [attach, setAttach] = useState(null);
 
     const handleFileChange = (e) => {
-        setAttachList(e.target.files[0]);
+        setAttach(e.target.files);
     };
 
 
@@ -170,7 +170,7 @@ function ConcertRequest() {
             concertRequestState: "n"
         });
 
-        setAttachList([""]);
+        setAttach({});
     }, [bsModal]);
 
 
@@ -201,23 +201,16 @@ function ConcertRequest() {
         formData.append('rent', JSON.stringify(rent));
         formData.append('concert', JSON.stringify(concert));
         formData.append('actors', JSON.stringify(actors));
-
-        //attachList에 파일이 있는 경우 FormData에 파일 추가
-        if (attachList && attachList.length > 0) {
-            for (let i = 0; i < attachList.length; i++) {
-                formData.append(`attachList`, attachList[i]);
+        
+        //attach에 파일이 있는 경우 FormData에 파일 추가
+        if (attach && attach.length > 0) {
+            for (let i = 0; i < attach.length; i++) {
+                formData.append(`attach`, attach[i]);
             }
         }
         axios({
             url: "/concertRequest/",
             method: "post",
-            // data: {
-            //     applicant:applicant, 
-            //     rent:rent,
-            //     concert:concert, 
-            //     actors:actors,
-            //     attachList:attachList
-            // },
             data: formData,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -264,6 +257,9 @@ function ConcertRequest() {
                     concertRequestSeata: "",
                 });
 
+                setActors([{
+                    actorNo: 1, actorName: ''
+                }]);
 
                 setRent({
                     concertRequestHeadDay: "",
@@ -277,12 +273,12 @@ function ConcertRequest() {
                     concertRequestState: "n"
                 });
 
-                setAttachList([]);
+                setAttach({});
 
                 closeModal();
 
             });
-    }, [applicant, rent, concert, actors, attachList]);
+    }, [applicant, rent, concert, actors, attach]);
 
 
 
@@ -641,7 +637,7 @@ function ConcertRequest() {
                                 <div className='row mt-4'>
                                     <div className='col mb-4'>
                                         <label>포스터 첨부</label>
-                                        <input type="file" name="attachList"
+                                        <input type="file" name="attach"
                                             onChange={e => handleFileChange(e)} />
                                     </div>
 
