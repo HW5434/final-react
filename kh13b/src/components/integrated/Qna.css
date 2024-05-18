@@ -1,16 +1,73 @@
-/* 게시글 전체에 대한 디자인 */
-
-/* 게시글 제목에 대한 디자인 */
-
 /* 게시글 내용에 대한 디자인 */
 .accordion-body{
     /* 배경색 */
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     /* 글꼴 */
     font-family: '빙그레 메로나체';
+    
+}
+
+/* 화살표 버튼 숨기기 */
+/* 질문글 디자인 */
+.accordion-button {
+    background: #f1f1f1;
+    /* 클릭시 테두리 */
+    outline:none !important;
+    box-shadow:none !important;
+    border-bottom: 2px solid #bbbbbb75; /* 테두리 추가 */
+}
+
+/*  */
+
+
+
+/* 답변글 등록 세부 디자인 설정 */
+
+/* 화살표 버튼 숨기기 */
+.accordion-button::after {
+    display: none !important;
+}
+
+
+
+
+.Question-Q {
+    color: #000000;
+}
+.Question-N {
+    color: rgb(173, 173, 173);
+}
+
+.accordion {
+    /* 뚜껑 */
+    --bs-accordion-active-bg: #F7F7F7; 
+    /* 답변창 색상 */
+    --bs-accordion-bg: #F7F7F7;
 }
 
 /* 페이지 네이션 디자인 */
 .pagination{
-
+    
 }
+
+.page-link {
+    color: #000; 
+    background-color: #fff;
+    border: 1px solid #ccc; 
+    border-radius: none;
+  }
+  
+  .page-item.active .page-link {
+   z-index: 1;
+   color: #555555;
+   font-weight:bold;
+   background-color: #f1f1f1;
+   border-color: #ccc;
+   
+  }
+  
+  .page-link:focus, .page-link:hover {
+    color: #000;
+    background-color: #fafafa; 
+    border-color: #ccc;
+  }

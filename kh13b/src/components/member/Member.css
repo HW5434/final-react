@@ -41,10 +41,11 @@
     height: 45px;
     padding: 0px;
     background: rgb(255 255 255);
-    color: rgb(217 143 11);
-    border: solid rgb(255 203 111);
+    color: #800E13;
+    border: solid #EEEEEE;
     line-height: 20px;
     font-size: 17px;
+    color: #fff;
     min-height: 50px;
 }
 
@@ -95,8 +96,8 @@ label {
     height: 45px;
     padding: 0px;
     background: rgb(255 255 255);
-    color: rgb(217 143 11);
-    border: solid rgb(255 203 111);
+    color: #800E13;
+    border: solid #800E13;
     line-height: 20px;
     font-size: 17px;
     min-height: 50px;
@@ -143,8 +144,9 @@ label {
     padding: 11px 10px;
     font-size: 17px;
     line-height: 26px;
-    border-color: rgb(255 203 111);
-    background-color: rgb(255 203 111);
+    border-color: #800E13;
+    background-color: #800E13;
+    color: #fff;
 }
 
 .sign-danger {
@@ -163,8 +165,9 @@ label {
     padding: 11px 10px;
     font-size: 17px;
     line-height: 26px;
-    border-color: rgb(255 203 111);
-    background-color: rgb(255 203 111);
+    border-color: #800E13;
+    /* background-color: #800E13; */
+    color: #800E13;
 }
 
 .passwor-flag {

@@ -5,10 +5,10 @@ import './Jum.css';
 function Jumbotron(props){ //props는 상위 컴포넌트에서 전달되는 값(=파라미터)
     return(
         <>
-        <div class="jumbotron jumbotron-fluid">
+        <div className="jumbotron jumbotron-fluid">
             <div className="row">
                 <div className="col">
-                    <div className="p-4 bg-light text-dark w-100">
+                    <div className="my-5 text-dark w-100">
                         <h1>{props.title}</h1>
                         <p>{props.content}</p>
                     </div>

@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Jumbotron from "../../Jumbotron";
 import axios from "../../utils/CustomAxios";
-import { Link } from "react-router-dom";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
-const RequestList = () => {
-    const [concertRequests, setConcertRequests] = useState([]);
+const ScheduleList = () => {
+    const [concertSchedules, setConcertSchedules] = useState([]);
+    const [castActors, setCastActors] = useState([]);
     const [page, setPage] = useState(1);
     const [size] = useState(10); // 페이지당 항목 수
     const [count, setCount] = useState(0); // 총 페이지 수
@@ -16,9 +16,11 @@ const RequestList = () => {
 
     const loadData = async () => {
         try {
-            const resp = await axios.get("/concertRequest/state");
-            setConcertRequests(resp.data);
-            setCount(Math.ceil(resp.data.length / size)); // 총 페이지 수 계산
+            const schedule = await axios.get("/schedule/");
+            const actor = await axios.get("/castActor/");
+            setConcertSchedules(schedule.data);
+            setCastActors(actor.data);
+            setCount(Math.ceil(schedule.data.length / size)); // 총 페이지 수 계산
         } catch (error) {
             console.error("Error loading data:", error);
         }
@@ -32,6 +34,13 @@ const RequestList = () => {
         const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
         const dayOfWeek = daysOfWeek[date.getDay()];
         return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+    };
+
+    const formatTime = (timeString) => {
+        const time = new Date(timeString);
+        const hours = String(time.getHours()).padStart(2, '0');
+        const minutes = String(time.getMinutes()).padStart(2, '0');
+        return `${hours}시 ${minutes}분`;
     };
 
     const previousPage = () => {
@@ -48,7 +57,7 @@ const RequestList = () => {
 
     return (
         <>
-            <Jumbotron title="승인신청" />
+            <Jumbotron title="일정등록목록" />
             <div className="container w-100 justify-content-end mt-3">
                 <div className="row justify-content-center">
                     <div className="col-md-10">
@@ -56,33 +65,17 @@ const RequestList = () => {
                             <table className="table text-center align-middle justify-content-end">
                                 <thead>
                                     <tr>
-                                        <th>신청번호</th>
-                                        <th>공연 이름</th>
-                                        <th>대관 시작</th>
-                                        <th>대관 종료</th>
-                                        <th>공연시작날짜</th>
-                                        <th>공연종료날짜</th>
-                                        <th>승인확인</th>
-                                        <th>공연 일정 등록 </th>
+                                        <th>공연 신청번호</th>
+                                        <th>시작 날짜/시간</th>
+                                        <th>종료 날짜/시간</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center align-middle justify-content-end">
-                                    {concertRequests.slice((page - 1) * size, page * size).map(ConcertRequest => (
-                                        <tr key={ConcertRequest.concertRequestNo}>
-                                            <td style={{ padding: '20px' }}>{ConcertRequest.concertRequestNo}</td>
-                                            <td>{ConcertRequest.concertRequestConcertName}</td>
-                                            <td>{formatDate(ConcertRequest.concertRequestHeadDay)}</td>
-                                            <td>{formatDate(ConcertRequest.concertRequestFooterDay)}</td>
-                                            <td>{formatDate(ConcertRequest.concertRequestStarthDay)}</td>
-                                            <td>{formatDate(ConcertRequest.concertRequestStartfDay)}</td>
-                                            <td>{ConcertRequest.concertRequestState}</td>
-                                            <td>
-                                                <Link to={`/requestList/${ConcertRequest.concertRequestNo}`}>
-                                                    <button className="justify-content-end align-middle btn right btn-100">
-                                                        등록
-                                                    </button>
-                                                </Link>
-                                            </td>
+                                    {concertSchedules.slice((page - 1) * size, page * size).map(concertSchedule => (
+                                        <tr key={concertSchedule.concertScheduleNo}>
+                                            <td style={{ padding: '20px' }}>{concertSchedule.concertScheduleNo}</td>
+                                            <td>{formatDate(concertSchedule.concertScheduleStart)} {formatTime(concertSchedule.concertScheduleStart)}</td>
+                                            <td>{formatDate(concertSchedule.concertScheduleEnd)} {formatTime(concertSchedule.concertScheduleEnd)}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -120,4 +113,4 @@ const RequestList = () => {
     );
 };
 
-export default RequestList;
+export default ScheduleList;

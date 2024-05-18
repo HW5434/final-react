@@ -1,5 +1,7 @@
 .main-wrapper {
-    background-color: #47484A
+
+    background-color: #EEEEEE;
+
 }
 
 /* Footer */
@@ -10,6 +12,13 @@
     color: rgba(240, 248, 255, 0.705);
     /* 글사크기 */
     flex: 1;
+}
+
+/* 가운데 정렬 */
+.parent {
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
 }
 
 /* 포스터 크기 */

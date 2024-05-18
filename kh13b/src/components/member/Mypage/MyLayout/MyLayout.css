@@ -1,5 +1,7 @@
 .profile-wrap {
     width: 66.6667%;
+    /* height: 600px; */
+    padding-top: 30px;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -7,7 +9,7 @@
 .mypage-layout {
     max-width: 700px;
     margin: 0px auto;
-    padding: 50px 0px 0px;
+    padding: 20px 0px 0px;
     color: rgb(41, 41, 41);
 }
 
@@ -21,7 +23,8 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    margin: 0px 0px 20px;
+    margin: 0px 0px 10px;
+    border-bottom: solid 1px;
 }
 
 .my-title-text {
@@ -31,33 +34,120 @@
     line-height: 1;
 }
 
-.my-title-count {
-    margin-left: 0.4ch;
-    color: rgb(217 143 11);
-}
-
-.my-nav {
-    margin: 0px -10px;
-    a {
-        margin: 0px 10px;
-        color: rgb(217 143 11);
-        font-size: 13px;
-        font-weight: bold;
-        transition: opacity 0.1s ease 0s;
-        text-decoration: none;
-    }
-}
-
 .layout-list {
     display: flex;
     flex-wrap: wrap;
     color: rgb(41, 41, 41);
     margin: 0px -10px -20px;
+    text-align: center;
 }
 
 .my-list-data {
     flex: 0 0 auto;
     width: 25%;
     box-sizing: border-box;
+}
+
+.page-link {
+    color: #000; 
+    background-color: #EEEEEE;
+    border: none;
+  }
+  
+.page-item.active .page-link {
+    z-index: 1;
+    color: #555;
+    font-weight:bold;
+    background-color: #f1f1f1;
+    border-color: #EEEEEE;
+}
+
+.page-link:focus, .page-link:hover {
+    color: #000;
+    background-color: #EEEEEE;
+    border-color: #ccc;
+}
+
+.box-info {
+    border-bottom: solid 1px;
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+.reservation-info-wrap {
+    overflow: hidden;
+    height: 210px;
     padding: 0px 10px 20px;
+}
+
+.box-contents {
+    text-decoration: none;
+    float: left;
+    width: 100%;
+    margin-right: 0;
+    color: #222 !important;
+    font-size: 14px;
+    overflow: hidden;
+    line-height: 1.6;
+    /* padding-bottom: 10px; */
+    ::after {
+        clear: both;
+        display: table;
+        content: '';
+    }
+}
+
+.res-title {
+    float: left;
+    font-weight: bold;
+    font-size: 18px;
+    max-width: calc(100% - 120px);
+}
+
+.res-price {
+    float: right;
+    font-size: 17px;
+    color: #0077a8;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.reservation-mv-info {
+    float: left;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 0;
+    > li {
+        box-sizing: border-box;
+        float: left;
+        width: 50%;
+        padding-right: 10px;
+        margin-top: 8px;
+        list-style: none;
+        dd {
+            float: left;
+            width: calc(100% - 60px);
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        dl {
+            overflow: hidden;
+            margin: 0;
+            ::after {
+                display: table;
+                clear: both;
+                content: '';
+            }
+        }
+        dt {
+            float: left;
+            width: 70px;
+            color: #222;
+        }
+    }
+    ::after {
+        display: table;
+        clear: both;
+        content: '';
+    }
 }
