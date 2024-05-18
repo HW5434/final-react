@@ -101,7 +101,7 @@ function ConcertRequest() {
         loadData();
     }, []);//최초1회만
 
-    
+
     const [attach, setAttach] = useState(null);
 
     const handleFileChange = (e) => {
@@ -118,7 +118,7 @@ function ConcertRequest() {
 
     const closeModal = useCallback(() => {
         const modal = Modal.getInstance(bsModal.current);
-        
+
         setApplicant({
             concertRequestNo: "",
             concertRequestCompanyName: "",
@@ -203,7 +203,7 @@ function ConcertRequest() {
         formData.append('rent', JSON.stringify(rent));
         formData.append('concert', JSON.stringify(concert));
         formData.append('actors', JSON.stringify(actors));
-        
+
         //attach에 파일이 있는 경우 FormData에 파일 추가
         if (attach && attach.length > 0) {
             for (let i = 0; i < attach.length; i++) {
@@ -293,7 +293,7 @@ function ConcertRequest() {
                         <NavLink className="" to="/Home">
                             <i class="bi bi-house-fill" /></NavLink>
                         <i class="bi bi-slash" />
-                        메뉴 2번
+                        대관
                         <i class="bi bi-slash" />
                         대관안내
                     </div>
@@ -308,13 +308,13 @@ function ConcertRequest() {
                         <span>문 의:고객센터-1:1문의 또는 별도 문의(대관 공고 연락처)</span>
                         <div className="col mt-2 mb-5">
                             <span>*대관 접수 전 반드시 공지사항 내 [
-                                <NavLink className="" to="">대관 공고</NavLink>
+                                <NavLink className="" to="/notice">대관 공고</NavLink>
                                 ]를 확인 하시기 바랍니다.</span>
                         </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col centered-image mt-5">
+                    <div className="col centered-image mt-5 mb-5">
                         <button type="button" className="success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">대관접수버튼</button>
                     </div>
                 </div>
@@ -328,10 +328,53 @@ function ConcertRequest() {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
+                            <h2>개인정보 수집 및 이용</h2>
+                            <hr />
+                            <div className="container text-center">
+                                <div className='row'>
+                                    <div className='col-4'>
+                                        <h5 className='mt-0 pt-0 mb-0 pb-0'>
+                                            목적
+                                        </h5>
+                                    </div>
+                                    <div className='col-4'>
+                                        <h5 className='mt-0 pt-0 mb-0 pb-0'>
+                                            항목
+                                        </h5>
+                                    </div>
+                                    <div className='col-4'>
+                                        <h5 className='mt-0 pt-0 mb-0 pb-0'>
+                                            보유기간
+                                        </h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div className='row'>
+                                    <div className='col-4'>
+                                        <h5>
+                                            - 대관 신청에 따른 단체 확인용<br />
+                                            - 대관 관련 상호 의사소통 경로 확보<br />
+                                            - 대관료 청구 및 지급 등 기타 대관 관련 업무 진행
+                                        </h5>
+                                    </div>
+                                    <div className='col-4'>
+                                        <h5>
+                                            단체명, 담당자, 사무실<br />
+                                            전화번호, 이메일, 핸드폰 번호
+                                        </h5>
+                                    </div>
+                                    <div className='col-4 mb-5'>
+                                        <h5>
+                                            등록일로부터 1년
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
                             {/* 등록 화면 */}
 
-                            <div className="container">
+                            <div className="container mt-5">
                                 <span className="red-icon"><h2>신청인</h2></span>
                                 <hr />
                                 <div className='row mt-4'>
@@ -549,7 +592,7 @@ function ConcertRequest() {
 
 
                             <div className="container">
-                                <span><h2>대관 일정</h2></span>
+                                <span className="red-icon"><h2>대관 일정</h2></span>
                                 <hr />
                                 <div className='row mt-4'>
                                     <div className='col-4'>
