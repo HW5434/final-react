@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+
 import sample_images_0 from './Bannerimg/0.png';
 import sample_images_1 from './Bannerimg/1.png';
 import sample_images_2 from './Bannerimg/2.png';
@@ -40,7 +41,7 @@ const Bnr02 = () => {
                 pagination={{
                     clickable: true,
                 }}
-                navigation={true} 
+                navigation={false} 
                 modules={[EffectFade, Autoplay, Pagination, Navigation]}
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
                 className="mySwiper"

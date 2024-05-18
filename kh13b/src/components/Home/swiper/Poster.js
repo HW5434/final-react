@@ -36,6 +36,7 @@ const Poster = () => {
                 centeredSlides={true}
                 navigation={true}
                 slidesPerView={'auto'}
+                initialSlide={1}  // 2번째 이미지부터 시작
                 coverflowEffect={{
                     rotate: 50,
                     stretch: 0,

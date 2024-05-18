@@ -32,9 +32,9 @@ function Home() {
                 <Wrapper>
                     <div className="row my-5  justify-content-center">
                         {/* 1번쨰 배너 */}
-                        <div className="col-3 banner">
+                        {/* <div className="col-3 banner">
                             <Bnr01 />
-                        </div>
+                        </div> */}
 
                         {/* 2번쨰 배너 */}
                         <div className="col-3 banner">
@@ -42,9 +42,9 @@ function Home() {
                         </div>
 
                         {/* 3번쨰 배너 */}
-                        <div className="col-3 banner">
+                        {/* <div className="col-3 banner">
                             <Bnr03 />
-                        </div>
+                        </div> */}
                     </div>
                     </Wrapper>
 
