@@ -58,8 +58,6 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/stage">소개 1</NavLink>
-                                    <NavLink className="dropdown-item" to="/test02">소개 2</NavLink>
-                                    <NavLink className="dropdown-item" to="/test03">소개 3</NavLink>
                                 </div>
                             </li>
                             {/* 메뉴 2 */}
@@ -96,6 +94,7 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
                                     <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
                                     <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink>
+                                    <NavLink className="dropdown-item" to="/adminMember">회원관리</NavLink>
                                 </div>
                             </li>
                             </>

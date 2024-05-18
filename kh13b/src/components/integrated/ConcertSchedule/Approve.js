@@ -52,10 +52,10 @@ const Approve = () => {
         <>
             <Jumbotron title="대관신청 목록" content="승인여부" />
             {/* 대관 신청 목록 */}
-            <div className="container w-100 justify-content-end mt-3">
+            <div className="container w-100 justify-content-end mt-3 mb-3">
                 <div className="row justify-content-center">
                     <div className="col-md-10">
-                        <div className="shadow-lg p-3 my-3 bg-light rounded w-100 h-100">
+                        <div className="shadow-lg p-3 my-3 bg-light rounded w-100 h-80">
                             <table className='table text-center align-middle justify-content-end'>
                                 <thead>
                                     <tr>
