@@ -3,9 +3,10 @@ import axios from "../../../utils/CustomAxios";
 import './InfoEdit.css';
 import Jumbotron from "../../../Jumbotron";
 
-const InfoEdit = ({ memberId, layoutChange }) => {
+const InfoEdit = ({ memberId, layoutChange, setMember }) => {
     const [infoEdits, setInfoEdits] = useState([]);
     const [input, setInput] = useState({
+        memberNo:"",
         memberName: "",
         memberContact: "",
         memberBirth: "",
@@ -40,7 +41,8 @@ const InfoEdit = ({ memberId, layoutChange }) => {
     const saveEditMember = useCallback(async () => {
         const resp = await axios.patch(`/member/`, input);
         loadData(); // 수정 후 데이터 다시 불러오기
-    }, []);
+        setMember(resp.data);
+    }, [input]);
 
 
     // 현재 날짜를 ISO 형식으로 가져오기

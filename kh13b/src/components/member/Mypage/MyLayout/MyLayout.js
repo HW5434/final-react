@@ -55,7 +55,7 @@ const MyLayout = ({
                                         <li>
                                             <dl>
                                                 <dt>관람일시</dt>
-                                                <dd className="txt-red">{item.PAY_DATE}</dd>
+                                                <dd className="txt-red">{item.RESERVATION_CONCERT_DATE}</dd>
                                             </dl>
                                         </li>
                                         <li>
