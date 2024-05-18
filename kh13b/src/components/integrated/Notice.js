@@ -104,11 +104,10 @@ const Notice = () => {
 
     return (
         <>
-
-
+            <div className="notice-wrapper">
             <Wrapper>
                 <div className="row justify-content-center">
-                    <div className="col-md-8 text-start">
+                    <div className="col-md-11 text-start">
                         <Jumbotron title="공지사항" content="공지글에 대한 페이지입니다." />
                         <div className="row mt-5">
                             <div className="col">
@@ -235,6 +234,7 @@ const Notice = () => {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </>
 

@@ -57,18 +57,16 @@ function Menu() {
                             <li className="nav-item dropdown p-3">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
                                 <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/stage">소개 1</NavLink>
-                                    <NavLink className="dropdown-item" to="/test02">소개 2</NavLink>
-                                    <NavLink className="dropdown-item" to="/test03">소개 3</NavLink>
+                                    <NavLink className="dropdown-item" to="/stage">소개</NavLink>
                                 </div>
                             </li>
                             {/* 메뉴 2 */}
                             <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">메뉴 2번</a>
+                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">대관</a>
                                 <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/test01">테스트 1번</NavLink>
+                                    {/* <NavLink className="dropdown-item" to="/test01">테스트 1번</NavLink> */}
                                     <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
-                                    <NavLink className="dropdown-item" to="/test03">테스트 3번</NavLink>
+                                    {/* <NavLink className="dropdown-item" to="/test03">테스트 3번</NavLink> */}
                                 </div>
                             </li>
                             {/* 고객센터 */}
@@ -95,7 +93,8 @@ function Menu() {
                                     <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
                                     <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
                                     <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
-                                    <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink>
+                                    {/* <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink> */}
+                                    <NavLink className="dropdown-item" to="/adminMember">회원관리</NavLink>
                                 </div>
                             </li>
                             </>

@@ -1,7 +1,5 @@
 .main-wrapper {
-
     background-color: #EEEEEE;
-
 }
 
 /* Footer */
@@ -29,5 +27,9 @@
 /* Banner 사이즈 [1 ,2 ,3] */
 .banner{
   width: 30%;
-  height: 150px;
+  height: 200px;
+}
+
+.intro-banner {
+  
 }

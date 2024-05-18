@@ -18,7 +18,6 @@
 /* 로고 뒷 배경 색 */
 .navbar-logo {
     background-color: rgb(255, 255, 255);
-    padding: 0 !important; /* 패딩을 0으로 설정하고 !important로 강제 적용 */
 }
 
 .navbar-brand.active {

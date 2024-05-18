@@ -137,11 +137,11 @@ function Qna() {
     // 화면 출력
     return (
         <>
+        <div className='qna-wrapper'>
             <Wrapper>
-
                 <div className="row justify-content-center">
-                    <div className="col-md-8 text-start">
-                        <Jumbotron title="질문글 테스트" content="질문글에 대한 컨텐츠"/>
+                    <div className="col-md-11 text-start">
+                        <Jumbotron title="질문글" content="질문글에 대한 컨텐츠"/>
                         <div className='row-4 mt-3 mb-3'>
                             <div className='col'>
                                 {qnas.map((qna) => (
@@ -178,7 +178,6 @@ function Qna() {
                                                     <>
                                                         <div className="accordion-body text-start">
                                                             {/* 답변 영역 */}
-
                                                             <div className="row justify-content-center text-start">
                                                                 <div className="col-md-11">
                                                                     <div className="row mt-1">
@@ -201,6 +200,7 @@ function Qna() {
                                                                                     <h3>
                                                                                         {qna.qnaContent}
                                                                                     </h3>
+                                                                                    <hr className='mt-5'/>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -259,41 +259,36 @@ function Qna() {
                                                         {/* 답변 이 없을때 글 내용 */}
 
                                                         <Wrapper>
-                                                            <div className="row justify-content-center text-start">
-                                                                <div className="col-md-10">
 
-                                                                    <div className="row mt-5">
-                                                                        <div className="col">
-                                                                            <div className="">
-                                                                                <h1>
-                                                                                    {qna.qnaNo}번째 글
-                                                                                </h1>
-                                                                                <hr></hr>
-                                                                            </div>
+                                                                <div className="col p-3">
 
+                                                                    <div className="row text-start">
+                                                                        <div className="col-10">
                                                                             <div className="col">
-                                                                                <div className="mt-5">
+                                                                                <div className="mt-4">
                                                                                     {/* 공지글 제목 */}
-                                                                                    <h2><strong>
+                                                                                    <h3><strong>
                                                                                         {qna.qnaTitle}
+                                                                                        
                                                                                     </strong>
-                                                                                    </h2>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div className="col">
-                                                                                <div className="mt-5">
-                                                                                    {/* 공지글 내용 */}
-                                                                                    <h3>
-                                                                                        {qna.qnaContent}
                                                                                     </h3>
                                                                                 </div>
+                                                                            </div>
+
+                                                                            <div className="col">
+                                                                                    <hr/>
+                                                                                <div className="my-5">
+                                                                                    {/* 공지글 내용 */}
+                                                                                    <h4>
+                                                                                        {qna.qnaContent}
+                                                                                    </h4>
+                                                                                </div>
+                                                                                        <hr/>
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
                                                                 </div>
-                                                            </div>
                                                         </Wrapper>
                                                     </>
                                                 )}
@@ -389,7 +384,7 @@ function Qna() {
 
             {/* 여기까지 모달코드 */}
 
-
+            </div>
         </>
     );
 }
