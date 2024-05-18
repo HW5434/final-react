@@ -115,10 +115,10 @@ const ConcertScheduleAdd = () => {
                     <div className="container w-100">
                         <div className="row justify-content-center">
                             <div className="col-md-10">
-                                <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
+                                <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-60">
                                     <div className="row mt-4">
                                         <div className="col">
-                                            <h2>일정 선택</h2>
+                                            <h2>일정 등록</h2>
                                         </div>
                                     </div>
                                     <div className='row mt-4'>
@@ -183,41 +183,40 @@ const ConcertScheduleAdd = () => {
                                     {/* 등록버튼 */}
                                     <div className="row mt-4">
                                         <div className="col">
-                                            <button onClick={saveAdd} className="btn btn-primary">
+                                            <button onClick={saveAdd} className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }}>
                                                 저장
                                             </button>
                                         </div>
                                     </div>
-
-                                    {/* 목록
-                                    <div className="container w-100 justify-content-end mt-3">
-                                        <div className="row justify-content-center">
-                                            <div className="col-md-10">
-                                                <div className="shadow-lg p-3 my-3 bg-light rounded w-100 h-80">
-                                                    <table className="table text-center align-middle justify-content-end">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>공연 신청번호</th>
-                                                                <th>시작 날짜/시간</th>
-                                                                <th>종료 날짜/시간</th>
-                                                                <th>일정 등록 번호 </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody className="text-center align-middle justify-content-end">
-                                                            {concertSchedules.map(concertSchedule => (
-                                                                <tr key={concertSchedule.concertScheduleNo}>
-                                                                    <td>{concertSchedule.concertScheduleNo}</td>
-                                                                    <td>{concertSchedule.concertScheduleStart}</td>
-                                                                    <td>{concertSchedule.concertScheduleEnd}</td>
-                                                                    <td>{concertSchedule.concertRequestNo}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                </div>
+                            </div>
+                            {/* 목록 */}
+                            <div className="container w-100 justify-content-end mt-3">
+                                <div className="row justify-content-center">
+                                    <div className="col-md-10">
+                                        <div className="shadow-lg p-3 my-3 bg-light rounded w-100 h-80">
+                                            <table className="table text-center align-middle justify-content-end">
+                                                <thead>
+                                                    <tr>
+                                                        <th>공연 신청번호</th>
+                                                        <th>시작 날짜/시간</th>
+                                                        <th>종료 날짜/시간</th>
+                                                        <th>일정 등록 번호 </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="text-center align-middle justify-content-end">
+                                                    {concertSchedules.map(concertSchedule => (
+                                                        <tr key={concertSchedule.concertScheduleNo}>
+                                                            <td>{concertSchedule.concertScheduleNo}</td>
+                                                            <td>{concertSchedule.concertScheduleStart}</td>
+                                                            <td>{concertSchedule.concertScheduleEnd}</td>
+                                                            <td>{concertSchedule.concertRequestNo}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
