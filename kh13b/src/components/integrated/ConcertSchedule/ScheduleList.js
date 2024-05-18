@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Jumbotron from "../../Jumbotron";
 import axios from "../../utils/CustomAxios";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import ConcertRequest from "../ConcertRequest";
 
 const ScheduleList = () => {
     const [concertSchedules, setConcertSchedules] = useState([]);
@@ -65,7 +66,7 @@ const ScheduleList = () => {
                             <table className="table text-center align-middle justify-content-end">
                                 <thead>
                                     <tr>
-                                        <th>공연 신청번호</th>
+                                        <th>공연 등록번호</th>
                                         <th>시작 날짜/시간</th>
                                         <th>종료 날짜/시간</th>
                                     </tr>

@@ -71,7 +71,7 @@ const RequestDetail = () => {
             <div className="container w-100">
                 <div className="row justify-content-center">
                     <div className="col-md-8">
-                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-100">
+                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded  w-100 h-80">
                             <table className="table text-center">
                                 <thead>
                                     <tr>
