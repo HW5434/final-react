@@ -27,31 +27,6 @@ function Home() {
                     </div>
                 </Wrapper>
 
-                {/* 배너 부분  */}
-
-                <Wrapper>
-                    <div className="row my-5  justify-content-center">
-                        {/* 1번쨰 배너 */}
-
-                        <div className="col-3 banner">
-                            {/* <Bnr01 /> */}
-                        </div>
-
-
-                        {/* 2번쨰 배너 */}
-                        <div className="col-3 banner">
-                            {/* <Bnr02 /> */}
-                        </div>
-
-                        {/* 3번쨰 배너 */}
-
-                        <div className="col-3 banner">
-                            {/* <Bnr03 /> */}
-                        </div>
-
-                    </div>
-                    </Wrapper>
-
             </div>
         </>
     );
