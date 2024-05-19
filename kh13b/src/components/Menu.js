@@ -58,6 +58,7 @@ function Menu() {
                                 <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
                                 <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/stage">소개 1</NavLink>
+                                    <NavLink className="dropdown-item" to="/test02">작성 테스트</NavLink>
                                 </div>
                             </li>
                             {/* 메뉴 2 */}
