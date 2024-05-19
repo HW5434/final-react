@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from '../../utils/CustomAxios';
 import Jumbotron from "../../Jumbotron";
 import { Link } from "react-router-dom";
+import './Concert.css';
 //** 현재 날짜 기준 지난 공연들은 안나오게 구현
 const Concert = () => {
     const [concerts, setConcerts] = useState([]);
@@ -19,6 +20,21 @@ const Concert = () => {
                 const endDate = new Date(concert.concertRequestStartfDay);
                 return concert.concertRequestState === 'y' && endDate > now;
             });
+            await Promise.all(approvedConcerts.map(async (item, idx) => {
+                await axios.get(`/concertRequest/getAttach/${item.concertRequestNo}`, {
+                    responseType: 'arraybuffer',
+                }).then((res) => {
+                    const base64 = btoa(
+                        new Uint8Array(res.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                        )
+                    );
+                    approvedConcerts[idx].concertImage = base64;
+                }).catch((e) => {
+                    console.log("파일 없음")
+                });
+            }));
             setConcerts(approvedConcerts);
         } catch (error) {
             console.error("Error loading data:", error);
@@ -48,8 +64,8 @@ const Concert = () => {
                                         <Link to={`/concert/${concert.concertRequestNo}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                             <div className="card h-100">
                                                 <div className="row no-gutters">
-                                                    <div className="col-md-3">
-                                                        <img src="https://www.charlottetheater.co.kr/_upload/ART/2024222133311_17637.jpg" className="card-img" alt="뮤지컬 포스터" />
+                                                    <div className="col-md-3 concert-image">
+                                                        <img src={`data:image/;base64,${concert.concertImage}`} className="card-img" alt="뮤지컬 포스터" />
                                                     </div>
                                                     <div className="col-md-9">
                                                         <div className="card-body">
