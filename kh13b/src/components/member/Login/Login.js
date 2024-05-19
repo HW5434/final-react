@@ -1,6 +1,6 @@
 import './Login.css';
 import { useCallback, useState } from "react";
-import Jumbotron from "../../Jumbotron";
+import logo from "../../Home/logo/logo.png";
 import {useRecoilState} from "recoil";
 import { loginIdState, loginGradeState } from "../../utils/RecoilData";
 import axios from "../../utils/CustomAxios";
@@ -64,7 +64,7 @@ const Login = () => {
             <div className='login'>
                 <div className="login-wrap">
                     <Link className='login-logo' to='/'>
-                        <img className='login-logoImage' src='/static/media/logo.8732cb4a8436724ca619.png'></img>
+                        <img className='login-logoImage' src={logo}></img>
                     </Link>
                     <form className='login-form'>
                         <div className="">

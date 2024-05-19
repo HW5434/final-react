@@ -66,7 +66,7 @@ const Mypage = () => {
                     {layout === 'update' && (
                         <>
                         <div>
-                            <InfoEdit memberId={loginId} layoutChange={setLayout}/>
+                            <InfoEdit memberId={loginId} layoutChange={setLayout} setMember={setMember}/>
                         </div>
                         <div className='withdrawal-button'>
                             <button type="button" onClick={() => setLayout('delete')}>

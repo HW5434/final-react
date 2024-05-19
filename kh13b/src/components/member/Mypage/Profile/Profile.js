@@ -69,12 +69,14 @@ const Profile = ({ member, layoutChange, reservationCount }) => {
                                         </div>
                                         <div className='sub-text'>내정보</div>
                                     </Link>
-                                    <Link className='sub-link' onClick={() => layoutChange('editPassword')}>
-                                        <div className='link-icon'>
-                                            <RiLockPasswordLine className='profile-icon' />
-                                        </div>
-                                        <div className='sub-text'>비밀번호변경</div>
-                                    </Link>
+                                    {member.memberPw === 'kakaoLoingPw' ? "" :
+                                        <Link className='sub-link' onClick={() => layoutChange('editPassword')}>
+                                            <div className='link-icon'>
+                                                <RiLockPasswordLine className='profile-icon' />
+                                            </div>
+                                            <div className='sub-text'>비밀번호변경</div>
+                                        </Link>
+                                    }
                                 </div>
                             </div>
                         </div>
