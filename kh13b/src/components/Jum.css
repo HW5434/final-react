@@ -15,7 +15,7 @@
     }
 }
 
-.active {
+.menu-font-color.active {
     color: #EEEEEE !important;
     font-weight: 600;
 }
