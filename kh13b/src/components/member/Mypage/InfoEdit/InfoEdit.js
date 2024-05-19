@@ -39,9 +39,13 @@ const InfoEdit = ({ memberId, layoutChange, setMember }) => {
     };
 
     const saveEditMember = useCallback(async () => {
-        const resp = await axios.patch(`/member/`, input);
-        loadData(); // 수정 후 데이터 다시 불러오기
-        setMember(resp.data);
+        await axios.patch(`/member/`, input).then((resp) => {
+            alert("수정완료");
+            loadData(); // 수정 후 데이터 다시 불러오기
+            setMember(resp.data);
+        }).catch((e) => {
+            console.log("error 발생");
+        })
     }, [input]);
 
 

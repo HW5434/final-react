@@ -1,3 +1,21 @@
 .bg-light {
-    background-color: #994141ad; /* 투명도를 조절하려면 마지막 값(0~1)을 조절합니다 */
+    background-color: #EEEEEE; /* 투명도를 조절하려면 마지막 값(0~1)을 조절합니다 */
+}
+
+.navi-color {
+    background-color: #5C0C11;
+    color: #EEEEEE;
+    font-size: 18px;
+}
+
+.menu-font-color {
+    color: #EEEEEE;
+    &:hover {
+        color: #EEEEEE;
+    }
+}
+
+.menu-font-color.active {
+    color: #EEEEEE !important;
+    font-weight: 600;
 }

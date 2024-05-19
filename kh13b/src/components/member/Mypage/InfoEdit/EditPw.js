@@ -55,7 +55,7 @@ const EditPw = ({memberId, layoutChange}) => {
     , [pw.newPw, pw.confirmPw]);
     
     const cancelEditPw = useCallback(() => {
-        layoutChange('my'); // 메인페이지로 이동
+        layoutChange('my'); // 마이페이지로 이동
     }, []);
 
     const saveEditPw = useCallback(async () => {
@@ -77,7 +77,7 @@ const EditPw = ({memberId, layoutChange}) => {
             alert('비밀번호가 성공적으로 변경되었습니다.');
     
             // 비밀번호 변경 후에는 메인 페이지로 이동할 수 있습니다.
-            navigator("/");
+            layoutChange('my'); // 마이페이지로 이동
         } catch (error) {
             // 비밀번호 변경에 실패한 경우, 사용자에게 에러를 표시할 수 있습니다.
             console.error('비밀번호 변경에 실패했습니다:', error);

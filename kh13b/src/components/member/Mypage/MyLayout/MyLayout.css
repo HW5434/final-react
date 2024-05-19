@@ -71,13 +71,11 @@
 .box-info {
     border-bottom: solid 1px;
     overflow: hidden;
-    padding-top: 10px;
+    padding: 15px;
 }
 
 .reservation-info-wrap {
     overflow: hidden;
-    height: 210px;
-    padding: 0px 10px 20px;
 }
 
 .box-contents {
@@ -149,5 +147,13 @@
         display: table;
         clear: both;
         content: '';
+    }
+}
+
+.seat-list {
+    display: flex;
+    flex-wrap: wrap;
+    > div {
+        margin-right: 5px;
     }
 }

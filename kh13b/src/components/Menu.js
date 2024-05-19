@@ -42,70 +42,72 @@ function Menu() {
         <>
             {/* 로고 */}
             <NavLink className="navbar-brand" to="/">
-                <div className='navbar-logo text-center'><img src={logo} style={{ width: 'auto', height: '100px' }} /></div>
+    <div className='navbar-logo text-center'><img src={logo} style={{ width: 'auto', height: '100px' }} /></div>
             </NavLink>
-            <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+            <nav className="navbar navbar-expand-lg navi-color" data-bs-theme="light">
                 <Wrapper>
                     {/* React에서는 페이지간 이동을 NavLink 태그로 한다 */}
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     {/* 메뉴들과 로그인 상태 */}
-                    <div className="collapse navbar-collapse " id="navbarColor01">
+                    <div className="collapse navbar-collapse" id="navbarColor01">
                         <ul className="navbar-nav me-auto">
                             {/* 메뉴 1 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
-                                <div className="dropdown-menu">
+                            <li className="nav-item">
+                                {/* <a className="nav-link dropdown-toggle menu-font-color" href="#" role="button" aria-haspopup="true" aria-expanded="false">소개</a> */}
+                                <NavLink className="nav-link menu-font-color" to="/stage">소개</NavLink>
+                                {/* <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/stage">소개</NavLink>
-                                </div>
+                                </div> */}
                             </li>
                             {/* 메뉴 2 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">대관</a>
-                                <div className="dropdown-menu">
-                                    {/* <NavLink className="dropdown-item" to="/test01">테스트 1번</NavLink> */}
+                            <li className="nav-item">
+                                {/* <a className="nav-link dropdown-toggle menu-font-color" href="#" role="button" aria-haspopup="true" aria-expanded="false">대관</a> */}
+                                <NavLink className="nav-link menu-font-color" to="/ConcertRequest">대관문의 신청</NavLink>
+                                {/* <div className="dropdown-menu">
                                     <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
-                                    {/* <NavLink className="dropdown-item" to="/test03">테스트 3번</NavLink> */}
-                                </div>
+                                </div> */}
                             </li>
                             {/* 고객센터 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/qna">1대1 문의글</NavLink>
-                                    <NavLink className="dropdown-item" to="/notice">공지사항 공사중..</NavLink>
-                                </div>
+                            <li className="nav-item">
+                                {/* <a className="nav-link dropdown-toggle menu-font-color" href="#" role="button" aria-haspopup="true" aria-expanded="false">대관</a> */}
+                                <NavLink className="nav-link menu-font-color" to="/qna">1 : 1 문의</NavLink>
+                                {/* <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
+                                </div> */}
+                            </li>
+                            <li className="nav-item">
+                                {/* <a className="nav-link dropdown-toggle menu-font-color" href="#" role="button" aria-haspopup="true" aria-expanded="false">대관</a> */}
+                                <NavLink className="nav-link menu-font-color" to="/notice">공지사항</NavLink>
+                                {/* <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
+                                </div> */}
+                            </li>
+                            {/* 공연 */}
+                            <li className="nav-item">
+                                {/* <a className="nav-link dropdown-toggle menu-font-color" href="#" role="button" aria-haspopup="true" aria-expanded="false">대관</a> */}
+                                <NavLink className="nav-link menu-font-color" to="/concert">공연</NavLink>
+                                {/* <div className="dropdown-menu">
+                                    <NavLink className="dropdown-item" to="/ConcertRequest">대관문의 신청</NavLink>
+                                </div> */}
                             </li>
                             {/* 좌석 */}
                             {isLogin && loginGrade === '관리자' && (
                                 <>
-                                <li className="nav-item dropdown p-3">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">좌석</a>
+                                {/* 관리자 */}
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle menu-font-color" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
                                     <div className="dropdown-menu">
-                                        <NavLink className="dropdown-item" to="/seat">좌석배치도</NavLink>
+                                        <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
+                                        <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
+                                        <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
+                                        <NavLink className="dropdown-item" to="/seat">좌석관리</NavLink>
+                                        <NavLink className="dropdown-item" to="/adminMember">회원관리</NavLink>
                                     </div>
                                 </li>
-                                {/* 관리자 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/approve">대관신청목록</NavLink>
-                                    <NavLink className="dropdown-item" to="/reservationList">전체 예매 내역</NavLink>
-                                    <NavLink className="dropdown-item" to="/requestList">승인신청 목록</NavLink>
-                                    {/* <NavLink className="dropdown-item" to="/scheduleList">공연등록 목록</NavLink> */}
-                                    <NavLink className="dropdown-item" to="/adminMember">회원관리</NavLink>
-                                </div>
-                            </li>
                             </>
                             )}
-                            {/* 공연 */}
-                            <li className="nav-item dropdown p-3">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">공연</a>
-                                <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/concert">공연 목록</NavLink>
-                                </div>
-                            </li>
                         </ul>
                         {/* 로그인관련 */}
                         <div className="d-flex login-font">

@@ -7,6 +7,7 @@
 .navbar-nav .nav-link {
     font-size: 20px; /* 원하는 크기로 수정 */
     font-family: '빙그레 메로나체';
+    padding: 10px 0;
 }
 
 
@@ -17,10 +18,22 @@
 
 /* 로고 뒷 배경 색 */
 .navbar-logo {
-    background-color: rgb(255, 255, 255);
+    background-color: #EEEEEE;
 }
 
 .navbar-brand.active {
     padding: 0 !important; /* 패딩을 0으로 설정하고 !important로 강제 적용 */
 }
+
+.navbar-nav {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    width: 100%;
+}
+
+.nav-item {
+    padding: 10px 40px;
+}
+
+
 
