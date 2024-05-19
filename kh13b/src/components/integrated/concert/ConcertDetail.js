@@ -16,6 +16,7 @@ const ConcertDetail = () => {
     const navigator = useNavigate();
     const [concert, setConcert] = useState({});
     const [actors, setActors] = useState([]);
+    const [concertImage, setConcertImage] = useState();
     const [showSchedule, setShowSchedule] = useState(false);
 
     useEffect(() => {
@@ -24,8 +25,18 @@ const ConcertDetail = () => {
 
     const loadData = useCallback(async () => {
         const resp = await axios.get(`/concertRequest/${concertNo}/actors`);
+        const ImageResp = await axios.get(`/concertRequest/getAttach/${concertNo}`, {
+            responseType: 'arraybuffer',
+        });
+        const base64 = btoa(
+            new Uint8Array(ImageResp.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+            )
+        );
         setConcert(resp.data.concertRequestDto);
         setActors(resp.data.listActorDto);
+        setConcertImage(base64);
     }, [concertNo]);
 
     const formatDate = (dateString) => {
@@ -66,7 +77,7 @@ const ConcertDetail = () => {
                             <div className="row mt-5">
                                 <div className="col-md-3">
                                     <div>
-                                        <img src="https://www.charlottetheater.co.kr/_upload/ART/2024222133311_17637.jpg" className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} />
+                                        <img src={`data:image/;base64,${concertImage}`} className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} />
                                     </div>
                                     <div className="text-center mt-4 mb-4">
                                         <button className="btn btn-success"
