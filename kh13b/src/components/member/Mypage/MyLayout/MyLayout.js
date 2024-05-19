@@ -61,11 +61,11 @@ const MyLayout = ({
                                         <li>
                                             <dl>
                                                 <dt>관람좌석</dt>
-                                                <dd>
+                                                <dd className='seat-list'>
                                                     {seatList[idx].map((data, i) => {
-                                                        let seat = "";
-                                                        console.log(i);
+                                                        let seat = " ";
                                                         if(data.RESERVATION_PAY_DATE === item.PAY_DATE) {
+                                                            seat += ` ${data.SEAT_LEVEL}석 `;
                                                             if(seatList[idx].length === 1) {
                                                                 seat += data.SEAT_CHOICE;
                                                             } else if(i === seatList[idx].length-1) {
@@ -74,7 +74,7 @@ const MyLayout = ({
                                                                 seat += data.SEAT_CHOICE+", ";
                                                             }
                                                         }
-                                                        return seat;
+                                                        return <div key={i}>{seat}</div>;
                                                     })}
                                                 </dd>
                                             </dl>

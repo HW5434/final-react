@@ -61,7 +61,7 @@ const ConcertDetail = () => {
             <div className="container w-100">
                 <div className="row justify-content-center">
                     <div className="col-md-10">
-                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-100">
+                        <div className="shadow-lg p-3 mt-5 mb-5 bg-light rounded w-100 h-80">
 
                             <div className="row mt-5">
                                 <div className="col-md-3">
