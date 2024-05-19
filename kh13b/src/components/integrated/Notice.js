@@ -174,7 +174,7 @@ const Notice = () => {
                                                     {loginGrade === '관리자' && (
                                                         <td>
                                                             <MdDelete style={{ fontSize: '1.3em', color: 'red' }}
-                                                                             className="text-danger" onClick={e => deleteNotice(notice)} />
+                                                                className="text-danger" onClick={e => deleteNotice(notice)} />
                                                         </td>
                                                     )}
 
@@ -217,9 +217,15 @@ const Notice = () => {
                                     </div>
 
                                     <div className="col w-25 d-flex justify-content-end align-items-center">
-                                        <button className="btn btn-primary ms-3" onClick={openModal}>
-                                            공지글 등록
-                                        </button>
+                                        {loginGrade === '관리자' ? (
+                                            <>
+                                                <button className="btn btn-primary ms-3" onClick={openModal}>
+                                                    공지글 등록
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <></>
+                                        )}
                                     </div>
                                 </div>
                             </Wrapper>
@@ -245,14 +251,14 @@ const Notice = () => {
                                 <div className="row">
                                     <div className="col">
                                         <label>글 내용</label>
-                                            <ReactQuill
-                                                theme="snow"
-                                                modules={modules}
-                                                formats={formats}
-                                                value={input.noticeContent}
-                                                onChange={(content) => setInput({ ...input, noticeContent: content })}
-                                                className="quill-editor"
-                                            />
+                                        <ReactQuill
+                                            theme="snow"
+                                            modules={modules}
+                                            formats={formats}
+                                            value={input.noticeContent}
+                                            onChange={(content) => setInput({ ...input, noticeContent: content })}
+                                            className="quill-editor"
+                                        />
                                     </div>
                                 </div>
 
