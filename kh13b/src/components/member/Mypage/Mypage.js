@@ -33,12 +33,27 @@ const Mypage = () => {
         await axios.get(`/member/getMember/${refreshToken}`).then((res) => {
             setMember(res.data);
         });
-        await axios.post(`/member/getMyReservationList/`,
-            data
-        ).then((res) => {
-            setReservationList(res.data);
-            setCount(res.data.pageVO.totalPage);
-        });
+        const res = await axios.post(`/member/getMyReservationList/`,data)
+
+        await Promise.all(res.data.reservationList.map(async (item, idx) => {
+            await axios.get(`/member/getAttach/${item.CONCERT_SCHEDULE_NO}`, {
+                responseType: 'arraybuffer',
+            }).then((imageRes) => {
+                const base64 = btoa(
+                    new Uint8Array(imageRes.data).reduce(
+                        (data, byte) => data + String.fromCharCode(byte),
+                        ''
+                    )
+                );
+                res.data.reservationList[idx].concertImage = base64;
+            }).catch((e) => {
+                console.log("파일 없음")
+            });
+        }));
+        
+        setReservationList(res.data);
+        setCount(res.data.pageVO.totalPage);
+        
     }, [page, size]);
 
     useEffect(() => {

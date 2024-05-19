@@ -6,7 +6,10 @@ import { IoTicket } from "react-icons/io5";
 import { FaRegCalendarCheck } from "react-icons/fa6";
 import ConcertScheduleInfo from "./ConcertScheduleInfo"; // 일정 목록 컴포넌트 import
 import { FaGreaterThan } from "react-icons/fa";
-
+//랜덤 포스터 출력
+import poster1 from "../../Home/swiper/Bannerimg/3.jpg";
+import poster2 from "../../Home/swiper/Bannerimg/2.jpg";
+import poster3 from "../../Home/swiper/Bannerimg/1.jpg";
 
 const ConcertDetail = () => {
     const { concertNo } = useParams();
@@ -18,7 +21,8 @@ const ConcertDetail = () => {
     const [actors, setActors] = useState([]);
     const [concertImage, setConcertImage] = useState();
     const [showSchedule, setShowSchedule] = useState(false);
-
+    //랜덤 포스터 출력
+    const posters = [poster1, poster2, poster3];
     useEffect(() => {
         loadData();
     }, [concertNo]);
@@ -66,6 +70,11 @@ const ConcertDetail = () => {
         } else {
             navigator(`/reservation/${concertNo}`);
         }
+        
+    };
+    // 랜덤으로 포스터 출력
+    const getRandomPoster = () => {
+        return posters[Math.floor(Math.random() * posters.length)];
     };
 
     return (
@@ -80,7 +89,9 @@ const ConcertDetail = () => {
                             <div className="row mt-5">
                                 <div className="col-md-3">
                                     <div>
-                                        <img src={`data:image/;base64,${concertImage}`} className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} />
+                                        {/* <img src={`data:image/;base64,${concertImage}`} className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} /> */}
+                                        {/* <img src={poster1} className="card-img" alt="뮤지컬 포스터" style={{ height: "500px", overflow: "hidden" }} /> */}
+                                        <img src={getRandomPoster()} className="card-img" alt="뮤지컬 포스터" />
                                     </div>
                                     <div className="text-center mt-4 mb-4">
                                         <button className="btn btn-success"

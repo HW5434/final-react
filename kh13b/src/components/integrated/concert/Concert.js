@@ -3,10 +3,16 @@ import axios from '../../utils/CustomAxios';
 import Jumbotron from "../../Jumbotron";
 import { Link } from "react-router-dom";
 import './Concert.css';
+//랜덤 포스터 출력
+import poster1 from "../../Home/swiper/Bannerimg/3.jpg";
+import poster2 from "../../Home/swiper/Bannerimg/2.jpg";
+import poster3 from "../../Home/swiper/Bannerimg/1.jpg";
+
 //** 현재 날짜 기준 지난 공연들은 안나오게 구현
 const Concert = () => {
     const [concerts, setConcerts] = useState([]);
-
+    //랜덤 포스터 출력
+    const posters = [poster1, poster2, poster3];
     useEffect(() => {
         loadData();
     }, []);
@@ -50,6 +56,10 @@ const Concert = () => {
         const dayOfWeek = daysOfWeek[date.getDay()];
         return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
     };
+    // 랜덤 포스터 출력
+    const getRandomPoster = () => {
+        return posters[Math.floor(Math.random() * posters.length)];
+    };
 
     return (
         <>
@@ -65,7 +75,9 @@ const Concert = () => {
                                             <div className="card h-100">
                                                 <div className="row no-gutters">
                                                     <div className="col-md-3 concert-image">
-                                                        <img src={`data:image/;base64,${concert.concertImage}`} className="card-img" alt="뮤지컬 포스터" />
+                                                        {/* <img src={`data:image/;base64,${concert.concertImage}`} className="card-img" alt="뮤지컬 포스터" /> */}
+                                                        {/* <img src={poster1} className="card-img" alt="뮤지컬 포스터" /> */}
+                                                        <img src={getRandomPoster()} className="card-img" alt="뮤지컬 포스터" />
                                                     </div>
                                                     <div className="col-md-9">
                                                         <div className="card-body">

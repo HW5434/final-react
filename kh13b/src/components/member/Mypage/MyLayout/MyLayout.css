@@ -76,6 +76,7 @@
 
 .reservation-info-wrap {
     overflow: hidden;
+    display: flex;
 }
 
 .box-contents {
@@ -156,4 +157,13 @@
     > div {
         margin-right: 5px;
     }
+}
+
+.my-concert-img {
+    width: 120px;
+    height: 150px;
+}
+
+.my-detail-image {
+    margin-left: 10px;
 }
