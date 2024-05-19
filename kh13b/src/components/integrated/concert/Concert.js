@@ -21,16 +21,19 @@ const Concert = () => {
                 return concert.concertRequestState === 'y' && endDate > now;
             });
             await Promise.all(approvedConcerts.map(async (item, idx) => {
-                const res = await axios.get(`/concertRequest/getAttach/${item.concertRequestNo}`, {
+                await axios.get(`/concertRequest/getAttach/${item.concertRequestNo}`, {
                     responseType: 'arraybuffer',
+                }).then((res) => {
+                    const base64 = btoa(
+                        new Uint8Array(res.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                        )
+                    );
+                    approvedConcerts[idx].concertImage = base64;
+                }).catch((e) => {
+                    console.log("파일 없음")
                 });
-                const base64 = btoa(
-                    new Uint8Array(res.data).reduce(
-                        (data, byte) => data + String.fromCharCode(byte),
-                        ''
-                    )
-                );
-                approvedConcerts[idx].concertImage = base64;
             }));
             setConcerts(approvedConcerts);
         } catch (error) {

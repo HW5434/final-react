@@ -25,18 +25,21 @@ const ConcertDetail = () => {
 
     const loadData = useCallback(async () => {
         const resp = await axios.get(`/concertRequest/${concertNo}/actors`);
-        const ImageResp = await axios.get(`/concertRequest/getAttach/${concertNo}`, {
+        await axios.get(`/concertRequest/getAttach/${concertNo}`, {
             responseType: 'arraybuffer',
+        }).then((imageResp) => {
+            const base64 = btoa(
+                new Uint8Array(imageResp.data).reduce(
+                    (data, byte) => data + String.fromCharCode(byte),
+                    ''
+                )
+            );
+            setConcertImage(base64);
+        }).catch((e) => {
+            console.log("파일 없음")
         });
-        const base64 = btoa(
-            new Uint8Array(ImageResp.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-            )
-        );
         setConcert(resp.data.concertRequestDto);
         setActors(resp.data.listActorDto);
-        setConcertImage(base64);
     }, [concertNo]);
 
     const formatDate = (dateString) => {
