@@ -50,7 +50,7 @@ const Approve = () => {
 
     return (
         <>
-            <Jumbotron title="대관신청 목록" content="승인여부" />
+            <Jumbotron title="대관신청 목록"/>
             {/* 대관 신청 목록 */}
             <div className="container w-100 justify-content-end mt-3 mb-3">
                 <div className="row justify-content-center">

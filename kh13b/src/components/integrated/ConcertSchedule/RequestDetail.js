@@ -165,7 +165,7 @@ const RequestDetail = () => {
                             <div>
                                 <div className="text-center mt-3">
                                     <Link to={`/requestList`}>
-                                        <button className="btn btn-success" onClick={approveState}>
+                                        <button className="btn btn-success" style={{ backgroundColor: '#681116', borderColor: '#681116' }} onClick={approveState}>
                                             승인
                                         </button>
                                     </Link>
