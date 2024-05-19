@@ -1,4 +1,5 @@
 import './MyLayout.css';
+import { useState, useEffect, useCallback } from 'react';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
 const MyLayout = ({ 
@@ -22,6 +23,9 @@ const MyLayout = ({
         setPage(pageNumber); // 페이지 번호를 직접 선택하여 이동하는 함수
     };
 
+    console.log("데이터 체크");
+    console.log(reservationList)
+
     return (
         <div className='mypage-layout'>
             <div>
@@ -35,63 +39,66 @@ const MyLayout = ({
                         <div className="box-info">
                             <div className="detail-area">
                                 <div className="reservation-info-wrap">
-                                    <h2 className="box-contents artHouse">
-                                        <span className="res-title">{item.RESERVATION_CONCERT_TITLE}</span>
-                                        <span className="res-price">{item.SUM_PRICE.toLocaleString()}원</span>
-                                    </h2>
-                                    <ul className="reservation-mv-info">
-                                        <li>
-                                            <dl>
-                                                <dt>예약자명</dt>
-                                                <dd>{item.RESERVATION_PERSON_NAME}</dd>
-                                            </dl>
-                                        </li>
-                                        <li>
-                                            <dl>
-                                                <dt>관람인원</dt>
-                                                <dd>{item.RESERVATION_COUNT}명</dd>
-                                            </dl>
-                                        </li>
-                                        <li>
-                                            <dl>
-                                                <dt>관람일시</dt>
-                                                <dd className="txt-red">{item.RESERVATION_CONCERT_DATE}</dd>
-                                            </dl>
-                                        </li>
-                                        <li>
-                                            <dl>
-                                                <dt>관람좌석</dt>
-                                                <dd className='seat-list'>
-                                                    {seatList[idx].map((data, i) => {
-                                                        let seat = " ";
-                                                        if(data.RESERVATION_PAY_DATE === item.PAY_DATE) {
-                                                            seat += ` ${data.SEAT_LEVEL}석 `;
-                                                            if(seatList[idx].length === 1) {
-                                                                seat += data.SEAT_CHOICE;
-                                                            } else if(i === seatList[idx].length-1) {
-                                                                seat += data.SEAT_CHOICE;
-                                                            } else {
-                                                                seat += data.SEAT_CHOICE+", ";
+                                    <img src={`data:image/;base64,${item.concertImage}`} className="card-img my-concert-img" alt="뮤지컬 포스터" />
+                                    <div className='my-detail-image'>
+                                        <h2 className="box-contents artHouse">
+                                            <span className="res-title">{item.RESERVATION_CONCERT_TITLE}</span>
+                                            <span className="res-price">{item.SUM_PRICE.toLocaleString()}원</span>
+                                        </h2>
+                                        <ul className="reservation-mv-info">
+                                            <li>
+                                                <dl>
+                                                    <dt>예약자명</dt>
+                                                    <dd>{item.RESERVATION_PERSON_NAME}</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>관람인원</dt>
+                                                    <dd>{item.RESERVATION_COUNT}명</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>관람일시</dt>
+                                                    <dd className="txt-red">{item.RESERVATION_CONCERT_DATE}</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>관람좌석</dt>
+                                                    <dd className='seat-list'>
+                                                        {seatList[idx].map((data, i) => {
+                                                            let seat = " ";
+                                                            if(data.RESERVATION_PAY_DATE === item.PAY_DATE) {
+                                                                seat += ` ${data.SEAT_LEVEL}석 `;
+                                                                if(seatList[idx].length === 1) {
+                                                                    seat += data.SEAT_CHOICE;
+                                                                } else if(i === seatList[idx].length-1) {
+                                                                    seat += data.SEAT_CHOICE;
+                                                                } else {
+                                                                    seat += data.SEAT_CHOICE+", ";
+                                                                }
                                                             }
-                                                        }
-                                                        return <div key={i}>{seat}</div>;
-                                                    })}
-                                                </dd>
-                                            </dl>
-                                        </li>
-                                        <li>
-                                            <dl>
-                                                <dt>예약상태</dt>
-                                                <dd>{item.RESERVATION_STATUS}</dd>
-                                            </dl>
-                                        </li>
-                                        <li>
-                                            <dl>
-                                                <dt>매수</dt>
-                                                <dd>{item.RESERVATION_COUNT}매</dd>
-                                            </dl>
-                                        </li>
-                                    </ul>
+                                                            return <div key={i}>{seat}</div>;
+                                                        })}
+                                                    </dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>예약상태</dt>
+                                                    <dd>{item.RESERVATION_STATUS}</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>매수</dt>
+                                                    <dd>{item.RESERVATION_COUNT}매</dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div> 
