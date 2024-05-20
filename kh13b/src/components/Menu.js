@@ -47,8 +47,8 @@ function Menu() {
             <nav className="navbar navbar-expand-lg navi-color" data-bs-theme="light">
                 <Wrapper>
                     {/* React에서는 페이지간 이동을 NavLink 태그로 한다 */}
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-theme="light" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon" style={{color: '#EEEEEE'}}></span>
                     </button>
                     {/* 메뉴들과 로그인 상태 */}
                     <div className="collapse navbar-collapse" id="navbarColor01">

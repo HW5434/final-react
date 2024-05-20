@@ -6,7 +6,7 @@ import { loginIdState, loginGradeState } from "../../utils/RecoilData";
 import axios from "../../utils/CustomAxios";
 import { useNavigate, Link } from "react-router-dom";
 
-const redirect_uri = 'http://localhost:3000/auth'
+const redirect_uri = 'http://192.168.30.43:3000/auth'
 
 const Login = () => {
 

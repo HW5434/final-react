@@ -6,9 +6,10 @@
  /* 메뉴 글자 크기 수정 */
 .navbar-nav .nav-link {
     font-size: 20px; /* 원하는 크기로 수정 */
-    font-family: '빙그레 메로나체';
+    /* font-family: '빙그레 메로나체'; */
     padding: 10px 0;
 }
+
 
 
 .login-font {
