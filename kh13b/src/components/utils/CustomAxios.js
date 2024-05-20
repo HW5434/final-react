@@ -7,7 +7,9 @@ import axios from "axios";
 
 //필요한 설정을 추가한다
 const instance = axios.create({
-    baseURL : "http://localhost:8080",
+    //baseURL : "http://localhost:8080",//테스트시
+    baseURL : "http://192.168.30.43:8080",//테스트시
+    //baseURL : "https://www.sysout.co.kr",//배포시
     timeout : 5000, //통신의 최대 지연시간(ms)
 });
 
