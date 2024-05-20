@@ -73,6 +73,7 @@ function Qna() {
             qnaTarget: qnaTargetNo
         });
         loadData();
+        clearAdmin();
     }, [admin, qnaTargetNo]); //관리자글 등록
     // 입력 값 변경
     const changeInput = useCallback((e) => {
@@ -84,6 +85,7 @@ function Qna() {
     const saveInput = useCallback(async () => {
         const resp = await axios.post("/qna/", input);
         loadData();
+        closeModal();
     }, [input]); // 등록
     // 입력 값 초기화
     const clearInput = useCallback(() => {
@@ -94,6 +96,12 @@ function Qna() {
             qnaAnswer: ""
         });
     }, [input]);
+    const clearAdmin = useCallback(() => {
+        setAdmin({
+        qnaTitle: "",
+        qnaContent: ""
+        });
+    }, [admin]);
     const cancelInput = useCallback(() => {
         const choice = window.confirm("작성을 취소하시겠습니까?");
         if (choice === false) return;
@@ -227,7 +235,10 @@ function Qna() {
                                                                                     <div className="my-5">
                                                                                         {/* 공지글 내용 */}
                                                                                         <h3>
-                                                                                            <div dangerouslySetInnerHTML={{ __html: qna.qnaContent }} />
+                                                                                            <div
+                                                                                                style={{ whiteSpace: 'pre-wrap' }}
+                                                                                                dangerouslySetInnerHTML={{ __html: qna.qnaContent }}
+                                                                                            />
                                                                                         </h3>
                                                                                         <hr className='mt-5' />
                                                                                     </div>
@@ -261,7 +272,7 @@ function Qna() {
                                                                             <div className="row m-3">
                                                                                 <div className="col mt-3">
                                                                                     <h4>답변글 내용</h4>
-                                                                                    <textarea type="text" style={{ minHeight: '500px', maxHeight: '500px' }} name="qnaContent" value={admin.qnaContent} onChange={changeAdmin} className="form-control" />
+                                                                                    <textarea type="text" style={{ minHeight: '500px', maxHeight: '500px', whiteSpace: 'pre-wrap' }} name="qnaContent" value={admin.qnaContent} onChange={changeAdmin} className="form-control" />
                                                                                 </div>
                                                                             </div>
 
@@ -309,7 +320,10 @@ function Qna() {
                                                                                 <div className="my-5">
                                                                                     {/* 공지글 내용 */}
                                                                                     <h4>
-                                                                                        <div dangerouslySetInnerHTML={{ __html: qna.qnaContent }} />
+                                                                                    <div
+                                                                                                style={{ whiteSpace: 'pre-wrap' }}
+                                                                                                dangerouslySetInnerHTML={{ __html: qna.qnaContent }}
+                                                                                            />
                                                                                     </h4>
                                                                                 </div>
                                                                                 <hr />
@@ -362,9 +376,16 @@ function Qna() {
 
                                     <div className="col w-25 d-flex justify-content-end align-items-center">
                                         {/* 추가 버튼 */}
-                                        <button className="btn btn-primary ms-3" onClick={openModal}>
-                                            문의글 등록
-                                        </button>
+                                        {loginGrade !== '' ? (
+                                                    <>
+                                                    <button className="btn btn-primary ms-3" onClick={openModal}>
+                                                        문의글 등록
+                                                    </button>
+                                                    </>
+                                                ) : (
+                                                    <></>
+                                                )}
+
                                     </div>
                                 </div>
                             </Wrapper>

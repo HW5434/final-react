@@ -18,6 +18,9 @@
 }
 
 /*  */
+.pre-wrap-content {
+    white-space: pre-wrap;
+}
 
 /* REACT-QUILL */
 .ql-size-small {
